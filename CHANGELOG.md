@@ -145,4 +145,3 @@
 
 **最新版本**: 2.2.1  
 查看完整项目信息：[README.md](README.md)  
-开发文档：[AGENTS.md](AGENTS.md)
