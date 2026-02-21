@@ -1,50 +1,59 @@
 """
-服务层模块 - 业务逻辑封装
+services 子模块 - 服务层实现
 
-提供核心业务服务，所有服务继承 ServiceBase，支持单例模式。
+提供项目所需的各项服务实现。
 
-使用示例:
-    >>> from plugins.common.services import AIService, BanService, ChatService
-    >>> 
-    >>> # 获取服务实例
-    >>> ai = AIService.get_instance()
-    >>> ban = BanService.get_instance()
-    >>> chat = ChatService.get_instance()
-    >>> 
-    >>> # 使用服务
-    >>> if ai.is_available:
-    ...     result = await ai.chat("系统提示", "用户输入")
-    ...     if result.is_success:
-    ...         print(result.value)
+架构说明:
+    所有服务都实现相应的 Protocol 接口，并通过 ServiceLocator 注册。
+    插件层通过 ServiceLocator.get(Protocol) 获取服务，不直接实例化。
+
+服务列表:
+    - AIService: DeepSeek API 调用
+    - BanService: 黑名单管理
+    - BotService: NoneBot 群管理 API
+    - ChatService: 群聊历史记录
+    - ConfigProvider: 配置查询
+    - GameServiceBase: 游戏服务基类
+    - PluginRegistry: 插件注册表
+    - SystemMonitorService: 系统监控
+    - TokenService: 一次性令牌
+
+使用方式:
+    from plugins.common import AIService
+    ai = AIService.get_instance()
+    
+    from plugins.common.protocols import ServiceLocator, AIServiceProtocol
+    ai = ServiceLocator.get(AIServiceProtocol)
 """
 
-from .ai import AIService, get_ai_service
-from .ban import BanService, get_ban_service
-from .chat import ChatService, ChatMessage, get_chat_service
-from .bot import BotService, get_bot_service
+# 服务导出
+from .ai import AIService
+from .ban import BanService
+from .bot import BotService
+from .chat import ChatService
+from .provider import ConfigProvider
 from .game import GameServiceBase, GameState
-from .registry import PluginRegistry, PluginInfo, get_plugin_registry
-from .token import TokenService, get_token_service
-from .system import SystemMonitorService, get_system_monitor_service
+from .registry import PluginRegistry, PluginInfo
+from .system import SystemMonitorService
+from .token import TokenService
 
 __all__ = [
-    # 服务类（推荐使用 .get_instance()）
-    "AIService",
-    "BanService",
-    "ChatService",
-    "BotService",
-    "GameServiceBase",
-    "PluginRegistry",
+    # 核心服务
+    'AIService',
+    'BanService',
+    'BotService',
+    'ChatService',
+    'ConfigProvider',
     
-    # 数据类
-    "ChatMessage",
-    "GameState",
-    "PluginInfo",
+    # 游戏服务
+    'GameServiceBase',
+    'GameState',
     
-    # 向后兼容的获取函数
-    "get_ai_service",
-    "get_ban_service",
-    "get_chat_service",
-    "get_bot_service",
-    "get_plugin_registry",
+    # 注册表
+    'PluginRegistry',
+    'PluginInfo',
+    
+    # 其他服务
+    'SystemMonitorService',
+    'TokenService',
 ]

@@ -1,69 +1,82 @@
 """
 系统监控服务
 
+服务层 - 实现 SystemMonitorProtocol 协议
+
 提供 bot 进程资源使用情况查询，包括 CPU、内存、运行时间等。
 """
+
 import os
 import time
 import platform
-from typing import Dict, List, Tuple, Optional
+from typing import Optional
 from dataclasses import dataclass
+import logging
 
 from ..base import ServiceBase
+from ..protocols import (
+    SystemMonitorProtocol,
+    ServiceLocator,
+)
 
 
 @dataclass
 class ProcessStatus:
     """进程状态信息"""
-    cpu_percent: float      # 进程 CPU 使用率
-    memory_mb: float        # 进程内存使用 (MB)
-    memory_percent: float   # 进程内存占用率（占系统总内存）
-    threads: int            # 线程数
-    uptime_seconds: float   # 运行时间
-    platform: str           # 系统平台
-    python_version: str     # Python 版本
+    cpu_percent: float
+    memory_mb: float
+    memory_percent: float
+    threads: int
+    uptime_seconds: float
+    platform: str
+    python_version: str
 
 
-class SystemMonitorService(ServiceBase):
+class SystemMonitorService(ServiceBase, SystemMonitorProtocol):
     """
     系统监控服务
     
-    获取当前 bot 进程的资源使用情况。
-    
-    Example:
-        >>> service = SystemMonitorService.get_instance()
-        >>> status = service.get_status()
-        >>> print(f"CPU: {status.cpu_percent}%")
-        >>> print(f"Memory: {status.memory_mb}MB")
+    实现 SystemMonitorProtocol 协议，在 initialize() 完成后注册到 ServiceLocator。
     """
     
     def __init__(self) -> None:
+        """初始化服务"""
         super().__init__()
         self._start_time = time.time()
         self._psutil_available = False
         self._process = None
+        self.logger = logging.getLogger("plugins.common.services.system")
         
         # 尝试导入 psutil
         try:
             import psutil
             self._psutil = psutil
             self._psutil_available = True
-            # 获取当前进程
             self._process = psutil.Process()
         except ImportError:
             self.logger.warning("psutil not installed, system monitoring limited")
+    
+    def initialize(self) -> None:
+        """
+        初始化服务
+        
+        注意：初始化完成后才注册到 ServiceLocator。
+        """
+        if self._initialized:
+            return
+        
+        self._initialized = True
+        
+        # 初始化完成后注册到服务定位器
+        ServiceLocator.register(SystemMonitorProtocol, self)
+        self.logger.info("System Monitor Service initialized")
     
     def is_available(self) -> bool:
         """检查是否可用（psutil 是否安装）"""
         return self._psutil_available
     
     def get_status(self) -> ProcessStatus:
-        """
-        获取进程状态
-        
-        Returns:
-            ProcessStatus 包含 CPU、内存、线程数等信息
-        """
+        """获取进程状态"""
         if self._psutil_available and self._process:
             return self._get_status_with_psutil()
         else:
@@ -71,20 +84,11 @@ class SystemMonitorService(ServiceBase):
     
     def _get_status_with_psutil(self) -> ProcessStatus:
         """使用 psutil 获取进程状态"""
-        # 进程 CPU 使用率（需要间隔采样）
         cpu_percent = self._process.cpu_percent(interval=0.1)
-        
-        # 进程内存信息
         memory_info = self._process.memory_info()
-        memory_mb = memory_info.rss / (1024 * 1024)  # RSS 实际使用内存
-        
-        # 进程内存占用率（占系统总内存的百分比）
+        memory_mb = memory_info.rss / (1024 * 1024)
         memory_percent = self._process.memory_percent()
-        
-        # 线程数
         threads = self._process.num_threads()
-        
-        # 运行时间
         uptime_seconds = time.time() - self._start_time
         
         return ProcessStatus(
@@ -112,15 +116,7 @@ class SystemMonitorService(ServiceBase):
         )
     
     def format_uptime(self, seconds: float) -> str:
-        """
-        格式化运行时间
-        
-        Args:
-            seconds: 秒数
-            
-        Returns:
-            人类可读的时间字符串，如 "2天3小时15分钟"
-        """
+        """格式化运行时间"""
         days = int(seconds // 86400)
         hours = int((seconds % 86400) // 3600)
         minutes = int((seconds % 3600) // 60)
@@ -135,42 +131,34 @@ class SystemMonitorService(ServiceBase):
         
         return "".join(parts)
     
+    # ========== SystemMonitorProtocol 实现 ==========
+    
     def get_status_text(self) -> str:
-        """
-        获取格式化的状态文本
-        
-        Returns:
-            格式化的进程状态字符串
-        """
+        """获取格式化的状态文本"""
         status = self.get_status()
         
         lines = []
         lines.append(f"进程: query_bot")
         
-        # CPU
         if status.cpu_percent >= 0:
             lines.append(f"CPU: {status.cpu_percent}%")
         else:
             lines.append("CPU: N/A (psutil not installed)")
         
-        # Memory
         if status.memory_percent >= 0:
             lines.append(f"Memory: {status.memory_mb}MB ({status.memory_percent}%)")
         else:
             lines.append("Memory: N/A")
         
-        # Threads
         if status.threads > 0:
             lines.append(f"Threads: {status.threads}")
         
-        # Runtime
         uptime_str = self.format_uptime(status.uptime_seconds)
         lines.append(f"Runtime: {uptime_str}")
         
         return "\n".join(lines)
 
 
-# 便捷获取函数
 def get_system_monitor_service() -> SystemMonitorService:
-    """获取系统监控服务实例"""
+    """获取系统监控服务实例（向后兼容）"""
     return SystemMonitorService.get_instance()

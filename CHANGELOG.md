@@ -6,6 +6,32 @@
 
 ---
 
+### Version 2.2.2 (2026-02-21)
+
+**重构完成**
+
+**架构升级**
+- 完成 7 层严格分层架构：配置层 → 基础层 → 协议层 → 服务层 → 处理器层 → 接收层 → 插件层
+- 引入协议接口（Protocol）：所有服务定义抽象协议，实现与使用完全解耦
+- 引入 `ServiceLocator` 服务定位器：统一服务注册与查找，支持类型安全的通用查询
+- 拆分 `receiver.py` 为 `handler.py` + `receiver.py`：业务逻辑与命令接收完全分离
+- 重命名 `cfgprov.py` 为 `provider.py`：代码结构更清晰
+
+**服务注册机制**
+- 所有服务在 `initialize()` 中注册到 `ServiceLocator`，而非 `__init__`
+- `bot.py` 启动时自动初始化所有核心服务
+- `receiver` 层添加 `_ensure_service_initialized()` 保险机制，确保服务可用
+
+**插件架构**
+- 插件通过 `ServiceLocator.get(Protocol)` 访问服务，禁止直接 `XxxService.get_instance()`
+- `PluginHandler` 与 `MessageHandler` 定义业务逻辑接口
+- `CommandReceiver` 与 `MessageReceiver` 负责命令注册和前置检查
+
+**工具新增**
+- 新增 `utils/prompt.py`：`read_prompt()` 函数读取 `prompts/` 目录下的提示词文件
+
+---
+
 ### Version 2.2.1 (2026-02-20)
 
 **新功能**
@@ -143,6 +169,5 @@
 
 ---
 
-**最新版本**: 2.2.1  
-查看完整项目信息：[README.md](README.md)  
-开发文档：[AGENTS.md](AGENTS.md)
+**最新版本**: 2.2.2  
+查看完整项目信息：[README.md](README.md)

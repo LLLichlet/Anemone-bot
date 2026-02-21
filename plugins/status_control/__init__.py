@@ -3,6 +3,8 @@
 
 管理员功能：查看和控制各功能开关状态、用户管理。
 使用一次性令牌验证，令牌通过私聊 "/申请令牌" 获取，5分钟内有效。
+
+使用新架构（PluginHandler + CommandReceiver）重构
 """
 from typing import List, Tuple, Set
 
@@ -17,44 +19,54 @@ except ImportError:
     class PluginMetadata:
         def __init__(self, **kwargs): pass
 
-from plugins.common import CommandPlugin, config, BanService, TokenService, SystemMonitorService
+from plugins.common import (
+    PluginHandler,
+    CommandReceiver,
+    ServiceLocator,
+    BanServiceProtocol,
+    TokenServiceProtocol,
+    SystemMonitorProtocol,
+    ConfigProviderProtocol,
+)
 
 
-# ========== 配置 ==========
-def get_admin_user_ids() -> Set[int]:
-    """获取管理员白名单（从配置读取）"""
-    return config.admin_user_ids_set
-
-
-class RequestTokenPlugin(CommandPlugin):
-    """申请令牌插件（私聊）"""
+class RequestTokenHandler(PluginHandler):
+    """申请令牌处理器（私聊）"""
     
     name = "申请令牌"
     description = "私聊申请管理员操作令牌"
     command = "申请令牌"
     priority = 10
     feature_name = None
-    hidden_in_help = True  # 不在帮助中显示
+    hidden_in_help = True
     
     async def handle(self, event: MessageEvent, args: str) -> None:
         """处理令牌申请（仅私聊）"""
-        # 检查是否为私聊
         if not isinstance(event, PrivateMessageEvent):
             await self.reply("请私聊机器人申请令牌")
             return
         
         user_id = event.user_id
         
-        # 检查是否在管理员白名单
-        if user_id not in get_admin_user_ids():
+        # 检查管理员权限
+        config = ServiceLocator.get(ConfigProviderProtocol)
+        if config is None:
+            await self.reply("配置服务不可用")
+            return
+        
+        admin_ids = config.get("admin_user_ids_set", set())
+        if user_id not in admin_ids:
             await self.reply("您没有管理员权限")
             return
         
-        # 生成令牌
-        token_service = TokenService.get_instance()
+        # 通过协议层获取令牌服务
+        token_service = ServiceLocator.get(TokenServiceProtocol)
+        if token_service is None:
+            await self.reply("令牌服务不可用")
+            return
+        
         token = token_service.generate_token(user_id)
         
-        # 发送令牌
         await self.finish(
             f"您的操作令牌: {token}\n"
             f"有效期: 5分钟\n"
@@ -63,8 +75,8 @@ class RequestTokenPlugin(CommandPlugin):
         )
 
 
-class StatusControlPlugin(CommandPlugin):
-    """状态控制插件"""
+class StatusControlHandler(PluginHandler):
+    """状态控制处理器"""
     
     name = "状态控制"
     description = "管理员功能：查看和控制各功能开关状态"
@@ -74,7 +86,6 @@ class StatusControlPlugin(CommandPlugin):
     feature_name = None
     hidden_in_help = True
     
-    # 可控制的功能列表: (配置键, 显示名, 简短名)
     CONTROLLABLE_FEATURES: List[Tuple[str, str, str]] = [
         ("math", "数学定义", "数学"),
         ("random", "随机回复", "随机"),
@@ -83,24 +94,27 @@ class StatusControlPlugin(CommandPlugin):
         ("math_soup", "数学谜题", "数学谜"),
     ]
     
-    def __init__(self) -> None:
-        super().__init__()
-        self._system_monitor = SystemMonitorService.get_instance()
+    def _get_config(self) -> ConfigProviderProtocol:
+        """获取配置提供者"""
+        config = ServiceLocator.get(ConfigProviderProtocol)
+        if config is None:
+            raise RuntimeError("配置服务不可用")
+        return config
+    
+    def _check_admin(self, user_id: int) -> bool:
+        """检查是否为管理员"""
+        config = self._get_config()
+        admin_ids = config.get("admin_user_ids_set", set())
+        return user_id in admin_ids
     
     async def handle(self, event: MessageEvent, args: str) -> None:
         """处理状态控制命令"""
         user_id = event.user_id
         
-        # 检查是否在管理员白名单
-        if user_id not in get_admin_user_ids():
-            # 白名单未配置时，拒绝所有操作
-            if not get_admin_user_ids():
-                await self.reply("管理员白名单未配置")
-                return
+        if not self._check_admin(user_id):
             await self.reply("您没有管理员权限")
             return
         
-        # 解析参数
         if not args:
             await self._show_status()
             return
@@ -110,9 +124,12 @@ class StatusControlPlugin(CommandPlugin):
         remaining = parts[1] if len(parts) > 1 else ""
         
         # 验证令牌
-        token_service = TokenService.get_instance()
+        token_service = ServiceLocator.get(TokenServiceProtocol)
+        if token_service is None:
+            await self.reply("令牌服务不可用")
+            return
+        
         if not token_service.verify_token(user_id, token):
-            # 检查是否有有效令牌（用于提示）
             if token_service.has_valid_token(user_id):
                 remaining_time = token_service.get_token_remaining_time(user_id)
                 await self.reply(f"令牌错误。您有有效令牌，剩余 {remaining_time} 秒")
@@ -120,12 +137,10 @@ class StatusControlPlugin(CommandPlugin):
                 await self.reply("令牌无效或已过期，请私聊申请新令牌")
             return
         
-        # 令牌验证通过，执行操作
         if not remaining:
             await self._show_status()
             return
         
-        # 路由操作
         action_parts = remaining.split(maxsplit=1)
         action = action_parts[0].lower()
         action_args = action_parts[1] if len(action_parts) > 1 else ""
@@ -145,16 +160,20 @@ class StatusControlPlugin(CommandPlugin):
     
     async def _show_status(self) -> None:
         """显示所有功能状态"""
+        config = self._get_config()
+        
         lines = ["功能状态:"]
         
         for feature_key, display_name, _ in self.CONTROLLABLE_FEATURES:
-            is_enabled = getattr(config, f"{feature_key}_enabled", True)
+            is_enabled = config.is_feature_enabled(feature_key)
             status = "[开启]" if is_enabled else "[关闭]"
             lines.append(f"  {display_name}: {status}")
         
-        # 黑名单统计
-        ban = BanService.get_instance()
-        banned_count = ban.get_banned_count()
+        # 通过协议层获取黑名单服务
+        ban = ServiceLocator.get(BanServiceProtocol)
+        banned_count = 0
+        if ban is not None:
+            banned_count = ban.get_banned_count()
         lines.append(f"\n已拉黑用户: {banned_count} 人")
         
         await self.finish("\n".join(lines))
@@ -167,7 +186,6 @@ class StatusControlPlugin(CommandPlugin):
         
         target = args.strip().lower()
         
-        # 查找匹配的功能
         matched_feature = None
         for feature_key, display_name, short_name in self.CONTROLLABLE_FEATURES:
             if target in feature_key or target in display_name.lower() or target == short_name.lower():
@@ -180,10 +198,14 @@ class StatusControlPlugin(CommandPlugin):
             return
         
         feature_key, display_name = matched_feature
-        current_value = getattr(config, f"{feature_key}_enabled", True)
         
-        # 切换状态
-        setattr(config, f"{feature_key}_enabled", not current_value)
+        # 注意：这里应该调用配置提供者的方法来切换功能
+        # 但 ConfigProviderProtocol 只定义了读取接口
+        # 实际实现可能需要扩展协议或直接使用 config 模块
+        # 暂时保持简单实现
+        from plugins.common import config as _config
+        current_value = getattr(_config, f"{feature_key}_enabled", True)
+        setattr(_config, f"{feature_key}_enabled", not current_value)
         new_status = "开启" if not current_value else "关闭"
         
         await self.finish(f"{display_name} 已{new_status}")
@@ -200,7 +222,10 @@ class StatusControlPlugin(CommandPlugin):
             await self.reply("用户ID必须是数字")
             return
         
-        ban = BanService.get_instance()
+        ban = ServiceLocator.get(BanServiceProtocol)
+        if ban is None:
+            await self.reply("黑名单服务不可用")
+            return
         
         if ban.is_banned(target_user_id):
             await self.finish(f"用户 {target_user_id} 已在黑名单中")
@@ -224,7 +249,10 @@ class StatusControlPlugin(CommandPlugin):
             await self.reply("用户ID必须是数字")
             return
         
-        ban = BanService.get_instance()
+        ban = ServiceLocator.get(BanServiceProtocol)
+        if ban is None:
+            await self.reply("黑名单服务不可用")
+            return
         
         if not ban.is_banned(target_user_id):
             await self.finish(f"用户 {target_user_id} 不在黑名单中")
@@ -238,22 +266,28 @@ class StatusControlPlugin(CommandPlugin):
     
     async def _show_system_status(self) -> None:
         """显示系统状态"""
-        status_text = self._system_monitor.get_status_text()
+        monitor = ServiceLocator.get(SystemMonitorProtocol)
+        if monitor is None:
+            await self.finish("系统监控服务不可用")
+            return
+        
+        status_text = monitor.get_status_text()
         await self.finish(status_text)
 
 
-# 实例化插件
-request_token_plugin = RequestTokenPlugin()
-status_control_plugin = StatusControlPlugin()
+# ========== 创建处理器和接收器 ==========
+request_token_handler = RequestTokenHandler()
+status_control_handler = StatusControlHandler()
 
-# 导出元数据
+request_token_receiver = CommandReceiver(request_token_handler)
+status_control_receiver = CommandReceiver(status_control_handler)
+
+
+# ========== 导出元数据 ==========
 if NONEBOT_AVAILABLE:
     __plugin_meta__ = PluginMetadata(
         name="状态控制",
         description="管理员功能：查看和控制各功能开关状态（需令牌）",
         usage="私聊: /申请令牌 | 群内: /状态控制 [令牌] [操作] [参数]",
-        extra={
-            "author": "Lichlet",
-            "version": "2.2.1",
-        }
+        extra={"author": "Lichlet", "version": "2.3.0"}
     )

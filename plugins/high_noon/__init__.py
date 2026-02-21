@@ -1,10 +1,9 @@
 """
 午时已到（俄罗斯轮盘赌）插件
 
-使用 GameServiceBase 重构版本 - 统一的游戏状态管理
+使用新架构（PluginHandler + CommandReceiver）重构
 """
 import random
-from typing import Optional
 from dataclasses import dataclass, field
 
 try:
@@ -17,21 +16,22 @@ except ImportError:
     class PluginMetadata:
         def __init__(self, **kwargs): pass
 
-from plugins.common import CommandPlugin, config, BotService, GameServiceBase, GameState
+from plugins.common import (
+    PluginHandler,
+    CommandReceiver,
+    ServiceLocator,
+    GameServiceBase,
+    GameState,
+    BotServiceProtocol,
+    ConfigProviderProtocol,
+)
 
 
 # ========== 数据模型 ==========
 
 @dataclass
 class HighNoonState(GameState):
-    """
-    午时已到游戏状态
-    
-    Attributes:
-        bullet_pos: 子弹位置 (1-6)
-        shot_count: 已开枪次数
-        players: 参与玩家列表
-    """
+    """午时已到游戏状态"""
     bullet_pos: int = 0
     shot_count: int = 0
     players: list = field(default_factory=list)
@@ -40,13 +40,8 @@ class HighNoonState(GameState):
 # ========== 游戏服务 ==========
 
 class HighNoonService(GameServiceBase[HighNoonState]):
-    """
-    午时已到游戏服务
+    """午时已到游戏服务"""
     
-    使用 GameServiceBase 统一管理游戏状态。
-    """
-    
-    # 游戏阶段提示语
     STATEMENTS = [
         "无需退路。( 1 / 6 )",
         "英雄们啊，为这最强大的信念，请站在我们这边。( 2 / 6 )",
@@ -57,15 +52,15 @@ class HighNoonService(GameServiceBase[HighNoonState]):
     
     def _log(self, message: str) -> None:
         """调试日志输出"""
-        if config.debug_mode or config.debug_highnoon:
-            self.logger.info(f"[HighNoon] {message}")
+        config = ServiceLocator.get(ConfigProviderProtocol)
+        if config is not None:
+            debug_mode = config.get("debug_mode", False)
+            debug_highnoon = config.get("debug_highnoon", False)
+            if debug_mode or debug_highnoon:
+                self.logger.info(f"[HighNoon] {message}")
     
     def create_game(self, group_id: int, **kwargs) -> HighNoonState:
-        """
-        创建新游戏状态
-        
-        随机生成子弹位置（1-6）。
-        """
+        """创建新游戏状态"""
         bullet_pos = random.randint(1, 6)
         self._log(f"创建新游戏 - 群{group_id}: 子弹位置={bullet_pos}")
         
@@ -77,17 +72,13 @@ class HighNoonService(GameServiceBase[HighNoonState]):
         )
     
     async def fire(self, group_id: int, user_id: int, username: str) -> Optional[dict]:
-        """
-        处理开枪
-        
-        Returns:
-            结果字典或 None（如果没有游戏）
-        """
+        """处理开枪"""
+        # 注意：由于 has_active_game 和 get_game 是无锁的，
+        # 我们在这里只读取状态，不修改状态
         game = self.get_game(group_id)
         if game is None or not game.is_active:
             return None
         
-        # 添加玩家到列表
         if user_id not in game.players:
             game.players.append(user_id)
         
@@ -98,10 +89,10 @@ class HighNoonService(GameServiceBase[HighNoonState]):
             f"bullet_pos={game.bullet_pos}, user={username}"
         )
         
-        # 判断是否中弹
         if game.shot_count == game.bullet_pos:
             self._log(f"群{group_id}: 中弹！")
-            self.end_game(group_id)
+            # 异步结束游戏
+            await self.end_game(group_id)
             return {
                 "hit": True,
                 "message": f"来吧,{username},鲜血会染红这神圣的场所",
@@ -116,9 +107,9 @@ class HighNoonService(GameServiceBase[HighNoonState]):
             }
 
 
-# ========== 插件类 ==========
+# ========== 处理器类 ==========
 
-class HighNoonStartPlugin(CommandPlugin):
+class HighNoonStartHandler(PluginHandler):
     """午时已到 - 开始游戏"""
     
     name = "决斗"
@@ -132,19 +123,26 @@ class HighNoonStartPlugin(CommandPlugin):
         if not NONEBOT_AVAILABLE:
             return
         
-        group_id = event.group_id  # type: ignore
+        group_id = event.group_id
         service = HighNoonService.get_instance()
         
-        # 直接开始新游戏（覆盖旧游戏）
-        result = service.start_game(group_id)
+        result = await service.start_game(group_id)
         
         if result.is_failure:
             await self.reply("开始游戏失败")
             return
         
-        # 获取游戏状态用于调试
         game = result.value
-        if config.debug_mode or config.debug_highnoon:
+        
+        # 检查调试模式
+        config = ServiceLocator.get(ConfigProviderProtocol)
+        debug_mode = False
+        debug_highnoon = False
+        if config is not None:
+            debug_mode = config.get("debug_mode", False)
+            debug_highnoon = config.get("debug_highnoon", False)
+        
+        if debug_mode or debug_highnoon:
             await self.send(
                 f"午时已到\n"
                 f"（调试：子弹位置={game.bullet_pos}）"
@@ -153,7 +151,7 @@ class HighNoonStartPlugin(CommandPlugin):
             await self.send("午时已到")
 
 
-class FirePlugin(CommandPlugin):
+class FireHandler(PluginHandler):
     """午时已到 - 开枪"""
     
     name = "开枪"
@@ -168,23 +166,24 @@ class FirePlugin(CommandPlugin):
         if not NONEBOT_AVAILABLE:
             return
         
-        group_id = event.group_id  # type: ignore
-        user_id = event.user_id  # type: ignore
-        username = event.sender.card or event.sender.nickname or f"用户{user_id}"  # type: ignore
+        group_id = event.group_id
+        user_id = event.user_id
+        username = event.sender.card or event.sender.nickname or f"用户{user_id}"
         
         service = HighNoonService.get_instance()
         
-        # 检查游戏是否进行中
         if not service.has_active_game(group_id):
             return
         
-        # 处理开枪
         result = await service.fire(group_id, user_id, username)
         
         if result is None:
             return
         
-        bot = BotService.get_instance()
+        # 通过协议层获取 Bot 服务
+        bot = ServiceLocator.get(BotServiceProtocol)
+        if bot is None:
+            return
         
         if result["hit"]:
             # 中弹！禁言
@@ -209,9 +208,12 @@ class FirePlugin(CommandPlugin):
             await bot.send_message(event, result["message"])
 
 
-# ========== 实例化 ==========
-high_noon_plugin = HighNoonStartPlugin()
-fire_plugin = FirePlugin()
+# ========== 创建处理器和接收器 ==========
+start_handler = HighNoonStartHandler()
+fire_handler = FireHandler()
+
+start_receiver = CommandReceiver(start_handler)
+fire_receiver = CommandReceiver(fire_handler)
 
 
 # ========== 导出元数据 ==========
@@ -220,8 +222,5 @@ if NONEBOT_AVAILABLE:
         name="午时已到",
         description="俄罗斯轮盘赌禁言游戏",
         usage="/午时已到 开始游戏，/开枪 参与",
-        extra={
-            "author": high_noon_plugin.author,
-            "version": high_noon_plugin.version,
-        }
+        extra={"author": "Lichlet", "version": "2.3.0"}
     )

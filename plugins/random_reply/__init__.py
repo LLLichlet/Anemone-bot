@@ -1,22 +1,32 @@
 """
 随机回复插件
 
-使用新的 MessagePlugin 基类重构
+使用新架构（MessageHandler + MessageReceiver）重构
 """
 import random
 
 try:
     from nonebot.adapters.onebot.v11 import GroupMessageEvent
+    from nonebot.plugin import PluginMetadata
     NONEBOT_AVAILABLE = True
 except ImportError:
     NONEBOT_AVAILABLE = False
     class GroupMessageEvent: pass
+    class PluginMetadata:
+        def __init__(self, **kwargs): pass
 
-from plugins.common import MessagePlugin, config, AIService, ChatService
+from plugins.common import (
+    MessageHandler,
+    MessageReceiver,
+    ServiceLocator,
+    AIServiceProtocol,
+    ChatServiceProtocol,
+    ConfigProviderProtocol,
+)
 
 
-class RandomReplyPlugin(MessagePlugin):
-    """随机回复插件"""
+class RandomReplyHandler(MessageHandler):
+    """随机回复处理器"""
     
     name = "随机回复"
     description = "随机回复群聊消息"
@@ -41,7 +51,17 @@ class RandomReplyPlugin(MessagePlugin):
         
         message = event.get_plaintext().strip()
         
-        min_length = config.random_reply_min_length
+        # 获取配置
+        config = ServiceLocator.get(ConfigProviderProtocol)
+        min_length = 3
+        reply_probability = 0.02
+        reply_probability_at = 0.8
+        
+        if config is not None:
+            min_length = config.get("random_reply_min_length", 3)
+            reply_probability = config.get("random_reply_probability", 0.02)
+            reply_probability_at = config.get("random_reply_probability_at", 0.8)
+        
         if event.to_me:
             min_length = max(1, min_length // 2)
         
@@ -51,22 +71,30 @@ class RandomReplyPlugin(MessagePlugin):
         if message.startswith('/'):
             return False
         
-        chat = ChatService.get_instance()
-        if not chat.check_cooldown(event.group_id):
-            return False
+        # 通过协议层获取聊天服务
+        chat = ServiceLocator.get(ChatServiceProtocol)
+        if chat is not None:
+            if not chat.check_cooldown(event.group_id):
+                return False
         
         if event.to_me:
-            return random.random() < config.random_reply_probability_at
+            return random.random() < reply_probability_at
         else:
-            return random.random() < config.random_reply_probability
+            return random.random() < reply_probability
     
     async def handle_message(self, event: GroupMessageEvent) -> None:
         """处理群聊消息"""
         if not NONEBOT_AVAILABLE:
             return
-            
-        chat = ChatService.get_instance()
         
+        # 获取服务
+        chat = ServiceLocator.get(ChatServiceProtocol)
+        ai = ServiceLocator.get(AIServiceProtocol)
+        config = ServiceLocator.get(ConfigProviderProtocol)
+        
+        if chat is None or ai is None:
+            return
+            
         # 记录消息
         username = event.sender.card or event.sender.nickname or f"用户{event.user_id}"
         chat.record_message(
@@ -90,17 +118,25 @@ class RandomReplyPlugin(MessagePlugin):
         user_input = event.get_plaintext()[:50]
         full_input = f"{context}|{username}说：{user_input}" if context else user_input
         
+        # 获取配置参数
+        temperature = 0.8
+        max_tokens_min = 30
+        max_tokens_max = 100
+        top_p = 0.95
+        
+        if config is not None:
+            temperature = config.get("random_temperature", 0.8)
+            max_tokens_min = config.get("random_max_tokens_min", 30)
+            max_tokens_max = config.get("random_max_tokens_max", 100)
+            top_p = config.get("random_top_p", 0.95)
+        
         # 调用 AI
-        ai = AIService.get_instance()
         result = await ai.chat(
             system_prompt=self.SYSTEM_PROMPT,
             user_input=full_input,
-            temperature=config.random_temperature,
-            max_tokens=random.randint(
-                config.random_max_tokens_min,
-                config.random_max_tokens_max
-            ),
-            top_p=config.random_top_p
+            temperature=temperature,
+            max_tokens=random.randint(max_tokens_min, max_tokens_max),
+            top_p=top_p
         )
         
         # 处理回复
@@ -126,22 +162,19 @@ class RandomReplyPlugin(MessagePlugin):
             msg = build_at_message(event.user_id, reply)
             await self.send(msg)
         except ImportError:
-            # utils 未导入时直接发送文本
             await self.send(reply)
 
 
-# 实例化插件
-plugin = RandomReplyPlugin()
+# 创建处理器和接收器
+handler = RandomReplyHandler()
+receiver = MessageReceiver(handler)
 
-# 导出元数据（在 NoneBot 初始化时设置）
+
+# 导出元数据
 if NONEBOT_AVAILABLE:
-    from nonebot.plugin import PluginMetadata
     __plugin_meta__ = PluginMetadata(
-        name=plugin.name,
-        description=plugin.description,
+        name=handler.name,
+        description=handler.description,
         usage="无命令，自动触发",
-        extra={
-            "author": plugin.author,
-            "version": plugin.version,
-        }
+        extra={"author": "Lichlet", "version": "2.3.0"}
     )

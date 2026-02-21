@@ -1,9 +1,10 @@
 """
 随机谱面插件
 
-使用异步网络请求重构版本
+使用新架构（PluginHandler + CommandReceiver）重构
 """
 import random
+import asyncio
 
 try:
     from nonebot.adapters.onebot.v11 import MessageEvent
@@ -15,8 +16,7 @@ except ImportError:
     class PluginMetadata:
         def __init__(self, **kwargs): pass
 
-from plugins.common import CommandPlugin, config
-
+from plugins.common import PluginHandler, CommandReceiver
 
 try:
     from plugins.utils import download_image_async, image_to_message, merge_images
@@ -25,8 +25,8 @@ except ImportError:
     UTILS_AVAILABLE = False
 
 
-class PJSKPlugin(CommandPlugin):
-    """PJSK 随机谱面插件"""
+class PJSKHandler(PluginHandler):
+    """PJSK 随机谱面处理器"""
     
     name = "pjsk随机谱面"
     description = "pjsk随机谱面猜歌"
@@ -74,8 +74,6 @@ class PJSKPlugin(CommandPlugin):
     
     async def _download_images(self, bg_url: str, bar_url: str, data_url: str):
         """并发下载三张图片"""
-        import asyncio
-        
         tasks = [
             download_image_async(bg_url),
             download_image_async(bar_url),
@@ -84,17 +82,16 @@ class PJSKPlugin(CommandPlugin):
         return await asyncio.gather(*tasks)
 
 
-# 实例化插件
-plugin = PJSKPlugin()
+# 创建处理器和接收器
+handler = PJSKHandler()
+receiver = CommandReceiver(handler)
+
 
 # 导出元数据
 if NONEBOT_AVAILABLE:
     __plugin_meta__ = PluginMetadata(
-        name=plugin.name,
-        description=plugin.description,
-        usage="/pjsk随机谱面",
-        extra={
-            "author": plugin.author,
-            "version": plugin.version,
-        }
+        name=handler.name,
+        description=handler.description,
+        usage=f"/{handler.command}",
+        extra={"author": "Lichlet", "version": "2.3.0"}
     )

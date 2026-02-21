@@ -6,29 +6,33 @@
 
 使用示例:
     >>> from plugins.common.services.game import GameServiceBase, GameState
+    >>> import asyncio
     
-    >>> class MyGameState(GameState):
+    >>> @dataclass
+    ... class MyGameState(GameState):
     ...     score: int = 0
     ...     level: int = 1
-    
+    >>> 
     >>> class MyGameService(GameServiceBase[MyGameState]):
-    ...     def create_game(self, group_id: int, **kwargs) -> MyGameState:
+    ...     async def create_game(self, group_id: int, **kwargs) -> MyGameState:
     ...         return MyGameState(group_id=group_id, score=0, level=1)
-    
+    >>> 
     >>> service = MyGameService.get_instance()
-    >>> result = service.start_game(123456)  # 开始游戏
-    >>> game = service.get_game(123456)      # 获取游戏状态
-    >>> service.end_game(123456)             # 结束游戏
+    >>> result = await service.start_game(123456)
+    >>> game = service.get_game(123456)
+    >>> await service.end_game(123456)
 
 设计特点:
     1. 泛型支持：支持自定义 GameState 类型
-    2. 单例模式：每种类型的服务全局唯一
+    2. 单例模式：每种服务类型全局唯一
     3. 类型安全：完整的类型注解
-    4. 自动清理：结束游戏时自动清理状态
+    4. 并发安全：使用 asyncio.Lock 保护状态
+    5. 自动清理：结束游戏时自动清理状态
 """
 
+import asyncio
 from abc import abstractmethod
-from typing import Dict, Generic, Optional, TypeVar
+from typing import Any, Dict, Generic, Optional, TypeVar
 from dataclasses import dataclass, field
 
 from ..base import Result, ServiceBase
@@ -40,22 +44,15 @@ class GameState:
     游戏状态基类
     
     所有游戏状态的父类，包含通用字段。
-    子类应继承此类并添加游戏特定字段。
     
     Attributes:
         group_id: 群号
         is_active: 游戏是否进行中
         metadata: 额外元数据（可选）
-    
-    Example:
-        >>> @dataclass
-        ... class PokerState(GameState):
-        ...     players: List[int] = field(default_factory=list)
-        ...     deck: List[str] = field(default_factory=list)
     """
     group_id: int
     is_active: bool = True
-    metadata: Dict[str, any] = field(default_factory=dict)
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 T = TypeVar('T', bound=GameState)
@@ -65,25 +62,13 @@ class GameServiceBase(ServiceBase, Generic[T]):
     """
     游戏服务基类
     
-    提供标准化的群聊游戏管理功能。
-    使用泛型支持自定义状态类型。
-    
-    特性:
-        - 单例模式：每种服务类型全局唯一实例
-        - 多群隔离：每群独立游戏状态
-        - 类型安全：泛型确保状态类型正确
+    提供标准化的群聊游戏管理功能，支持多群并发游戏。
+    使用 asyncio.Lock 确保并发安全。
     
     子类必须实现:
         - create_game(): 创建初始游戏状态
     
-    Attributes:
-        _games: 群号到游戏状态的映射
-        _initialized: 是否已初始化
-    
-    Example:
-        >>> class DiceService(GameServiceBase[DiceState]):
-        ...     def create_game(self, group_id: int, **kwargs) -> DiceState:
-        ...         return DiceState(group_id=group_id, dice_count=kwargs.get('dice_count', 2))
+    注意：子类应该使用 async/await 来调用需要锁保护的方法。
     """
     
     _instances: Dict[type, 'GameServiceBase'] = {}
@@ -97,20 +82,16 @@ class GameServiceBase(ServiceBase, Generic[T]):
     
     @classmethod
     def get_instance(cls: type) -> 'GameServiceBase':
-        """
-        获取服务单例
-        
-        Returns:
-            该服务类型的全局唯一实例
-        """
+        """获取服务单例"""
         return cls()
     
     def __init__(self) -> None:
         """初始化服务（只执行一次）"""
         if self._initialized:
             return
-        super().__init__()  # 调用 ServiceBase.__init__()，设置 logger
+        super().__init__()
         self._games: Dict[int, T] = {}
+        self._lock = asyncio.Lock()  # 并发锁
         self._initialized = True
     
     @abstractmethod
@@ -118,21 +99,12 @@ class GameServiceBase(ServiceBase, Generic[T]):
         """
         创建游戏状态（子类必须实现）
         
-        根据游戏类型创建初始状态对象。
-        
         Args:
             group_id: 群号
-            **kwargs: 额外参数（如难度、玩家列表等）
+            **kwargs: 额外参数
             
         Returns:
             初始化的游戏状态对象
-            
-        Example:
-            >>> def create_game(self, group_id: int, **kwargs) -> MyState:
-            ...     return MyState(
-            ...         group_id=group_id,
-            ...         difficulty=kwargs.get('difficulty', 'normal')
-            ...     )
         """
         pass
     
@@ -140,11 +112,14 @@ class GameServiceBase(ServiceBase, Generic[T]):
         """
         检查指定群是否有进行中的游戏
         
+        注意：此方法不加锁，仅用于快速查询。
+        如需精确判断，请使用 get_game()。
+        
         Args:
             group_id: 群号
             
         Returns:
-            True 如果有进行中的游戏，False 如果没有或已结束
+            True 如果有进行中的游戏
         """
         game = self._games.get(group_id)
         return game is not None and game.is_active
@@ -152,6 +127,9 @@ class GameServiceBase(ServiceBase, Generic[T]):
     def get_game(self, group_id: int) -> Optional[T]:
         """
         获取指定群的游戏状态
+        
+        注意：此方法不加锁，返回当前状态的快照。
+        如需修改状态，请使用 start_game() / end_game()。
         
         Args:
             group_id: 群号
@@ -161,12 +139,11 @@ class GameServiceBase(ServiceBase, Generic[T]):
         """
         return self._games.get(group_id)
     
-    def start_game(self, group_id: int, **kwargs) -> Result[T]:
+    async def start_game(self, group_id: int, **kwargs) -> Result[T]:
         """
-        开始新游戏
+        开始新游戏（线程安全）
         
         如果该群已有进行中的游戏，会结束旧游戏并开始新游戏。
-        如需阻止重复开始，请先调用 has_active_game() 检查。
         
         Args:
             group_id: 群号
@@ -174,42 +151,43 @@ class GameServiceBase(ServiceBase, Generic[T]):
             
         Returns:
             Result[T]: 成功返回游戏状态，失败返回错误
-            
-        Example:
-            >>> # 先检查
-            >>> if service.has_active_game(group_id):
-            ...     await reply("已有进行中的游戏")
-            ...     return
-            >>> 
-            >>> # 开始新游戏
-            >>> result = service.start_game(group_id, difficulty='hard')
-            >>> if result.is_success:
-            ...     game = result.value
         """
-        try:
-            # 如果已有游戏，先结束它
-            if group_id in self._games:
-                self.end_game(group_id)
-            
-            # 创建新游戏状态
-            game = self.create_game(group_id, **kwargs)
-            self._games[group_id] = game
-            
-            return Result.success(game)
-        except Exception as e:
-            return Result.fail(f"开始游戏失败: {e}")
+        async with self._lock:
+            try:
+                # 如果已有游戏，先结束它
+                if group_id in self._games:
+                    await self._end_game_locked(group_id)
+                
+                # 创建新游戏状态
+                game = self.create_game(group_id, **kwargs)
+                self._games[group_id] = game
+                
+                return Result.success(game)
+            except Exception as e:
+                return Result.fail(f"开始游戏失败: {e}")
     
-    def end_game(self, group_id: int) -> bool:
+    async def end_game(self, group_id: int) -> bool:
         """
-        结束游戏
-        
-        将游戏标记为结束并从状态中移除。
+        结束游戏（线程安全）
         
         Args:
             group_id: 群号
             
         Returns:
             True 如果成功结束游戏，False 如果没有进行中的游戏
+        """
+        async with self._lock:
+            return await self._end_game_locked(group_id)
+    
+    async def _end_game_locked(self, group_id: int) -> bool:
+        """
+        结束游戏（内部方法，需在持有锁时调用）
+        
+        Args:
+            group_id: 群号
+            
+        Returns:
+            True 如果成功结束游戏
         """
         game = self._games.get(group_id)
         if game is None:

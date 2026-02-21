@@ -17,7 +17,7 @@
 ## 功能特性
 
 - **数学定义查询**: 基于 DeepSeek API 的数学概念解释（香蕉空间风格）
-- **数学谜题**: 20 Questions 游戏模式，支持 325+ 数学概念
+- **数学谜题**: 是/否回答游戏模式，支持 325+ 数学概念
 - **随机回复**: 基于上下文的 AI 群聊回复，可配置触发概率
 - **午时已到**: 俄罗斯轮盘赌禁言小游戏
 - **PJSK 谱面**: 随机 Project Sekai 游戏谱面获取
@@ -36,10 +36,12 @@ query-bot/
 ├── prompts/                # LLM 系统提示词
 └── plugins/                # 插件目录
     ├── common/             # 核心基础设施
-    │   ├── base.py         # ServiceBase, Result[T]
-    │   ├── config.py       # Pydantic Settings 配置
-    │   ├── plugin_base.py  # 插件基类框架
-    │   └── services/       # 业务服务层
+    │   ├── base.py         # 基础层: ServiceBase, Result[T]
+    │   ├── config.py       # 配置层: Pydantic Settings
+    │   ├── protocols.py    # 协议层: 接口定义、ServiceLocator
+    │   ├── handler.py      # 处理器层: PluginHandler, MessageHandler
+    │   ├── receiver.py     # 接收层: CommandReceiver, MessageReceiver
+    │   └── services/       # 服务层: 协议实现
     ├── math_definition/    # 数学定义查询
     ├── math_soup/          # 数学谜题游戏
     ├── random_reply/       # 随机回复监听
@@ -51,12 +53,23 @@ query-bot/
 
 ### 架构设计
 
-采用分层架构模式：
+采用 7 层严格分层架构：
+
+```
+插件层 → 处理器层 → 接收层 → 协议层 → 服务层 → 基础层 → 配置层
+```
 
 - **配置层**: Pydantic Settings 管理，支持环境变量和 `.env` 文件
-- **服务层**: ServiceBase 单例基类，提供 AIService、BanService、ChatService 等
-- **接口层**: CommandPlugin / MessagePlugin 基类，封装权限检查、功能开关、错误处理
-- **工具层**: 消息构建、网络请求、图片处理等纯函数工具
+- **基础层**: `ServiceBase` 单例基类，`Result[T]` 统一错误处理
+- **协议层**: Protocol 接口定义，`ServiceLocator` 服务定位器实现解耦
+- **服务层**: AIService、BanService、ChatService 等协议实现
+- **处理器层**: `PluginHandler` / `MessageHandler` 业务逻辑接口
+- **接收层**: `CommandReceiver` / `MessageReceiver` 命令注册与前置检查
+- **插件层**: 具体功能实现（数学定义、游戏等）
+
+**独立工具层**: 消息构建、网络请求、图片处理等纯函数工具（无状态，被各层调用）
+
+依赖规则：上层仅依赖协议层，不依赖具体实现；服务层通过 `ServiceLocator` 注册，插件层通过 `ServiceLocator.get(Protocol)` 获取。
 
 ## 快速开始
 
@@ -313,6 +326,7 @@ status = service.get_status()
 
 详见 [CHANGELOG.md](CHANGELOG.md)
 
+- **v2.2.2**: 7层架构重构, ServiceLocator, Protocol接口, 处理器/接收器分离
 - **v2.2.1**: PluginRegistry, TokenService, SystemMonitorService, nb-cli 支持
 - **v2.2.0**: 数学谜题插件, GameServiceBase, 325+ 数学概念
 - **v2.1.1**: 并发安全修复, BotService API 封装
@@ -336,7 +350,7 @@ A QQ group chat bot based on the NoneBot2 framework, providing mathematical know
 ## Features
 
 - **Math Definition Query**: Mathematical concept explanations powered by DeepSeek API (Banana Space style)
-- **Math Puzzle**: 20 Questions game mode with 325+ mathematical concepts
+- **Math Puzzle**: Yes/No answer-asking mode with 325+ mathematical concepts
 - **Random Reply**: Context-aware AI group chat replies with configurable trigger probability
 - **High Noon**: Russian roulette mute game
 - **PJSK Charts**: Random Project Sekai game chart images
@@ -355,10 +369,12 @@ query-bot/
 ├── prompts/                # LLM system prompts
 └── plugins/                # Plugin directory
     ├── common/             # Core infrastructure
-    │   ├── base.py         # ServiceBase, Result[T]
-    │   ├── config.py       # Pydantic Settings
-    │   ├── plugin_base.py  # Plugin base classes
-    │   └── services/       # Business services
+    │   ├── base.py         # Base: ServiceBase, Result[T]
+    │   ├── config.py       # Config: Pydantic Settings
+    │   ├── protocols.py    # Protocol: interfaces & ServiceLocator
+    │   ├── handler.py      # Handler: PluginHandler, MessageHandler
+    │   ├── receiver.py     # Receiver: CommandReceiver, MessageReceiver
+    │   └── services/       # Services: protocol implementations
     ├── math_definition/    # Math query plugin
     ├── math_soup/          # Math puzzle game
     ├── random_reply/       # Random reply listener

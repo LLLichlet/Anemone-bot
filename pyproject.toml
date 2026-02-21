@@ -10,7 +10,7 @@ fastapi_reload = true
 
 [project]
 name = "query-bot"
-version = "2.2.1"
+version = "2.2.2"
 description = "多功能查询聊天机器人"
 readme = "README.md"
 requires-python = ">=3.9"

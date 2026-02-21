@@ -31,6 +31,7 @@ from .image import (
     compress_image,
     ImageProcessor,
 )
+from .prompt import read_prompt, read_prompt_with_fallback
 
 __all__ = [
     # 消息构建
@@ -59,4 +60,8 @@ __all__ = [
     "create_placeholder_image",
     "compress_image",
     "ImageProcessor",
+    
+    # 提示词读取
+    "read_prompt",
+    "read_prompt_with_fallback",
 ]
