@@ -39,4 +39,3 @@ class MathPuzzleState(GameState):
     concept: Optional[MathConcept] = None
     question_count: int = 0
     guess_count: int = 0
-    history: List[tuple] = field(default_factory=list)

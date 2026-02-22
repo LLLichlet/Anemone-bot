@@ -6,6 +6,18 @@
 
 ---
 
+### Version 2.2.3 (2026-02-23)
+
+**Bug 修复**
+- 修复数学谜题猜对后无法自动结束游戏的问题：`make_guess` 中缺少 `await self.end_game()`
+- 修复私聊消息触发群聊处理器的问题：`MessageReceiver` 添加 `isinstance(event, GroupMessageEvent)` 检查
+
+**优化**
+- 简化数学谜题 AI 提示词：移除历史问答记录，减少 token 消耗
+- 移除 `MathPuzzleState` 中的 `history` 字段及相关代码
+
+---
+
 ### Version 2.2.2 (2026-02-21)
 
 **重构完成**
@@ -169,7 +181,7 @@
 
 ---
 
-**最新版本**: 2.2.2  
+**最新版本**: 2.2.3  
 查看完整项目信息：[README.md](README.md)
 
 

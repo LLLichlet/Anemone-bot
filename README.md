@@ -1,6 +1,6 @@
 # query-bot
 
-[![Version](https://img.shields.io/badge/version-2.2.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.2.3-blue.svg)](CHANGELOG.md)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 [![NoneBot2](https://img.shields.io/badge/NoneBot-2.4+-green.svg)](https://nonebot.dev/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
@@ -326,6 +326,7 @@ status = service.get_status()
 
 详见 [CHANGELOG.md](CHANGELOG.md)
 
+- **v2.2.3**: 修复数学谜题bug，优化AI提示词
 - **v2.2.2**: 7层架构重构, ServiceLocator, Protocol接口, 处理器/接收器分离
 - **v2.2.1**: PluginRegistry, TokenService, SystemMonitorService, nb-cli 支持
 - **v2.2.0**: 数学谜题插件, GameServiceBase, 325+ 数学概念

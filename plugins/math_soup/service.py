@@ -50,8 +50,7 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
             group_id=group_id,
             concept=concept,
             question_count=0,
-            guess_count=0,
-            history=[]
+            guess_count=0
         )
     
     async def ask_question(self, group_id: int, question_text: str) -> Result[str]:
@@ -63,16 +62,6 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         if game.concept is None:
             return Result.fail("游戏状态异常")
         
-        # 构建历史记录文本
-        history_text = ""
-        if game.history:
-            history_lines = []
-            for q, a in game.history[-5:]:
-                history_lines.append(f"- Q: {q} -> A: {a}")
-            history_text = "\n".join(history_lines)
-        else:
-            history_text = "（无）"
-        
         # 读取并填充提示词模板
         system_prompt = read_prompt("math_soup_judge")
         if not system_prompt:
@@ -83,7 +72,6 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
             answer=game.concept.answer,
             category=game.concept.category,
             aliases=aliases_text,
-            history=history_text,
             question=question_text
         )
         
@@ -119,7 +107,6 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         # 更新游戏状态
         if final_answer != "不确定(不消耗次数)":
             game.question_count += 1
-        game.history.append((question_text, final_answer))
         
         return Result.success(final_answer)
     
@@ -131,9 +118,6 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
 - 答案：{answer}
 - 别名：{aliases}
 - 分类：{category}
-
-## 历史问答
-{history}
 
 ## 当前问题
 {question}
@@ -202,7 +186,7 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         
         if is_correct:
             self._log(f"群{group_id}: 猜对了！答案是 {game.concept.answer}")
-            self.end_game(group_id)
+            await self.end_game(group_id)
             return Result.success({
                 "correct": True,
                 "answer": game.concept.answer,
@@ -228,6 +212,5 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         return {
             "question_count": game.question_count,
             "guess_count": game.guess_count,
-            "concept_answer": game.concept.answer if game.concept else None,
-            "history": game.history
+            "concept_answer": game.concept.answer if game.concept else None
         }

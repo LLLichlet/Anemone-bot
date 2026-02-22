@@ -16,7 +16,7 @@ from typing import Optional, Callable
 
 try:
     from nonebot import on_command, on_message
-    from nonebot.adapters.onebot.v11 import MessageEvent
+    from nonebot.adapters.onebot.v11 import MessageEvent, GroupMessageEvent
     from nonebot.matcher import Matcher
     from nonebot.params import CommandArg
     from nonebot.exception import FinishedException
@@ -25,6 +25,7 @@ except ImportError:
     NONEBOT_AVAILABLE = False
     class Matcher: pass
     class MessageEvent: pass
+    class GroupMessageEvent: pass
     class FinishedException(Exception): pass
     def on_command(*args, **kwargs):
         class FakeMatcher:
@@ -262,6 +263,10 @@ class MessageReceiver:
         
         async def handler(matcher: Matcher, event: MessageEvent):
             """实际的消息处理器"""
+            # 只处理群聊消息（MessageHandler 设计用于群聊场景）
+            if not isinstance(event, GroupMessageEvent):
+                return
+            
             token = _current_event_var.set(event)
             
             try:
