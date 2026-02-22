@@ -101,6 +101,8 @@ temp/
 
 # Test
 tests/
+pytest.ini
+run_tests.py
 
 # ============================================
 # Keep these (use ! to negate)
