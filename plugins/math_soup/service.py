@@ -4,11 +4,16 @@
 实现游戏逻辑和 AI 交互。
 """
 
-import difflib
 from typing import Optional
 
-from plugins.common import GameServiceBase, ServiceLocator, AIServiceProtocol, ConfigProviderProtocol, read_prompt
+from plugins.common import (
+    GameServiceBase,
+    ServiceLocator,
+    AIServiceProtocol,
+    read_prompt,
+)
 from plugins.common.base import Result
+from plugins.utils import calculate_similarity, normalize_text
 
 from .models import MathConcept, MathPuzzleState
 from .repository import ConceptRepository
@@ -25,26 +30,11 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         """获取 AI 服务"""
         return ServiceLocator.get(AIServiceProtocol)
     
-    def _get_config(self) -> Optional[ConfigProviderProtocol]:
-        """获取配置提供者"""
-        return ServiceLocator.get(ConfigProviderProtocol)
-    
-    def _log(self, message: str) -> None:
-        """调试日志输出"""
-        config = self._get_config()
-        if config is not None:
-            debug_mode = config.get("debug_mode", False)
-            debug_math_soup = config.get("debug_math_soup", False)
-            if debug_mode or debug_math_soup:
-                self.logger.info(f"[MathPuzzle] {message}")
-    
     def create_game(self, group_id: int, **kwargs) -> MathPuzzleState:
         """创建新游戏状态"""
         concept = self._repository.get_random_concept()
         if concept is None:
             raise RuntimeError("题库为空，无法开始游戏")
-        
-        self._log(f"创建新游戏 - 群{group_id}: 答案={concept.answer}")
         
         return MathPuzzleState(
             group_id=group_id,
@@ -89,7 +79,6 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         )
         
         if ai_result.is_failure:
-            self._log(f"AI 判定失败: {ai_result.error}")
             return Result.fail("AI 服务暂时不可用，请稍后再试")
         
         # 解析 AI 回答
@@ -102,10 +91,8 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         else:
             final_answer = "不确定"
         
-        self._log(f"提问: {question_text} -> 回答: {final_answer}")
-        
-        # 更新游戏状态
-        if final_answer != "不确定(不消耗次数)":
+        # 更新游戏状态（"不确定"不消耗次数）
+        if final_answer != "不确定":
             game.question_count += 1
         
         return Result.success(final_answer)
@@ -129,31 +116,6 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
 
 只回答"是"、"否"或"不确定"，不要解释。"""
     
-    def _similarity(self, s1: str, s2: str) -> float:
-        """计算两个字符串的相似度（0-100%）"""
-        s1_clean = s1.lower().replace(" ", "").replace("·", "").replace("•", "").replace("-", "").replace("ˈ", "")
-        s2_clean = s2.lower().replace(" ", "").replace("·", "").replace("•", "").replace("-", "").replace("ˈ", "")
-        
-        if not s1_clean or not s2_clean:
-            return 0.0
-        
-        if s1_clean == s2_clean:
-            return 100.0
-        
-        if s1_clean in s2_clean or s2_clean in s1_clean:
-            shorter = min(len(s1_clean), len(s2_clean))
-            longer = max(len(s1_clean), len(s2_clean))
-            return 70.0 + 25.0 * (shorter / longer)
-        
-        matcher = difflib.SequenceMatcher(None, s1_clean, s2_clean)
-        ratio = matcher.ratio()
-        
-        if len(s1_clean) <= 4 or len(s2_clean) <= 4:
-            if ratio < 0.8:
-                return ratio * 80
-        
-        return ratio * 100
-    
     async def make_guess(self, group_id: int, guess_text: str) -> Result[dict]:
         """处理玩家猜测答案"""
         game = self.get_game(group_id)
@@ -165,27 +127,27 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
         
         game.guess_count += 1
         
-        guess_normalized = guess_text.lower().replace(" ", "").replace("·", "").replace("•", "")
-        answer_normalized = game.concept.answer.lower().replace(" ", "")
+        # 标准化猜测文本和答案
+        guess_normalized = normalize_text(guess_text)
+        answer_normalized = normalize_text(game.concept.answer)
         is_correct = (guess_normalized == answer_normalized)
         
+        # 检查别名匹配
         if not is_correct:
             for alias in game.concept.aliases:
-                alias_normalized = alias.lower().replace(" ", "").replace("·", "").replace("•", "")
+                alias_normalized = normalize_text(alias)
                 if guess_normalized == alias_normalized:
                     is_correct = True
                     break
         
-        max_similarity = 0.0
-        sim = self._similarity(guess_text, game.concept.answer)
-        max_similarity = max(max_similarity, sim)
+        # 计算最大相似度（用于提示）
+        max_similarity = calculate_similarity(guess_text, game.concept.answer)
         
         for alias in game.concept.aliases:
-            sim = self._similarity(guess_text, alias)
+            sim = calculate_similarity(guess_text, alias)
             max_similarity = max(max_similarity, sim)
         
         if is_correct:
-            self._log(f"群{group_id}: 猜对了！答案是 {game.concept.answer}")
             await self.end_game(group_id)
             return Result.success({
                 "correct": True,
@@ -195,7 +157,6 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
                 "similarity": max_similarity
             })
         else:
-            self._log(f"群{group_id}: 猜错了，猜测='{guess_text}'，相似度={max_similarity:.1f}%")
             return Result.success({
                 "correct": False,
                 "answer": None,
@@ -204,7 +165,7 @@ class MathPuzzleService(GameServiceBase[MathPuzzleState]):
             })
     
     def get_game_info(self, group_id: int) -> Optional[dict]:
-        """获取游戏信息（用于调试）"""
+        """获取游戏信息"""
         game = self.get_game(group_id)
         if game is None:
             return None

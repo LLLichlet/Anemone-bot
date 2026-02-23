@@ -21,7 +21,7 @@ from plugins.common import (
     ServiceLocator,
     AIServiceProtocol,
     ChatServiceProtocol,
-    ConfigProviderProtocol,
+    config,
 )
 
 
@@ -52,15 +52,9 @@ class RandomReplyHandler(MessageHandler):
         message = event.get_plaintext().strip()
         
         # 获取配置
-        config = ServiceLocator.get(ConfigProviderProtocol)
-        min_length = 3
-        reply_probability = 0.02
-        reply_probability_at = 0.8
-        
-        if config is not None:
-            min_length = config.get("random_reply_min_length", 3)
-            reply_probability = config.get("random_reply_probability", 0.02)
-            reply_probability_at = config.get("random_reply_probability_at", 0.8)
+        min_length = config.random_reply_min_length
+        reply_probability = config.random_reply_probability
+        reply_probability_at = config.random_reply_probability_at
         
         if event.to_me:
             min_length = max(1, min_length // 2)
@@ -90,7 +84,6 @@ class RandomReplyHandler(MessageHandler):
         # 获取服务
         chat = ServiceLocator.get(ChatServiceProtocol)
         ai = ServiceLocator.get(AIServiceProtocol)
-        config = ServiceLocator.get(ConfigProviderProtocol)
         
         if chat is None or ai is None:
             return
@@ -119,16 +112,10 @@ class RandomReplyHandler(MessageHandler):
         full_input = f"{context}|{username}说：{user_input}" if context else user_input
         
         # 获取配置参数
-        temperature = 0.8
-        max_tokens_min = 30
-        max_tokens_max = 100
-        top_p = 0.95
-        
-        if config is not None:
-            temperature = config.get("random_temperature", 0.8)
-            max_tokens_min = config.get("random_max_tokens_min", 30)
-            max_tokens_max = config.get("random_max_tokens_max", 100)
-            top_p = config.get("random_top_p", 0.95)
+        temperature = config.random_temperature
+        max_tokens_min = config.random_max_tokens_min
+        max_tokens_max = config.random_max_tokens_max
+        top_p = config.random_top_p
         
         # 调用 AI
         result = await ai.chat(

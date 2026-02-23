@@ -6,6 +6,18 @@
 
 ---
 
+### Version 2.2.4 (2026-02-23)
+
+**代码精简与优化**
+
+- `Result[T]` 改用 dataclass 实现，代码量减少 50%
+- 简化 `PluginHandler` API：`send()` / `reply()` 统一，支持 `finish` 参数
+- 移除 `ConfigProvider` 服务层，直接使用 `config` 对象
+- 集中导入保护到 `compat.py`，消除重复代码
+- 清理未使用的函数和过度封装（-19% 代码量）
+
+---
+
 ### Version 2.2.3 (2026-02-23)
 
 **Bug 修复**

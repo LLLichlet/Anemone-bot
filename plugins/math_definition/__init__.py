@@ -37,7 +37,7 @@ from plugins.common import (
     CommandReceiver,
     ServiceLocator,
     AIServiceProtocol,
-    ConfigProviderProtocol,
+    config,
     read_prompt,
 )
 
@@ -85,18 +85,10 @@ class MathDefinitionHandler(PluginHandler):
             await self.reply("AI 服务未配置，无法查询")
             return
         
-        # 通过协议层获取配置
-        config = ServiceLocator.get(ConfigProviderProtocol)
-        
-        # 获取 AI 参数（带默认值）
-        temperature = 0.3
-        max_tokens = 512
-        top_p = 0.8
-        
-        if config is not None:
-            temperature = config.get("math_temperature", 0.3)
-            max_tokens = config.get("math_max_tokens", 512)
-            top_p = config.get("math_top_p", 0.8)
+        # 获取 AI 参数
+        temperature = config.math_temperature
+        max_tokens = config.math_max_tokens
+        top_p = config.math_top_p
         
         # 调用 AI
         result = await ai.chat(

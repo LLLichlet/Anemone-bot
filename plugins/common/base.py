@@ -24,6 +24,7 @@
 """
 
 from abc import ABC
+from dataclasses import dataclass, field
 from typing import TypeVar, Generic, Optional, Type, Callable
 import logging
 
@@ -142,114 +143,59 @@ class ServiceBase(ABC):
         self._initialized = False
 
 
+@dataclass(frozen=True, slots=True)
 class Result(Generic[T]):
     """
     操作结果封装 - 替代异常的错误处理方式
     
     封装操作成功/失败状态和返回值，使错误处理显式化。
-    相比抛出异常，Result 类型强制调用者处理错误。
-    
-    Attributes:
-        is_success: 操作是否成功
-        value: 成功时的返回值（失败时为 None）
-        error: 失败时的错误信息（成功时为 None）
     
     Example:
-        >>> def divide(a: int, b: int) -> Result[float]:
-        ...     if b == 0:
-        ...         return Result.fail("除数不能为0")
-        ...     return Result.success(a / b)
-        ...
-        >>> result = divide(10, 2)
-        >>> if result.is_success:
-        ...     print(f"结果: {result.value}")  # 5.0
-        >>> else:
-        ...     print(f"错误: {result.error}")
-        
-        >>> # 或者使用 unwrap_or 提供默认值
-        >>> value = divide(10, 0).unwrap_or(float('inf'))
+        >>> return Result.ok(value)
+        >>> return Result.err("error message")
+        >>> if result:  # 布尔判断
+        ...     print(result.value)
     """
+    value: Optional[T] = None
+    error: Optional[str] = None
     
-    def __init__(
-        self,
-        is_success: bool,
-        value: Optional[T] = None,
-        error: Optional[str] = None
-    ):
-        self.is_success = is_success
-        self.is_failure = not is_success  # 便捷的失败判断属性
-        self.value = value
-        self.error = error
+    @property
+    def is_success(self) -> bool:
+        """操作是否成功"""
+        return self.error is None
     
-    @classmethod
-    def success(cls, value: T) -> 'Result[T]':
-        """
-        创建成功的结果
-        
-        Args:
-            value: 成功的返回值
-            
-        Returns:
-            包含值的 Result 对象
-        """
-        return cls(True, value=value, error=None)
-    
-    @classmethod
-    def fail(cls, error: str) -> 'Result[T]':
-        """
-        创建失败的结果
-        
-        Args:
-            error: 错误描述信息
-            
-        Returns:
-            包含错误信息的 Result 对象
-        """
-        return cls(False, value=None, error=error)
-    
-    def unwrap(self) -> T:
-        """
-        解包结果值
-        
-        Returns:
-            成功时的值
-            
-        Raises:
-            RuntimeError: 如果操作失败
-            
-        警告：只有确定操作成功时才使用，否则使用 unwrap_or
-        """
-        if not self.is_success:
-            raise RuntimeError(f"Cannot unwrap failed result: {self.error}")
-        return self.value # type: ignore
-    
-    def unwrap_or(self, default: T) -> T:
-        """
-        解包结果值，失败时返回默认值
-        
-        这是最安全的解包方式，永远不会抛出异常。
-        
-        Args:
-            default: 失败时的默认值
-            
-        Returns:
-            成功时的值或默认值
-            
-        Example:
-            >>> result = divide(10, 0)
-            >>> value = result.unwrap_or(0.0)  # 失败返回 0.0
-        """
-        return self.value if self.is_success else default # type: ignore
-    
-    def __repr__(self) -> str:
-        """字符串表示，便于调试"""
-        if self.is_success:
-            return f"Result.success({self.value!r})"
-        return f"Result.fail({self.error!r})"
+    @property
+    def is_failure(self) -> bool:
+        """操作是否失败"""
+        return self.error is not None
     
     def __bool__(self) -> bool:
-        """布尔值，便于条件判断"""
+        """布尔值判断"""
         return self.is_success
+    
+    def unwrap(self) -> T:
+        """解包值，失败时抛出 RuntimeError"""
+        if self.is_failure:
+            raise RuntimeError(f"Cannot unwrap failed result: {self.error}")
+        return self.value  # type: ignore
+    
+    def unwrap_or(self, default: T) -> T:
+        """解包值，失败返回默认值"""
+        return self.value if self.is_success else default  # type: ignore
+    
+    @classmethod
+    def ok(cls, value: T) -> 'Result[T]':
+        """创建成功结果"""
+        return cls(value=value)
+    
+    @classmethod
+    def err(cls, error: str) -> 'Result[T]':
+        """创建失败结果"""
+        return cls(error=error)
+    
+    # 保留旧接口向后兼容
+    success = ok
+    fail = err
 
 
 def safe_call(func: Callable, *args, error_msg: str = "Operation failed", **kwargs) -> Result[T]: # type: ignore

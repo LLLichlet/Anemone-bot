@@ -95,18 +95,6 @@ class AIService(ServiceBase, AIServiceProtocol):
             self.logger.error(f"AI API调用失败: {e}")
             return Result.fail(f"AI服务暂时不可用: {e}")
     
-    # ========== 额外方法（不在协议中）==========
-    
-    async def chat_simple(
-        self,
-        system_prompt: str,
-        user_input: str,
-        **kwargs: Any
-    ) -> str:
-        """简化版聊天接口，直接返回字符串"""
-        result = await self.chat(system_prompt, user_input, **kwargs)
-        return result.unwrap_or("AI服务暂时不可用")
-
 
 def get_ai_service() -> AIService:
     """获取 AI 服务单例实例（向后兼容）"""

@@ -23,7 +23,7 @@ from plugins.common import (
     GameServiceBase,
     GameState,
     BotServiceProtocol,
-    ConfigProviderProtocol,
+    config,
 )
 
 
@@ -50,19 +50,9 @@ class HighNoonService(GameServiceBase[HighNoonState]):
         "现在可没有后悔的余地了。( 5 / 6 )"
     ]
     
-    def _log(self, message: str) -> None:
-        """调试日志输出"""
-        config = ServiceLocator.get(ConfigProviderProtocol)
-        if config is not None:
-            debug_mode = config.get("debug_mode", False)
-            debug_highnoon = config.get("debug_highnoon", False)
-            if debug_mode or debug_highnoon:
-                self.logger.info(f"[HighNoon] {message}")
-    
     def create_game(self, group_id: int, **kwargs) -> HighNoonState:
         """创建新游戏状态"""
         bullet_pos = random.randint(1, 6)
-        self._log(f"创建新游戏 - 群{group_id}: 子弹位置={bullet_pos}")
         
         return HighNoonState(
             group_id=group_id,
@@ -84,13 +74,7 @@ class HighNoonService(GameServiceBase[HighNoonState]):
         
         game.shot_count += 1
         
-        self._log(
-            f"群{group_id} 开枪: shot_count={game.shot_count}, "
-            f"bullet_pos={game.bullet_pos}, user={username}"
-        )
-        
         if game.shot_count == game.bullet_pos:
-            self._log(f"群{group_id}: 中弹！")
             # 异步结束游戏
             await self.end_game(group_id)
             return {
@@ -99,7 +83,6 @@ class HighNoonService(GameServiceBase[HighNoonState]):
                 "game_over": True
             }
         else:
-            self._log(f"群{group_id}: 安全")
             return {
                 "hit": False,
                 "message": self.STATEMENTS[game.shot_count - 1],
@@ -135,14 +118,7 @@ class HighNoonStartHandler(PluginHandler):
         game = result.value
         
         # 检查调试模式
-        config = ServiceLocator.get(ConfigProviderProtocol)
-        debug_mode = False
-        debug_highnoon = False
-        if config is not None:
-            debug_mode = config.get("debug_mode", False)
-            debug_highnoon = config.get("debug_highnoon", False)
-        
-        if debug_mode or debug_highnoon:
+        if config.debug_mode or config.debug_highnoon:
             await self.send(
                 f"午时已到\n"
                 f"（调试：子弹位置={game.bullet_pos}）"

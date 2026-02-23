@@ -18,8 +18,7 @@ except ImportError:
 from plugins.common import (
     PluginHandler,
     CommandReceiver,
-    ServiceLocator,
-    ConfigProviderProtocol,
+    config,
 )
 
 from .service import MathPuzzleService
@@ -54,13 +53,9 @@ class MathPuzzleStartHandler(PluginHandler):
         game = result.value
         msg = f"数学谜题开始"
         
-        # 通过协议层检查调试模式
-        config = ServiceLocator.get(ConfigProviderProtocol)
-        if config is not None:
-            debug_mode = config.get("debug_mode", False)
-            debug_math_soup = config.get("debug_math_soup", False)
-            if debug_mode or debug_math_soup:
-                msg += f" [调试: {game.concept.answer}]"
+        # 检查调试模式
+        if config.debug_mode or config.debug_math_soup:
+            msg += f" [调试: {game.concept.answer}]"
         
         await self.reply(msg)
 

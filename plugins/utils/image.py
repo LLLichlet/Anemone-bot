@@ -11,31 +11,12 @@ from PIL import Image
 from nonebot.adapters.onebot.v11 import MessageSegment
 import logging
 
-from .network import fetch_binary_async
+from .network import fetch_binary
 
 logger = logging.getLogger("plugins.utils.image")
 
 
-def download_image_sync(url: str, timeout: int = 10) -> Optional[Image.Image]:
-    """
-    同步下载图片（使用 requests）
-    
-    注意：在异步代码中会阻塞事件循环。
-    异步代码请使用 download_image_async。
-    """
-    try:
-        import requests
-        from .network import DEFAULT_HEADERS
-        
-        response = requests.get(url, headers=DEFAULT_HEADERS, timeout=timeout)
-        response.raise_for_status()
-        return Image.open(io.BytesIO(response.content))
-    except Exception as e:
-        logger.error(f"Download failed [{url}]: {e}")
-        return None
-
-
-async def download_image_async(url: str, timeout: float = 10.0) -> Optional[Image.Image]:
+async def download_image(url: str, timeout: float = 10.0) -> Optional[Image.Image]:
     """
     异步下载图片（推荐）
     
@@ -47,22 +28,18 @@ async def download_image_async(url: str, timeout: float = 10.0) -> Optional[Imag
         PIL Image 对象，失败返回 None
     
     Example:
-        >>> img = await download_image_async("https://example.com/photo.png")
+        >>> img = await download_image("https://example.com/photo.png")
         >>> if img:
         ...     print(f"Size: {img.size}")
     """
     try:
-        data = await fetch_binary_async(url, timeout=timeout)
+        data = await fetch_binary(url, timeout=timeout)
         if data is None:
             return None
         return Image.open(io.BytesIO(data))
     except Exception as e:
         logger.error(f"Download failed [{url}]: {e}")
         return None
-
-
-# 向后兼容的别名
-download_image = download_image_async
 
 
 def image_to_message(image: Image.Image, format: str = 'PNG') -> MessageSegment:

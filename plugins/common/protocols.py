@@ -134,23 +134,6 @@ class SystemMonitorProtocol(ABC):
         pass
 
 
-class ConfigProviderProtocol(ABC):
-    """
-    配置提供者协议
-    
-    服务层实现此协议，其他层通过此协议访问配置。
-    禁止直接导入 config 模块。
-    """
-    
-    @abstractmethod
-    def get(self, key: str, default: Any = None) -> Any:
-        """获取配置项"""
-        pass
-    
-    @abstractmethod
-    def is_feature_enabled(self, feature_name: str) -> bool:
-        """检查功能是否开启"""
-        pass
 
 
 # ========== 服务定位器 ==========
@@ -207,38 +190,3 @@ class ServiceLocator:
         return protocol in cls._services
 
 
-# ========== 便捷函数 ==========
-
-def get_ai_service() -> Optional[AIServiceProtocol]:
-    """获取 AI 服务"""
-    return ServiceLocator.get(AIServiceProtocol)
-
-
-def get_ban_service() -> Optional[BanServiceProtocol]:
-    """获取黑名单服务"""
-    return ServiceLocator.get(BanServiceProtocol)
-
-
-def get_chat_service() -> Optional[ChatServiceProtocol]:
-    """获取聊天服务"""
-    return ServiceLocator.get(ChatServiceProtocol)
-
-
-def get_bot_service() -> Optional[BotServiceProtocol]:
-    """获取 Bot 服务"""
-    return ServiceLocator.get(BotServiceProtocol)
-
-
-def get_token_service() -> Optional[TokenServiceProtocol]:
-    """获取令牌服务"""
-    return ServiceLocator.get(TokenServiceProtocol)
-
-
-def get_system_monitor() -> Optional[SystemMonitorProtocol]:
-    """获取系统监控服务"""
-    return ServiceLocator.get(SystemMonitorProtocol)
-
-
-def get_config_provider() -> Optional[ConfigProviderProtocol]:
-    """获取配置提供者"""
-    return ServiceLocator.get(ConfigProviderProtocol)

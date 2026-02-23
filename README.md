@@ -1,6 +1,6 @@
 # query-bot
 
-[![Version](https://img.shields.io/badge/version-2.2.3-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.2.4-blue.svg)](CHANGELOG.md)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 [![NoneBot2](https://img.shields.io/badge/NoneBot-2.4+-green.svg)](https://nonebot.dev/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)

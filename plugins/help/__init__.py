@@ -15,8 +15,7 @@ except ImportError:
 from plugins.common import (
     PluginHandler,
     CommandReceiver,
-    ServiceLocator,
-    ConfigProviderProtocol,
+    config,
     PluginRegistry,
 )
 
@@ -37,22 +36,17 @@ class HelpHandler(PluginHandler):
         plugins = registry.get_command_plugins(include_hidden=False)
         
         if not plugins:
-            await self.finish("当前没有可用的功能")
+            await self.send("当前没有可用的功能", finish=True)
             return
-        
-        # 获取配置提供者
-        config = ServiceLocator.get(ConfigProviderProtocol)
         
         enabled_plugins = []
         for plugin in plugins:
             if plugin.command == "帮助":
                 continue
             
-            # 通过协议层检查功能开关
-            if plugin.feature_name and config is not None:
-                is_enabled = config.is_feature_enabled(plugin.feature_name)
-                if not is_enabled:
-                    continue
+            # 检查功能开关
+            if plugin.feature_name and not config.is_enabled(plugin.feature_name):
+                continue
             
             enabled_plugins.append(plugin)
         
@@ -69,10 +63,8 @@ class HelpHandler(PluginHandler):
         
         message_plugins = registry.get_message_plugins(include_hidden=False)
         for plugin in message_plugins:
-            if plugin.feature_name and config is not None:
-                is_enabled = config.is_feature_enabled(plugin.feature_name)
-                if not is_enabled:
-                    continue
+            if plugin.feature_name and not config.is_enabled(plugin.feature_name):
+                continue
             
             lines.append(f"{len(enabled_plugins) + 1}. {plugin.name}: 自动触发")
             lines.append(f"   {plugin.description}")
@@ -81,7 +73,7 @@ class HelpHandler(PluginHandler):
         if len(lines) == 1:
             lines.append("当前所有功能已关闭，请联系管理员")
         
-        await self.finish("\n".join(lines))
+        await self.send("\n".join(lines), finish=True)
 
 
 # 创建处理器和接收器

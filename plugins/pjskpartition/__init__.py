@@ -19,7 +19,7 @@ except ImportError:
 from plugins.common import PluginHandler, CommandReceiver
 
 try:
-    from plugins.utils import download_image_async, image_to_message, merge_images
+    from plugins.utils import download_image, image_to_message, merge_images
     UTILS_AVAILABLE = True
 except ImportError:
     UTILS_AVAILABLE = False
@@ -70,14 +70,14 @@ class PJSKHandler(PluginHandler):
         
         # 发送图片
         msg = image_to_message(result)
-        await self.finish(msg)
+        await self.send(msg, finish=True)
     
     async def _download_images(self, bg_url: str, bar_url: str, data_url: str):
         """并发下载三张图片"""
         tasks = [
-            download_image_async(bg_url),
-            download_image_async(bar_url),
-            download_image_async(data_url),
+            download_image(bg_url),
+            download_image(bar_url),
+            download_image(data_url),
         ]
         return await asyncio.gather(*tasks)
 

@@ -6,6 +6,7 @@ common 模块 - 基础设施层
 目录结构:
     base.py           - 基础层: ServiceBase, Result[T]
     config.py         - 配置层: PluginConfig
+    compat.py         - 兼容性: NoneBot 导入保护
     protocols.py      - 协议层: 接口定义, ServiceLocator
     handler.py        - 处理器层: PluginHandler, MessageHandler
     receiver.py       - 接收层: CommandReceiver, MessageReceiver
@@ -14,7 +15,6 @@ common 模块 - 基础设施层
         ├── ban.py          - 黑名单服务
         ├── bot.py          - Bot API服务
         ├── chat.py         - 聊天服务
-        ├── provider.py         - 配置提供者
         ├── game.py         - 游戏服务基类
         ├── registry.py     - 插件注册表
         ├── system.py       - 系统监控
@@ -39,6 +39,9 @@ from .base import (
 # ========== 配置层 ==========
 from .config import config, PluginConfig
 
+# ========== 兼容性 ==========
+from .compat import NONEBOT_AVAILABLE
+
 # ========== 协议层 ==========
 from .protocols import (
     ServiceLocator,
@@ -49,7 +52,6 @@ from .protocols import (
     BotServiceProtocol,
     TokenServiceProtocol,
     SystemMonitorProtocol,
-    ConfigProviderProtocol,
 )
 
 # ========== 处理器层 ==========
@@ -62,8 +64,6 @@ from .handler import (
 from .receiver import (
     CommandReceiver,
     MessageReceiver,
-    register_command,
-    register_message,
 )
 
 # ========== 工具层（常用）==========
@@ -77,7 +77,6 @@ from .services import (
     BotService,
     TokenService,
     SystemMonitorService,
-    ConfigProvider,
     GameServiceBase,
     GameState,
     PluginRegistry,
@@ -85,6 +84,9 @@ from .services import (
 )
 
 __all__ = [
+    # 兼容性
+    'NONEBOT_AVAILABLE',
+    
     # 工具层
     'read_prompt',
     
@@ -104,7 +106,6 @@ __all__ = [
     'BotServiceProtocol',
     'TokenServiceProtocol',
     'SystemMonitorProtocol',
-    'ConfigProviderProtocol',
     
     # 处理器层
     'PluginHandler',
@@ -113,8 +114,6 @@ __all__ = [
     # 接收层
     'CommandReceiver',
     'MessageReceiver',
-    'register_command',
-    'register_message',
     
     # 服务层
     'AIService',
@@ -123,7 +122,6 @@ __all__ = [
     'BotService',
     'TokenService',
     'SystemMonitorService',
-    'ConfigProvider',
     'GameServiceBase',
     'GameState',
     'PluginRegistry',

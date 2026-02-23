@@ -26,7 +26,7 @@ from plugins.common import (
     BanServiceProtocol,
     TokenServiceProtocol,
     SystemMonitorProtocol,
-    ConfigProviderProtocol,
+    config,
 )
 
 
@@ -49,13 +49,7 @@ class RequestTokenHandler(PluginHandler):
         user_id = event.user_id
         
         # 检查管理员权限
-        config = ServiceLocator.get(ConfigProviderProtocol)
-        if config is None:
-            await self.reply("配置服务不可用")
-            return
-        
-        admin_ids = config.get("admin_user_ids_set", set())
-        if user_id not in admin_ids:
+        if user_id not in config.admin_user_ids_set:
             await self.reply("您没有管理员权限")
             return
         
@@ -67,11 +61,12 @@ class RequestTokenHandler(PluginHandler):
         
         token = token_service.generate_token(user_id)
         
-        await self.finish(
+        await self.send(
             f"您的操作令牌: {token}\n"
             f"有效期: 5分钟\n"
             f"使用方式: 在群内发送 \"状态控制 {token} [操作]\"\n"
-            f"可用操作: 开关/拉黑/解封/状态/系统"
+            f"可用操作: 开关/拉黑/解封/状态/系统",
+            finish=True
         )
 
 
@@ -94,18 +89,9 @@ class StatusControlHandler(PluginHandler):
         ("math_soup", "数学谜题", "数学谜"),
     ]
     
-    def _get_config(self) -> ConfigProviderProtocol:
-        """获取配置提供者"""
-        config = ServiceLocator.get(ConfigProviderProtocol)
-        if config is None:
-            raise RuntimeError("配置服务不可用")
-        return config
-    
     def _check_admin(self, user_id: int) -> bool:
         """检查是否为管理员"""
-        config = self._get_config()
-        admin_ids = config.get("admin_user_ids_set", set())
-        return user_id in admin_ids
+        return user_id in config.admin_user_ids_set
     
     async def handle(self, event: MessageEvent, args: str) -> None:
         """处理状态控制命令"""
@@ -160,12 +146,10 @@ class StatusControlHandler(PluginHandler):
     
     async def _show_status(self) -> None:
         """显示所有功能状态"""
-        config = self._get_config()
-        
         lines = ["功能状态:"]
         
         for feature_key, display_name, _ in self.CONTROLLABLE_FEATURES:
-            is_enabled = config.is_feature_enabled(feature_key)
+            is_enabled = config.is_enabled(feature_key)
             status = "[开启]" if is_enabled else "[关闭]"
             lines.append(f"  {display_name}: {status}")
         
@@ -176,7 +160,7 @@ class StatusControlHandler(PluginHandler):
             banned_count = ban.get_banned_count()
         lines.append(f"\n已拉黑用户: {banned_count} 人")
         
-        await self.finish("\n".join(lines))
+        await self.send("\n".join(lines), finish=True)
     
     async def _handle_toggle(self, args: str) -> None:
         """处理功能开关"""
@@ -194,21 +178,17 @@ class StatusControlHandler(PluginHandler):
         
         if not matched_feature:
             available = ", ".join([name for _, name, _ in self.CONTROLLABLE_FEATURES])
-            await self.finish(f"未知功能。可用: {available}")
+            await self.send(f"未知功能。可用: {available}", finish=True)
             return
         
         feature_key, display_name = matched_feature
         
-        # 注意：这里应该调用配置提供者的方法来切换功能
-        # 但 ConfigProviderProtocol 只定义了读取接口
-        # 实际实现可能需要扩展协议或直接使用 config 模块
-        # 暂时保持简单实现
-        from plugins.common import config as _config
-        current_value = getattr(_config, f"{feature_key}_enabled", True)
-        setattr(_config, f"{feature_key}_enabled", not current_value)
+        # 切换功能开关
+        current_value = getattr(config, f"{feature_key}_enabled", True)
+        setattr(config, f"{feature_key}_enabled", not current_value)
         new_status = "开启" if not current_value else "关闭"
         
-        await self.finish(f"{display_name} 已{new_status}")
+        await self.send(f"{display_name} 已{new_status}", finish=True)
     
     async def _handle_ban(self, user_id_str: str) -> None:
         """处理拉黑用户"""
@@ -228,14 +208,14 @@ class StatusControlHandler(PluginHandler):
             return
         
         if ban.is_banned(target_user_id):
-            await self.finish(f"用户 {target_user_id} 已在黑名单中")
+            await self.send(f"用户 {target_user_id} 已在黑名单中", finish=True)
             return
         
         result = ban.ban(target_user_id)
         if result.is_success:
-            await self.finish(f"用户 {target_user_id} 已被拉黑")
+            await self.send(f"用户 {target_user_id} 已被拉黑", finish=True)
         else:
-            await self.finish(f"拉黑失败: {result.error}")
+            await self.send(f"拉黑失败: {result.error}", finish=True)
     
     async def _handle_unban(self, user_id_str: str) -> None:
         """处理解封用户"""
@@ -255,24 +235,24 @@ class StatusControlHandler(PluginHandler):
             return
         
         if not ban.is_banned(target_user_id):
-            await self.finish(f"用户 {target_user_id} 不在黑名单中")
+            await self.send(f"用户 {target_user_id} 不在黑名单中", finish=True)
             return
         
         result = ban.unban(target_user_id)
         if result.is_success:
-            await self.finish(f"用户 {target_user_id} 已解除拉黑")
+            await self.send(f"用户 {target_user_id} 已解除拉黑", finish=True)
         else:
-            await self.finish(f"解封失败: {result.error}")
+            await self.send(f"解封失败: {result.error}", finish=True)
     
     async def _show_system_status(self) -> None:
         """显示系统状态"""
         monitor = ServiceLocator.get(SystemMonitorProtocol)
         if monitor is None:
-            await self.finish("系统监控服务不可用")
+            await self.send("系统监控服务不可用", finish=True)
             return
         
         status_text = monitor.get_status_text()
-        await self.finish(status_text)
+        await self.send(status_text, finish=True)
 
 
 # ========== 创建处理器和接收器 ==========

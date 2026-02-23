@@ -1,15 +1,12 @@
 """
 网络请求工具 - HTTP 客户端封装
 
-提供同步和异步 HTTP 请求工具，支持重试机制和错误处理。
+提供异步 HTTP 请求工具，支持重试机制和错误处理。
 """
 
-from typing import Optional, Callable, Any, Dict
-from functools import wraps
-import asyncio
+from typing import Optional, Dict
 import logging
 
-import requests
 import httpx
 
 logger = logging.getLogger("plugins.utils.network")
@@ -28,105 +25,13 @@ DEFAULT_HEADERS = {
 }
 
 
-def retry_on_error(max_retries: int = 3, delay: float = 1.0):
-    """
-    重试装饰器
-    
-    Args:
-        max_retries: 最大重试次数
-        delay: 重试间隔（秒）
-    """
-    def decorator(func: Callable) -> Callable:
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            last_error = None
-            for attempt in range(max_retries):
-                try:
-                    return func(*args, **kwargs)
-                except Exception as e:
-                    last_error = e
-                    if attempt < max_retries - 1:
-                        logger.warning(f"Attempt {attempt + 1} failed: {e}, retrying...")
-                        asyncio.sleep(delay)
-            logger.error(f"All {max_retries} attempts failed: {last_error}")
-            raise last_error
-        return wrapper
-    return decorator
-
-
-def fetch_html(
-    url: str,
-    headers: Optional[Dict[str, str]] = None,
-    timeout: int = 10,
-    **kwargs
-) -> Optional[str]:
-    """
-    同步获取网页 HTML
-    
-    注意：在异步代码中使用会阻塞事件循环，
-    异步代码请使用 fetch_html_async。
-    
-    Returns:
-        HTML 文本，失败返回 None
-    """
-    try:
-        request_headers = headers if headers is not None else DEFAULT_HEADERS
-        response = requests.get(url, headers=request_headers, timeout=timeout, **kwargs)
-        response.raise_for_status()
-        
-        if response.encoding == 'ISO-8859-1':
-            response.encoding = response.apparent_encoding
-        
-        return response.text
-    except requests.RequestException as e:
-        logger.error(f"Request failed [{url}]: {e}")
-        return None
-
-
-def fetch_binary(
-    url: str,
-    headers: Optional[Dict[str, str]] = None,
-    timeout: int = 10
-) -> Optional[bytes]:
-    """
-    同步获取二进制数据
-    
-    Returns:
-        二进制数据，失败返回 None
-    """
-    try:
-        request_headers = headers if headers is not None else DEFAULT_HEADERS
-        response = requests.get(url, headers=request_headers, timeout=timeout)
-        response.raise_for_status()
-        return response.content
-    except requests.RequestException as e:
-        logger.error(f"Request failed [{url}]: {e}")
-        return None
-
-
-async def fetch_html_async(
+async def fetch_html(
     url: str,
     headers: Optional[Dict[str, str]] = None,
     timeout: float = 10.0,
     **kwargs
 ) -> Optional[str]:
-    """
-    异步获取网页 HTML（推荐在异步代码中使用）
-    
-    Args:
-        url: 目标 URL
-        headers: 自定义请求头
-        timeout: 超时时间（秒）
-        **kwargs: 其他 httpx 参数
-    
-    Returns:
-        HTML 文本，失败返回 None
-    
-    Example:
-        >>> html = await fetch_html_async("https://example.com")
-        >>> if html:
-        ...     print(html[:100])
-    """
+    """异步获取网页 HTML"""
     try:
         request_headers = headers if headers is not None else DEFAULT_HEADERS
         async with httpx.AsyncClient(headers=request_headers, timeout=timeout) as client:
@@ -134,22 +39,17 @@ async def fetch_html_async(
             response.raise_for_status()
             return response.text
     except httpx.HTTPError as e:
-        logger.error(f"Async request failed [{url}]: {e}")
+        logger.error(f"Request failed [{url}]: {e}")
         return None
 
 
-async def fetch_binary_async(
+async def fetch_binary(
     url: str,
     headers: Optional[Dict[str, str]] = None,
     timeout: float = 10.0,
     **kwargs
 ) -> Optional[bytes]:
-    """
-    异步获取二进制数据（推荐在异步代码中使用）
-    
-    Returns:
-        二进制数据，失败返回 None
-    """
+    """异步获取二进制数据"""
     try:
         request_headers = headers if headers is not None else DEFAULT_HEADERS
         async with httpx.AsyncClient(headers=request_headers, timeout=timeout) as client:
@@ -157,7 +57,7 @@ async def fetch_binary_async(
             response.raise_for_status()
             return response.content
     except httpx.HTTPError as e:
-        logger.error(f"Async request failed [{url}]: {e}")
+        logger.error(f"Request failed [{url}]: {e}")
         return None
 
 

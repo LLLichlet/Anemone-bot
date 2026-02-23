@@ -197,23 +197,4 @@ class GameServiceBase(ServiceBase, Generic[T]):
         del self._games[group_id]
         return True
     
-    def get_active_games_count(self) -> int:
-        """
-        获取进行中的游戏数量
-        
-        Returns:
-            当前进行中的游戏总数
-        """
-        return sum(1 for game in self._games.values() if game.is_active)
-    
-    def list_active_games(self) -> Dict[int, T]:
-        """
-        获取所有进行中的游戏
-        
-        Returns:
-            群号到游戏状态的映射字典（只包含活跃游戏）
-        """
-        return {
-            gid: game for gid, game in self._games.items() 
-            if game.is_active
-        }
+

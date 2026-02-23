@@ -249,13 +249,22 @@ class PluginConfig(BaseSettings):
         os.makedirs(self.data_dir, exist_ok=True)
     
     def get_banned_file_path(self) -> str:
-        """
-        获取黑名单文件完整路径
-        
-        Returns:
-            黑名单文件路径字符串
-        """
+        """获取黑名单文件完整路径"""
         return os.path.join(self.data_dir, "banned.json")
+    
+    def is_enabled(self, feature: str) -> bool:
+        """
+        检查功能是否开启
+        
+        Args:
+            feature: 功能名称，如 "math", "highnoon"
+            
+        Returns:
+            功能是否开启（默认 True）
+        """
+        if not feature:
+            return True
+        return getattr(self, f"{feature}_enabled", True)
 
 
 # 全局配置实例

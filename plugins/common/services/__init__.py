@@ -12,7 +12,6 @@ services 子模块 - 服务层实现
     - BanService: 黑名单管理
     - BotService: NoneBot 群管理 API
     - ChatService: 群聊历史记录
-    - ConfigProvider: 配置查询
     - GameServiceBase: 游戏服务基类
     - PluginRegistry: 插件注册表
     - SystemMonitorService: 系统监控
@@ -31,7 +30,6 @@ from .ai import AIService
 from .ban import BanService
 from .bot import BotService
 from .chat import ChatService
-from .provider import ConfigProvider
 from .game import GameServiceBase, GameState
 from .registry import PluginRegistry, PluginInfo
 from .system import SystemMonitorService
@@ -43,7 +41,6 @@ __all__ = [
     'BanService',
     'BotService',
     'ChatService',
-    'ConfigProvider',
     
     # 游戏服务
     'GameServiceBase',

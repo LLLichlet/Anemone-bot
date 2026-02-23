@@ -14,52 +14,40 @@
 
 from typing import Optional, Callable
 
-try:
+from .compat import (
+    NONEBOT_AVAILABLE,
+    MessageEvent,
+    GroupMessageEvent,
+    Matcher,
+    CommandArg,
+)
+
+if NONEBOT_AVAILABLE:
     from nonebot import on_command, on_message
-    from nonebot.adapters.onebot.v11 import MessageEvent, GroupMessageEvent
-    from nonebot.matcher import Matcher
-    from nonebot.params import CommandArg
     from nonebot.exception import FinishedException
-    NONEBOT_AVAILABLE = True
-except ImportError:
-    NONEBOT_AVAILABLE = False
-    class Matcher: pass
-    class MessageEvent: pass
-    class GroupMessageEvent: pass
-    class FinishedException(Exception): pass
+else:
+    class FinishedException(Exception):
+        pass
+
     def on_command(*args, **kwargs):
         class FakeMatcher:
             def handle(self, **kwargs):
                 return lambda f: f
         return FakeMatcher()
+
     def on_message(*args, **kwargs):
         class FakeMatcher:
             def handle(self, **kwargs):
                 return lambda f: f
         return FakeMatcher()
-    def CommandArg():
-        return None
 
 # 依赖协议层
 from .protocols import (
     ServiceLocator,
     BanServiceProtocol,
-    ConfigProviderProtocol,
 )
+from .config import config
 
-
-def _ensure_service_initialized(protocol_type, service_class):
-    """确保服务已初始化并注册到 ServiceLocator"""
-    service = ServiceLocator.get(protocol_type)
-    if service is None:
-        # 尝试初始化服务
-        try:
-            instance = service_class.get_instance()
-            instance.initialize()
-            service = ServiceLocator.get(protocol_type)
-        except Exception:
-            pass
-    return service
 
 # 依赖插件层
 from .handler import PluginHandler, MessageHandler, _current_event_var
@@ -179,8 +167,7 @@ class CommandReceiver:
     
     def _check_permission(self, event: MessageEvent) -> bool:
         """检查用户权限"""
-        from .services import BanService
-        ban_service = _ensure_service_initialized(BanServiceProtocol, BanService)
+        ban_service = ServiceLocator.get(BanServiceProtocol)
         if ban_service is None:
             return True
         return not ban_service.is_banned(event.user_id)
@@ -190,12 +177,7 @@ class CommandReceiver:
         if not self._handler.feature_name:
             return True
         
-        from .services import ConfigProvider
-        config_provider = _ensure_service_initialized(ConfigProviderProtocol, ConfigProvider)
-        if config_provider is not None:
-            return config_provider.is_feature_enabled(self._handler.feature_name)
-        
-        return True
+        return config.is_enabled(self._handler.feature_name)
 
 
 class MessageReceiver:
@@ -295,8 +277,7 @@ class MessageReceiver:
     
     def _check_permission(self, event: MessageEvent) -> bool:
         """检查用户权限"""
-        from .services import BanService
-        ban_service = _ensure_service_initialized(BanServiceProtocol, BanService)
+        ban_service = ServiceLocator.get(BanServiceProtocol)
         if ban_service is None:
             return True
         return not ban_service.is_banned(event.user_id)
@@ -306,21 +287,4 @@ class MessageReceiver:
         if not self._handler.feature_name:
             return True
         
-        from .services import ConfigProvider
-        config_provider = _ensure_service_initialized(ConfigProviderProtocol, ConfigProvider)
-        if config_provider is not None:
-            return config_provider.is_feature_enabled(self._handler.feature_name)
-        
-        return True
-
-
-# ========== 便捷函数 ==========
-
-def register_command(handler: PluginHandler) -> CommandReceiver:
-    """注册命令处理器（便捷函数）"""
-    return CommandReceiver(handler)
-
-
-def register_message(handler: MessageHandler) -> MessageReceiver:
-    """注册消息处理器（便捷函数）"""
-    return MessageReceiver(handler)
+        return config.is_enabled(self._handler.feature_name)

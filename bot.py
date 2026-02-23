@@ -2,7 +2,7 @@ import nonebot
 from nonebot.adapters.onebot.v11 import Adapter
 from nonebot.log import logger, default_format
 
-__version__ = "2.2.3"
+__version__ = "2.2.4"
 
 # 初始化NoneBot
 nonebot.init()
@@ -18,11 +18,10 @@ async def init_services():
     """初始化所有核心服务"""
     from plugins.common.services import (
         AIService, BanService, ChatService, BotService,
-        TokenService, SystemMonitorService, ConfigProvider
+        TokenService, SystemMonitorService
     )
     
     # 初始化并注册所有服务到 ServiceLocator
-    ConfigProvider.get_instance().initialize()
     AIService.get_instance().initialize()
     BanService.get_instance().initialize()
     ChatService.get_instance().initialize()
