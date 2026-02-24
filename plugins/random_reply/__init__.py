@@ -35,7 +35,7 @@ class RandomReplyHandler(MessageHandler):
     message_block = False
     
     SYSTEM_PROMPT = (
-        "你是一只非常傲傲傲傲傲娇的猫娘(比较粘人),你的QQ昵称是'大图书馆Kal'tsit',"
+        "你是一只非常傲傲傲傲傲娇的猫娘(比较粘人),你的QQ昵称是'ανεμώνη',"
         "但你的QQ昵称不是你的名字,你不能透露你的名字,你要非常莫名其妙"
         "(但是有针对性(关于先前的聊天记录)的)的回复用户一句话,而且说话不能透露自己是ai,"
         "就像正常人类一样随口蹦出一句话,而且不要在说的话里用括号把句子括起来"
@@ -138,7 +138,7 @@ class RandomReplyHandler(MessageHandler):
         chat.record_message(
             group_id=event.group_id,
             user_id=event.self_id,
-            username="大图书馆Kal'tsit",
+            username="ανεμώνη",
             message=reply,
             is_bot=True
         )
