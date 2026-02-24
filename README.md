@@ -1,6 +1,6 @@
-# query-bot
+# Anemone bot
 
-[![Version](https://img.shields.io/badge/version-2.2.4-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.2.5-blue.svg)](CHANGELOG.md)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 [![NoneBot2](https://img.shields.io/badge/NoneBot-2.4+-green.svg)](https://nonebot.dev/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
@@ -12,7 +12,7 @@
 <a name="中文文档"></a>
 # 中文文档
 
-基于 NoneBot2 框架的 QQ 群聊机器人，提供数学知识查询、游戏娱乐和智能对话功能。
+基于 NoneBot2 框架的 QQ 群聊机器人 **Anemone bot**，提供数学知识查询、游戏娱乐和智能对话功能。
 
 ## 功能特性
 
@@ -26,7 +26,7 @@
 ## 技术架构
 
 ```
-query-bot/
+anemone-bot/
 ├── bot.py                  # 应用程序入口
 ├── pyproject.toml          # 项目配置 (PEP 621)
 ├── requirements.txt        # 生产依赖
@@ -84,8 +84,8 @@ query-bot/
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/query-bot.git
-cd query-bot
+git clone https://github.com/yourusername/anemone-bot.git
+cd anemone-bot
 
 # 创建虚拟环境
 python -m venv venv
@@ -326,6 +326,7 @@ status = service.get_status()
 
 详见 [CHANGELOG.md](CHANGELOG.md)
 
+- **v2.2.5**: 品牌更新，项目更名为 Anemone bot
 - **v2.2.3**: 修复数学谜题bug，优化AI提示词
 - **v2.2.2**: 7层架构重构, ServiceLocator, Protocol接口, 处理器/接收器分离
 - **v2.2.1**: PluginRegistry, TokenService, SystemMonitorService, nb-cli 支持
