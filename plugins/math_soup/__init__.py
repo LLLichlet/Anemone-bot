@@ -29,7 +29,8 @@ class MathPuzzleStartHandler(PluginHandler):
     
     name = "数学谜题"
     description = "通过是非问题猜测数学概念的猜谜游戏"
-    command = "数学谜"
+    command = "mathpuzzle"
+    aliases = {"数学谜"}
     feature_name = "math_soup"
     priority = 10
     
@@ -40,7 +41,7 @@ class MathPuzzleStartHandler(PluginHandler):
         if service.has_active_game(event.group_id):
             await self.reply(
                 "当前已有进行中的数学谜题！\n"
-                "请使用 /答案 结束当前游戏后再开始新游戏。"
+                "请使用 /reveal (答案) 结束当前游戏后再开始新游戏。"
             )
             return
         
@@ -65,20 +66,21 @@ class MathPuzzleAskHandler(PluginHandler):
     
     name = "数学谜题提问"
     description = "提出是非问题来推理答案"
-    command = "问"
+    command = "ask"
+    aliases = {"问"}
     feature_name = "math_soup"
     priority = 10
     
     async def handle(self, event: MessageEvent, args: str) -> None:
         """处理提问命令"""
         if not args:
-            await self.reply("请输入问题内容，例如：/问 这是关于几何的吗")
+            await self.reply("请输入问题内容，例如：/ask (问) 这是关于几何的吗")
             return
         
         service = MathPuzzleService.get_instance()
         
         if not service.has_active_game(event.group_id):
-            await self.reply("请先使用 /数学谜 开始游戏")
+            await self.reply("请先使用 /mathpuzzle (数学谜) 开始游戏")
             return
         
         result = await service.ask_question(event.group_id, args)
@@ -95,20 +97,21 @@ class MathPuzzleGuessHandler(PluginHandler):
     
     name = "数学谜题猜测"
     description = "直接猜测答案"
-    command = "猜"
+    command = "guess"
+    aliases = {"猜"}
     feature_name = "math_soup"
     priority = 10
     
     async def handle(self, event: MessageEvent, args: str) -> None:
         """处理猜测命令"""
         if not args:
-            await self.reply("请输入猜测的答案，例如：/猜 欧拉公式")
+            await self.reply("请输入猜测的答案，例如：/guess (猜) 欧拉公式")
             return
         
         service = MathPuzzleService.get_instance()
         
         if not service.has_active_game(event.group_id):
-            await self.reply("请先使用 /数学谜 开始游戏")
+            await self.reply("请先使用 /mathpuzzle (数学谜) 开始游戏")
             return
         
         result = await service.make_guess(event.group_id, args)
@@ -136,8 +139,8 @@ class MathPuzzleRevealHandler(PluginHandler):
     
     name = "数学谜题答案"
     description = "揭示答案并结束游戏"
-    command = "答案"
-    aliases = {"不猜了", "揭晓"}
+    command = "reveal"
+    aliases = {"答案", "不猜了", "揭晓"}
     feature_name = "math_soup"
     priority = 10
     
@@ -181,6 +184,6 @@ if NONEBOT_AVAILABLE:
     __plugin_meta__ = PluginMetadata(
         name="数学谜题",
         description="通过是非问题猜测数学概念的猜谜游戏",
-        usage="/数学谜 - 开始游戏，/问 [问题] - 提问，/猜 [答案] - 猜测",
+        usage="/mathpuzzle (数学谜) - 开始游戏，/ask (问) [问题] - 提问，/guess (猜) [答案] - 猜测",
         extra={"author": "Lichlet", "version": "2.3.0"}
     )

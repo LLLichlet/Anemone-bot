@@ -35,7 +35,8 @@ class RequestTokenHandler(PluginHandler):
     
     name = "申请令牌"
     description = "私聊申请管理员操作令牌"
-    command = "申请令牌"
+    command = "token"
+    aliases = {"申请令牌"}
     priority = 10
     feature_name = None
     hidden_in_help = True
@@ -64,8 +65,8 @@ class RequestTokenHandler(PluginHandler):
         await self.send(
             f"您的操作令牌: {token}\n"
             f"有效期: 5分钟\n"
-            f"使用方式: 在群内发送 \"状态控制 {token} [操作]\"\n"
-            f"可用操作: 开关/拉黑/解封/状态/系统",
+            f"使用方式: 在群内发送 \"admin {token} [操作]\"\n"
+            f"可用操作: toggle(开关)/ban(拉黑)/unban(解封)/status(状态)/system(系统)",
             finish=True
         )
 
@@ -75,8 +76,8 @@ class StatusControlHandler(PluginHandler):
     
     name = "状态控制"
     description = "管理员功能：查看和控制各功能开关状态"
-    command = "状态控制"
-    aliases = {"状态", "控制"}
+    command = "admin"
+    aliases = {"状态控制", "状态", "控制"}
     priority = 100
     feature_name = None
     hidden_in_help = True
@@ -131,18 +132,18 @@ class StatusControlHandler(PluginHandler):
         action = action_parts[0].lower()
         action_args = action_parts[1] if len(action_parts) > 1 else ""
         
-        if action == "开关":
+        if action == "toggle":
             await self._handle_toggle(action_args)
-        elif action == "拉黑":
+        elif action == "ban":
             await self._handle_ban(action_args)
-        elif action == "解封":
+        elif action == "unban":
             await self._handle_unban(action_args)
-        elif action == "状态":
+        elif action == "status":
             await self._show_status()
-        elif action == "系统":
+        elif action == "system":
             await self._show_system_status()
         else:
-            await self.reply(f"未知操作: {action}。可用: 开关/拉黑/解封/状态/系统")
+            await self.reply(f"未知操作: {action}。可用: toggle/ban/unban/status/system")
     
     async def _show_status(self) -> None:
         """显示所有功能状态"""
@@ -165,7 +166,7 @@ class StatusControlHandler(PluginHandler):
     async def _handle_toggle(self, args: str) -> None:
         """处理功能开关"""
         if not args:
-            await self.reply("请输入要切换的功能名，如: 开关 数学")
+            await self.reply("请输入要切换的功能名，如: toggle 数学")
             return
         
         target = args.strip().lower()
@@ -193,7 +194,7 @@ class StatusControlHandler(PluginHandler):
     async def _handle_ban(self, user_id_str: str) -> None:
         """处理拉黑用户"""
         if not user_id_str.strip():
-            await self.reply("请输入用户ID，如: 拉黑 123456")
+            await self.reply("请输入用户ID，如: ban 123456")
             return
         
         try:
@@ -220,7 +221,7 @@ class StatusControlHandler(PluginHandler):
     async def _handle_unban(self, user_id_str: str) -> None:
         """处理解封用户"""
         if not user_id_str.strip():
-            await self.reply("请输入用户ID，如: 解封 123456")
+            await self.reply("请输入用户ID，如: unban 123456")
             return
         
         try:
@@ -268,6 +269,6 @@ if NONEBOT_AVAILABLE:
     __plugin_meta__ = PluginMetadata(
         name="状态控制",
         description="管理员功能：查看和控制各功能开关状态（需令牌）",
-        usage="私聊: /申请令牌 | 群内: /状态控制 [令牌] [操作] [参数]",
+        usage="私聊: /token (申请令牌) | 群内: /admin (状态控制) [令牌] [操作] [参数]",
         extra={"author": "Lichlet", "version": "2.3.0"}
     )

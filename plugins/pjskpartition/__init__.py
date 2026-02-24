@@ -28,9 +28,10 @@ except ImportError:
 class PJSKHandler(PluginHandler):
     """PJSK 随机谱面处理器"""
     
-    name = "pjsk随机谱面"
+    name = "PJSK随机谱面"
     description = "pjsk随机谱面猜歌"
-    command = "pjsk随机谱面"
+    command = "chart"
+    aliases = {"pjsk随机谱面"}
     feature_name = "pjskpartiton"
     priority = 10
     

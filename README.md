@@ -284,8 +284,8 @@ QUERY_DATA_DIR=/data
 
 基于一次性令牌的身份验证机制：
 
-1. **申请令牌**: 管理员私聊 `/申请令牌`，获取 5 分钟有效期的随机令牌
-2. **执行操作**: 群内发送 `/状态控制 [令牌] [操作] [参数]`
+1. **申请令牌**: 管理员私聊 `/token` (或 `/申请令牌`)，获取 5 分钟有效期的随机令牌
+2. **执行操作**: 群内发送 `/admin [令牌] [操作] [参数]` (或使用 `/状态控制`)
 3. **令牌验证**: 一次性使用，验证后立即失效
 
 支持操作：
@@ -606,8 +606,8 @@ QUERY_DATA_DIR=/data
 
 Identity verification based on one-time tokens:
 
-1. **Request Token**: Private chat `/申请令牌` to get a 5-minute random token
-2. **Execute**: Group chat `/状态控制 [token] [action] [params]`
+1. **Request Token**: Private chat `/token` (or `/申请令牌`) to get a 5-minute random token
+2. **Execute**: Group chat `/admin [token] [action] [params]` (or `/状态控制`)
 3. **Token Expires**: 5 minutes / one-time use
 
 Supported actions:

@@ -25,7 +25,8 @@ class HelpHandler(PluginHandler):
     
     name = "帮助"
     description = "查看插件使用帮助"
-    command = "帮助"
+    command = "help"
+    aliases = {"帮助"}
     priority = 10
     feature_name = None
     
@@ -33,15 +34,64 @@ class HelpHandler(PluginHandler):
         """处理帮助命令"""
         registry = PluginRegistry.get_instance()
         
+        # 如果有参数，显示特定指令的详细信息
+        if args:
+            await self._show_plugin_detail(registry, args.strip())
+            return
+        
+        # 否则显示功能列表
+        await self._show_plugin_list(registry)
+    
+    async def _show_plugin_detail(self, registry: PluginRegistry, query: str) -> None:
+        """显示特定插件的详细信息"""
+        # 去掉可能的前导 /
+        query = query.lstrip("/")
+        
+        # 特殊处理 help 自身
+        if query in ("help", "帮助"):
+            lines = ["/help 帮助"]
+            lines.append("别名: /帮助")
+            lines.append("描述: 查看插件使用帮助")
+            lines.append("用法: /help [指令名] - 显示功能列表或查看指定指令详细用法")
+            await self.send("\n".join(lines), finish=True)
+            return
+        
+        # 通过命令名查找插件
+        plugin = registry.get_plugin_by_command(query)
+        
+        if plugin is None or plugin.hidden:
+            await self.reply(f"未找到指令: /{query}")
+            return
+        
+        # 检查功能开关
+        if plugin.feature_name and not config.is_enabled(plugin.feature_name):
+            await self.reply(f"该功能当前已关闭: /{query}")
+            return
+        
+        lines = [f"/{plugin.command} {plugin.name}"]
+        
+        if plugin.aliases:
+            aliases_text = ", ".join(f"/{a}" for a in sorted(plugin.aliases))
+            lines.append(f"别名: {aliases_text}")
+        
+        lines.append(f"描述: {plugin.description}")
+        
+        if plugin.usage:
+            lines.append(f"用法: {plugin.usage}")
+        
+        await self.send("\n".join(lines), finish=True)
+    
+    async def _show_plugin_list(self, registry: PluginRegistry) -> None:
+        """显示所有可用功能列表"""
         plugins = registry.get_command_plugins(include_hidden=False)
         
         if not plugins:
-            await self.send("当前没有可用的功能", finish=True)
+            await self.send("欢迎使用Anemone bot!\n\n当前没有可用的功能", finish=True)
             return
         
         enabled_plugins = []
         for plugin in plugins:
-            if plugin.command == "帮助":
+            if plugin.command == "help":
                 continue
             
             # 检查功能开关
@@ -50,28 +100,23 @@ class HelpHandler(PluginHandler):
             
             enabled_plugins.append(plugin)
         
-        lines = ["功能列表:"]
+        lines = ["欢迎使用Anemone bot!"]
         
-        for i, plugin in enumerate(enabled_plugins, 1):
-            cmd_text = f"/{plugin.command}"
-            if plugin.aliases:
-                aliases_text = ", ".join(f"/{a}" for a in sorted(plugin.aliases))
-                cmd_text = f"{cmd_text} ({aliases_text})"
-            
-            lines.append(f"{i}. {plugin.name}: {cmd_text}")
-            lines.append(f"   {plugin.description}")
+        for plugin in enabled_plugins:
+            lines.append(f"/{plugin.command} {plugin.name}")
         
         message_plugins = registry.get_message_plugins(include_hidden=False)
         for plugin in message_plugins:
             if plugin.feature_name and not config.is_enabled(plugin.feature_name):
                 continue
             
-            lines.append(f"{len(enabled_plugins) + 1}. {plugin.name}: 自动触发")
-            lines.append(f"   {plugin.description}")
+            lines.append(f"(自动触发) {plugin.name}")
             break
         
-        if len(lines) == 1:
+        if len(enabled_plugins) == 0:
             lines.append("当前所有功能已关闭，请联系管理员")
+        
+        lines.append("\n使用 /help 指令名 查看详细用法")
         
         await self.send("\n".join(lines), finish=True)
 

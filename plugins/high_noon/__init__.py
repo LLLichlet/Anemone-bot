@@ -97,7 +97,8 @@ class HighNoonStartHandler(PluginHandler):
     
     name = "决斗"
     description = "俄罗斯轮盘赌禁言游戏"
-    command = "午时已到"
+    command = "highnoon"
+    aliases = {"午时已到"}
     feature_name = "highnoon"
     priority = 10
     
@@ -132,7 +133,8 @@ class FireHandler(PluginHandler):
     
     name = "开枪"
     description = "午时已到游戏开枪命令"
-    command = "开枪"
+    command = "fire"
+    aliases = {"开枪"}
     feature_name = "highnoon"
     priority = 5
     block = False
@@ -197,6 +199,6 @@ if NONEBOT_AVAILABLE:
     __plugin_meta__ = PluginMetadata(
         name="午时已到",
         description="俄罗斯轮盘赌禁言游戏",
-        usage="/午时已到 开始游戏，/开枪 参与",
+        usage="/highnoon (午时已到) 开始游戏，/fire (开枪) 参与",
         extra={"author": "Lichlet", "version": "2.3.0"}
     )

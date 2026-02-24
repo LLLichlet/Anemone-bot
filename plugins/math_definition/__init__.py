@@ -52,7 +52,8 @@ class MathDefinitionHandler(PluginHandler):
     # 元数据配置
     name = "数学定义查询"
     description = "查询数学名词的定义和解释"
-    command = "定义"
+    command = "define"
+    aliases = {"定义"}
     feature_name = "math"
     priority = 10
     
@@ -116,6 +117,6 @@ if NONEBOT_AVAILABLE:
     __plugin_meta__ = PluginMetadata(
         name=handler.name,
         description=handler.description,
-        usage=f"/{handler.command} [数学名词]",
+        usage=f"/{handler.command} (/{' /'.join(handler.aliases)}) [数学名词]",
         extra={"author": "Lichlet", "version": "2.3.0"}
     )
