@@ -1,6 +1,6 @@
 # Anemone bot
 
-[![Version](https://img.shields.io/badge/version-2.2.5-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.2.6-blue.svg)](CHANGELOG.md)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 [![NoneBot2](https://img.shields.io/badge/NoneBot-2.4+-green.svg)](https://nonebot.dev/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
@@ -17,7 +17,7 @@
 ## 功能特性
 
 - **数学定义查询**: 基于 DeepSeek API 的数学概念解释（香蕉空间风格）
-- **数学谜题**: 是/否回答游戏模式，支持 325+ 数学概念
+- **数学谜题**: 是/否回答游戏模式，支持 726+ 数学概念
 - **随机回复**: 基于上下文的 AI 群聊回复，可配置触发概率
 - **午时已到**: 俄罗斯轮盘赌禁言小游戏
 - **PJSK 谱面**: 随机 Project Sekai 游戏谱面获取
@@ -41,6 +41,7 @@ anemone-bot/
     │   ├── protocols.py    # 协议层: 接口定义、ServiceLocator
     │   ├── handler.py      # 处理器层: PluginHandler, MessageHandler
     │   ├── receiver.py     # 接收层: CommandReceiver, MessageReceiver
+    │   ├── buffer.py       # 消息缓冲: SendBuffer (防风控)
     │   └── services/       # 服务层: 协议实现
     ├── math_definition/    # 数学定义查询
     ├── math_soup/          # 数学谜题游戏
@@ -326,11 +327,12 @@ status = service.get_status()
 
 详见 [CHANGELOG.md](CHANGELOG.md)
 
+- **v2.2.6**: 修复消息发送并发bug，解决多请求消息丢失问题
 - **v2.2.5**: 品牌更新，项目更名为 Anemone bot
 - **v2.2.3**: 修复数学谜题bug，优化AI提示词
 - **v2.2.2**: 7层架构重构, ServiceLocator, Protocol接口, 处理器/接收器分离
 - **v2.2.1**: PluginRegistry, TokenService, SystemMonitorService, nb-cli 支持
-- **v2.2.0**: 数学谜题插件, GameServiceBase, 325+ 数学概念
+- **v2.2.0**: 数学谜题插件, GameServiceBase, 726+ 数学概念
 - **v2.1.1**: 并发安全修复, BotService API 封装
 - **v2.1.0**: ServiceBase, Result[T], PluginBase 架构
 
@@ -352,7 +354,7 @@ A QQ group chat bot based on the NoneBot2 framework, providing mathematical know
 ## Features
 
 - **Math Definition Query**: Mathematical concept explanations powered by DeepSeek API (Banana Space style)
-- **Math Puzzle**: Yes/No answer-asking mode with 325+ mathematical concepts
+- **Math Puzzle**: Yes/No answer-asking mode with 726+ mathematical concepts
 - **Random Reply**: Context-aware AI group chat replies with configurable trigger probability
 - **High Noon**: Russian roulette mute game
 - **PJSK Charts**: Random Project Sekai game chart images
@@ -376,6 +378,7 @@ query-bot/
     │   ├── protocols.py    # Protocol: interfaces & ServiceLocator
     │   ├── handler.py      # Handler: PluginHandler, MessageHandler
     │   ├── receiver.py     # Receiver: CommandReceiver, MessageReceiver
+    │   ├── buffer.py       # Buffer: SendBuffer (rate limiting)
     │   └── services/       # Services: protocol implementations
     ├── math_definition/    # Math query plugin
     ├── math_soup/          # Math puzzle game
@@ -648,8 +651,10 @@ Development:
 
 See [CHANGELOG.md](CHANGELOG.md)
 
+- **v2.2.6**: Fixed message sending concurrency bug, resolved message loss in multi-request scenarios
+- **v2.2.5**: Rebranded to Anemone bot
 - **v2.2.1**: PluginRegistry, TokenService, SystemMonitorService, nb-cli support
-- **v2.2.0**: Math puzzle plugin, GameServiceBase, 325+ math concepts
+- **v2.2.0**: Math puzzle plugin, GameServiceBase, 726+ math concepts
 - **v2.1.1**: Concurrency safety fix, BotService API encapsulation
 - **v2.1.0**: ServiceBase, Result[T], PluginBase architecture
 

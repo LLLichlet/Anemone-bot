@@ -1,1841 +1,5793 @@
 {
-    "concepts": [
-        {
-            "id": "topological_space",
-            "answer": "拓扑空间",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "定义了开集族结构的集合，是拓扑学研究的基本对象，推广了度量空间和欧几里得空间的概念"
-        },
-        {
-            "id": "topological_group",
-            "answer": "拓扑群",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "同时具有群结构和拓扑结构的数学对象，要求群的乘法和取逆运算都是连续的"
-        },
-        {
-            "id": "topological_field",
-            "answer": "拓扑域",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "带有拓扑结构的域，使得加、减、乘、除运算都是连续的"
-        },
-        {
-            "id": "topological_vector_space",
-            "answer": "拓扑线性空间",
-            "aliases": [
-                "TVS",
-                "拓扑向量空间"
-            ],
-            "category": "拓扑学",
-            "description": "带有拓扑结构的向量空间，使得向量加法和数乘运算都是连续的，泛函分析的重要研究对象"
-        },
-        {
-            "id": "topological_basis",
-            "answer": "拓扑基",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "一族开集，使得任意开集都可以表示为它们的并，用于生成拓扑结构"
-        },
-        {
-            "id": "open_set",
-            "answer": "开集",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "拓扑空间中的基本元素，满足任意并和有限交仍是开集的性质"
-        },
-        {
-            "id": "closed_set",
-            "answer": "闭集",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "开集的补集，包含其所有极限点的集合"
-        },
-        {
-            "id": "interior",
-            "answer": "内部",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "集合中所有内点组成的集合，是包含于该集合中的最大开集"
-        },
-        {
-            "id": "closure",
-            "answer": "闭包",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "包含该集合的最小闭集，由集合及其所有极限点组成"
-        },
-        {
-            "id": "boundary",
-            "answer": "边界",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "集合闭包与内部之差，即既不是内点也不是外点的点集"
-        },
-        {
-            "id": "dense_set",
-            "answer": "稠密集",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "闭包等于全空间的集合，即任意非空开集都与之相交"
-        },
-        {
-            "id": "neighborhood",
-            "answer": "邻域",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "包含某点的开集，用于描述点的局部性质和极限过程"
-        },
-        {
-            "id": "continuous_map",
-            "answer": "连续映射",
-            "aliases": [
-                "连续函数"
-            ],
-            "category": "拓扑学",
-            "description": "开集的原像仍是开集的映射，拓扑学中保持结构的基本映射"
-        },
-        {
-            "id": "homeomorphism",
-            "answer": "同胚",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "双向连续的双射映射，拓扑学中的等价关系，表明两空间拓扑结构相同"
-        },
-        {
-            "id": "open_map",
-            "answer": "开映射",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "将开集映射为开集的映射，与连续映射方向相反"
-        },
-        {
-            "id": "closed_map",
-            "answer": "闭映射",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "将闭集映射为闭集的映射"
-        },
-        {
-            "id": "quotient_map",
-            "answer": "商映射",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "满足开集原像为开集的满射，用于构造商拓扑"
-        },
-        {
-            "id": "quotient_topology",
-            "answer": "商拓扑",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "使得商映射连续的最细拓扑，通过等价关系粘合点来构造新空间"
-        },
-        {
-            "id": "subspace",
-            "answer": "子空间",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "拓扑空间的子集上继承的拓扑，开集为原空间开集与子集的交"
-        },
-        {
-            "id": "product_space",
-            "answer": "积空间",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "多个拓扑空间笛卡尔积上的拓扑，使得投影映射都连续"
-        },
-        {
-            "id": "sum_space",
-            "answer": "和空间",
-            "aliases": [
-                "不交并"
-            ],
-            "category": "拓扑学",
-            "description": "多个拓扑空间不交并上的拓扑，各空间在和中保持原有拓扑"
-        },
-        {
-            "id": "discrete_topology",
-            "answer": "离散拓扑",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "所有子集都是开集的拓扑，是最细的拓扑，空间中点彼此分离"
-        },
-        {
-            "id": "trivial_topology",
-            "answer": "密着拓扑",
-            "aliases": [
-                "平凡拓扑",
-                "最粗拓扑"
-            ],
-            "category": "拓扑学",
-            "description": "只有空集和全空间是开集的拓扑，是最粗的拓扑"
-        },
-        {
-            "id": "neighborhood_basis",
-            "answer": "邻域基",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "一点的邻域族，使得该点的任意邻域都包含其中的一个"
-        },
-        {
-            "id": "order_topology",
-            "answer": "序拓扑",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "全序集上由开区间生成的拓扑"
-        },
-        {
-            "id": "metric_space",
-            "answer": "度量空间",
-            "aliases": [
-                "距离空间",
-                "度量空间"
-            ],
-            "category": "拓扑学",
-            "description": "定义了距离函数的集合，通过开球生成拓扑，是拓扑空间的重要例子"
-        },
-        {
-            "id": "t1_space",
-            "answer": "T1空间",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "单点集都是闭集的拓扑空间，满足最弱的分离公理"
-        },
-        {
-            "id": "hausdorff_space",
-            "answer": "Hausdorff空间",
-            "aliases": [
-                "T2空间",
-                "豪斯多夫空间"
-            ],
-            "category": "拓扑学",
-            "description": "任意两点都有不相交邻域的拓扑空间，满足T2分离公理，极限唯一"
-        },
-        {
-            "id": "regular_space",
-            "answer": "正则空间",
-            "aliases": [
-                "T3空间"
-            ],
-            "category": "拓扑学",
-            "description": "T1空间且点和闭集可用开集分离的空间"
-        },
-        {
-            "id": "normal_space",
-            "answer": "正规空间",
-            "aliases": [
-                "T4空间"
-            ],
-            "category": "拓扑学",
-            "description": "T1空间且任意两个不相交闭集可用开集分离的空间，有Urysohn引理成立"
-        },
-        {
-            "id": "completely_normal_space",
-            "answer": "完全正规空间",
-            "aliases": [
-                "T5空间"
-            ],
-            "category": "拓扑学",
-            "description": "所有子空间都是正规空间的拓扑空间"
-        },
-        {
-            "id": "perfectly_normal_space",
-            "answer": "完美正规空间",
-            "aliases": [
-                "T6空间"
-            ],
-            "category": "拓扑学",
-            "description": "所有闭集都是Gδ集的正规空间"
-        },
-        {
-            "id": "g_delta_set",
-            "answer": "Gδ集",
-            "aliases": [
-                "Gdelta集"
-            ],
-            "category": "拓扑学",
-            "description": "可数个开集的交集，在完备度量空间中Gδ集完备"
-        },
-        {
-            "id": "f_sigma_set",
-            "answer": "Fσ集",
-            "aliases": [
-                "Fsigma集"
-            ],
-            "category": "拓扑学",
-            "description": "可数个闭集的并集"
-        },
-        {
-            "id": "net",
-            "answer": "网",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "定义在有向集上的映射，是序列的推广，用于描述一般拓扑空间的收敛性"
-        },
-        {
-            "id": "convergence",
-            "answer": "收敛",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "网或序列最终进入任意邻域的性质，是拓扑空间极限过程的描述"
-        },
-        {
-            "id": "uniform_topology",
-            "answer": "一致拓扑",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "由一致结构诱导的拓扑，使得一致连续映射都是连续的"
-        },
-        {
-            "id": "uniformly_continuous",
-            "answer": "一致连续",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "在一致空间上，δ只依赖于ε而不依赖于点的连续性"
-        },
-        {
-            "id": "uniform_convergence",
-            "answer": "一致收敛",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "函数列在定义域上一致地收敛到极限函数，强于逐点收敛"
-        },
-        {
-            "id": "compact",
-            "answer": "紧致",
-            "aliases": [
-                "紧"
-            ],
-            "category": "拓扑学",
-            "description": "拓扑空间的紧致性：任意开覆盖都有有限子覆盖，是数学分析中有限性概念在拓扑空间的推广"
-        },
-        {
-            "id": "sequentially_compact",
-            "answer": "序列紧致",
-            "aliases": [
-                "列紧"
-            ],
-            "category": "拓扑学",
-            "description": "任意序列都有收敛子列的性质，在度量空间中等价于紧致"
-        },
-        {
-            "id": "limit_point_compact",
-            "answer": "极限点紧致",
-            "aliases": [
-                "据点紧致"
-            ],
-            "category": "拓扑学",
-            "description": "任意无限子集都有极限点的性质，弱于紧致性"
-        },
-        {
-            "id": "compactification",
-            "answer": "紧致化",
-            "aliases": [
-                "紧化"
-            ],
-            "category": "拓扑学",
-            "description": "将非紧空间嵌入为紧空间的稠密子空间的过程"
-        },
-        {
-            "id": "one_point_compactification",
-            "answer": "单点紧致化",
-            "aliases": [
-                "单点紧化",
-                "Alexandroff紧致化"
-            ],
-            "category": "拓扑学",
-            "description": "局部紧Hausdorff空间添加一点得到的紧致化，如平面加无穷远点成球面"
-        },
-        {
-            "id": "stone_cech_compactification",
-            "answer": "Stone-Čech紧致化",
-            "aliases": [
-                "Stone-Cech紧致化",
-                "斯通切赫紧致化",
-                "斯通-切赫紧致化"
-            ],
-            "category": "拓扑学",
-            "description": "完全正则空间的最大紧致化，由Stone和Čech独立发现"
-        },
-        {
-            "id": "paracompact",
-            "answer": "仿紧致",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "任意开覆盖都有局部有限开加细的性质，度量空间都是仿紧致的"
-        },
-        {
-            "id": "locally_compact",
-            "answer": "局部紧致",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "每点都有紧邻域的性质，是紧致的局部版本"
-        },
-        {
-            "id": "sigma_compact",
-            "answer": "σ-紧致",
-            "aliases": [
-                "σ紧致",
-                "sigma紧致",
-                "可数紧致"
-            ],
-            "category": "拓扑学",
-            "description": "可数个紧子集的并，弱于紧致性"
-        },
-        {
-            "id": "connected",
-            "answer": "连通",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "不能表示为两个非空不交开集之并的拓扑空间，直观上是一整块没有分离的部分"
-        },
-        {
-            "id": "locally_connected",
-            "answer": "局部连通",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "每点都有连通邻域基的性质"
-        },
-        {
-            "id": "continuum",
-            "answer": "连续统",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "拓扑学中，连续统指紧致的连通度量空间，如实数闭区间[0,1]是最典型的例子"
-        },
-        {
-            "id": "continuum_hypothesis",
-            "answer": "连续统假设",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "关于实数集基数（连续统的势）的假设：不存在基数严格介于可数集和实数集之间的集合，由Cantor提出，Cohen证明其独立于ZFC公理系统"
-        },
-        {
-            "id": "open_cover",
-            "answer": "开覆盖",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "由开集组成的覆盖，在紧致性定义中起核心作用"
-        },
-        {
-            "id": "pasting_lemma",
-            "answer": "粘结引理",
-            "aliases": [
-                "黏结引理",
-                "粘合引理",
-                "粘贴引理"
-            ],
-            "category": "拓扑学",
-            "description": "在有限个闭集上定义的连续映射，若在交集上一致则可粘合成整体连续映射"
-        },
-        {
-            "id": "connected_sum",
-            "answer": "连通和",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "两个流形各挖去一个圆盘后粘合边界得到的曲面运算"
-        },
-        {
-            "id": "path",
-            "answer": "道路",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "从单位区间到空间的连续映射，表示两点间的连续路径"
-        },
-        {
-            "id": "first_countable",
-            "answer": "第一可数",
-            "aliases": [
-                "C1空间"
-            ],
-            "category": "拓扑学",
-            "description": "每点都有可数邻域基的拓扑空间，序列足以描述极限"
-        },
-        {
-            "id": "second_countable",
-            "answer": "第二可数",
-            "aliases": [
-                "C2空间"
-            ],
-            "category": "拓扑学",
-            "description": "有可数拓扑基的空间，蕴含可分、Lindelöf、第一可数等性质"
-        },
-        {
-            "id": "separable",
-            "answer": "可分集",
-            "aliases": [
-                "可分空间"
-            ],
-            "category": "拓扑学",
-            "description": "有可数的稠密子集的拓扑空间，第二可数空间都是可分的"
-        },
-        {
-            "id": "lindelof_space",
-            "answer": "Lindelöf空间",
-            "aliases": [
-                "Lindelof空间",
-                "林德洛夫空间"
-            ],
-            "category": "拓扑学",
-            "description": "任意开覆盖都有可数子覆盖的空间，第二可数空间都是Lindelöf的"
-        },
-        {
-            "id": "embedding",
-            "answer": "嵌入",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "空间到另一个空间的同胚于其子空间的映射"
-        },
-        {
-            "id": "immersion",
-            "answer": "浸入",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "微分拓扑中局部为嵌入的映射，切映射处处单射"
-        },
-        {
-            "id": "pointwise_convergence",
-            "answer": "点态收敛",
-            "aliases": [
-                "逐点收敛"
-            ],
-            "category": "拓扑学",
-            "description": "函数列在每一点都收敛的收敛方式，对应乘积拓扑"
-        },
-        {
-            "id": "compact_convergence",
-            "answer": "紧致收敛",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "在每个紧集上一致收敛的收敛方式"
-        },
-        {
-            "id": "urysohn_lemma",
-            "answer": "Urysohn引理",
-            "aliases": [
-                "乌雷松引理",
-                "乌瑞松引理"
-            ],
-            "category": "拓扑学",
-            "description": "正规空间中不相交闭集可用连续函数完全分离，是度量化定理的基础"
-        },
-        {
-            "id": "urysohn_metrization",
-            "answer": "Urysohn度量化定理",
-            "aliases": [
-                "乌雷松度量化定理"
-            ],
-            "category": "拓扑学",
-            "description": "第二可数的正规空间可度量化，可嵌入Hilbert立方体"
-        },
-        {
-            "id": "tychonoff_theorem",
-            "answer": "Tychonoff定理",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "任意多个紧致空间的积空间仍紧致，依赖选择公理，是点集拓扑的重要定理"
-        },
-        {
-            "id": "nagata_smirnov",
-            "answer": "Nagata-Smirnov度量化定理",
-            "aliases": [
-                "Nagata-Smirnov定理",
-                "长田定理"
-            ],
-            "category": "拓扑学",
-            "description": "拓扑空间可度量化的充要条件：正则且有σ局部有限基"
-        },
-        {
-            "id": "baire_category",
-            "answer": "Baire纲",
-            "aliases": [
-                "贝尔纲"
-            ],
-            "category": "拓扑学",
-            "description": "描述拓扑空间'大小'的分类，完备度量空间是第二纲集，在泛函分析中有重要应用"
-        },
-        {
-            "id": "peano_curve",
-            "answer": "Peano曲线",
-            "aliases": [
-                "皮亚诺曲线",
-                "填满空间的曲线"
-            ],
-            "category": "拓扑学",
-            "description": "填满单位正方形的连续曲线，由Peano发现，展示了连续映射的反直观性质"
-        },
-        {
-            "id": "manifold",
-            "answer": "流形",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "局部具有欧几里得空间性质的拓扑空间，每点都有一个邻域同胚于R^n中的开集，是微分几何和数学物理的基本研究对象"
-        },
-        {
-            "id": "compact_manifold",
-            "answer": "紧致流形",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "既是紧致的又是流形的空间，整体性质良好，在数学中研究广泛"
-        },
-        {
-            "id": "tietze_extension",
-            "answer": "Tietze扩张定理",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "正规空间的闭子集上的有界连续函数可扩张到全空间"
-        },
-        {
-            "id": "support",
-            "answer": "支集",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "函数非零点的闭包，紧支函数在分析中特别重要"
-        },
-        {
-            "id": " Whitney_embedding",
-            "answer": "嵌入定理",
-            "aliases": [
-                "Whitney嵌入定理"
-            ],
-            "category": "拓扑学",
-            "description": "n维光滑流形可光滑嵌入到R^(2n)，Whitney证明"
-        },
-        {
-            "id": "retract",
-            "answer": "收缩核",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "子空间A是X的收缩核如果存在收缩映射r:X→A使得r|A=id_A"
-        },
-        {
-            "id": "homotopy",
-            "answer": "同伦",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "两个连续映射之间的连续形变，是代数拓扑中映射等价的基本概念"
-        },
-        {
-            "id": "path_homotopy",
-            "answer": "道路同伦",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "端点固定的道路之间的同伦，用于定义基本群"
-        },
-        {
-            "id": "straight_line_homotopy",
-            "answer": "直线同伦",
-            "aliases": [],
-            "category": "拓扑学",
-            "description": "凸集中两点间道路的同伦，通过直线段连接"
-        },
-        {
-            "id": "grassmannian",
-            "answer": "Grassmann流形",
-            "aliases": [
-                "Grassmannian",
-                "格拉斯曼流形"
-            ],
-            "category": "拓扑学",
-            "description": "向量空间中所有k维子空间组成的流形，在代数几何和示性类理论中重要"
-        },
-        {
-            "id": "torus",
-            "answer": "环面",
-            "aliases": [
-                "甜甜圈",
-                "Torus"
-            ],
-            "category": "拓扑学",
-            "description": "两个圆的乘积S¹×S¹，亏格为1的可定向紧曲面，形如甜甜圈"
-        },
-        {
-            "id": "sphere",
-            "answer": "球",
-            "aliases": [
-                "球面",
-                "S^n"
-            ],
-            "category": "拓扑学",
-            "description": "n维欧氏空间中到原点距离为1的点集，是最基本的几何对象之一"
-        },
-        {
-            "id": "mobius_band",
-            "answer": "Möbius带",
-            "aliases": [
-                "Mobius带",
-                "莫比乌斯带",
-                "Mobius环",
-                "莫比乌斯环"
-            ],
-            "category": "拓扑学",
-            "description": "将纸条扭转180度后粘合得到的单侧曲面，不可定向，只有一条边界"
-        },
-        {
-            "id": "klein_bottle",
-            "answer": "Klein瓶",
-            "aliases": [
-                "克莱因瓶"
-            ],
-            "category": "拓扑学",
-            "description": "将两个Möbius带沿边界粘合得到的闭曲面，不可定向，无边界，在三维空间中自交"
-        },
-        {
-            "id": "roman_surface",
-            "answer": "罗马曲面",
-            "aliases": [
-                "Steiner曲面"
-            ],
-            "category": "拓扑学",
-            "description": "实射影平面在三维空间中的浸入，有自交线，由Steiner发现"
-        },
-        {
-            "id": "riemann_surface",
-            "answer": "Riemann曲面",
-            "aliases": [
-                "黎曼曲面"
-            ],
-            "category": "拓扑学",
-            "description": "一维复流形，用于处理多值复函数的黎曼面，是复分析和代数几何的交汇点"
-        },
-        {
-            "id": "group",
-            "answer": "群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "带有满足结合律的二元运算、单位元和每个元素都有逆元的代数结构"
-        },
-        {
-            "id": "ring",
-            "answer": "环",
-            "aliases": [],
-            "category": "代数学",
-            "description": "带有两种运算（加法和乘法）的代数结构，对加法成群，对乘法满足结合律和分配律"
-        },
-        {
-            "id": "field",
-            "answer": "域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "非零元都可逆的交换环，可以进行加减乘除四则运算的代数结构"
-        },
-        {
-            "id": "module",
-            "answer": "模",
-            "aliases": [
-                "R-模",
-                "R模"
-            ],
-            "category": "代数学",
-            "description": "环上的向量空间，群带有环的线性作用，是线性代数的推广"
-        },
-        {
-            "id": "algebra",
-            "answer": "代数",
-            "aliases": [],
-            "category": "代数学",
-            "description": "既是向量空间又是环的代数结构，乘法对加法满足双线性"
-        },
-        {
-            "id": "associative_algebra",
-            "answer": "结合代数",
-            "aliases": [],
-            "category": "代数学",
-            "description": "乘法满足结合律的代数，如矩阵代数，是李代数的对偶概念"
-        },
-        {
-            "id": "group_extension",
-            "answer": "群扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "通过正规子群和商群构造新群的方式，用短正合列N→G→Q描述"
-        },
-        {
-            "id": "ring_extension",
-            "answer": "环扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "一个环包含另一个环作为子环，研究整元素和代数整数的工具"
-        },
-        {
-            "id": "field_extension",
-            "answer": "域扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "一个域包含另一个域作为子域，是Galois理论和代数数论的核心研究对象"
-        },
-        {
-            "id": "subgroup",
-            "answer": "子群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "群的子集，对原群运算也构成群，Lagrange定理限制其阶数"
-        },
-        {
-            "id": "normal_subgroup",
-            "answer": "正规子群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "在共轭作用下不变的子群，可以构造商群，是同态的核"
-        },
-        {
-            "id": "quotient_group",
-            "answer": "商群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "由正规子群的陪集构成的群，群同态的像"
-        },
-        {
-            "id": "first_isomorphism_theorem",
-            "answer": "第一同构定理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "群（或环）的同态像同构于定义域模去核，最基本重要的同构定理"
-        },
-        {
-            "id": "second_isomorphism_theorem",
-            "answer": "第二同构定理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "子群H和正规子群N，HN/N ≅ H/(H∩N)，描述交与积的关系"
-        },
-        {
-            "id": "third_isomorphism_theorem",
-            "answer": "第三同构定理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "若K⊂N都是G的正规子群，则(G/K)/(N/K) ≅ G/N，商群的商群仍是商群"
-        },
-        {
-            "id": "orbit",
-            "answer": "轨道",
-            "aliases": [],
-            "category": "代数学",
-            "description": "群作用下点的轨迹，群作用的基本研究对象，轨道-稳定子定理的核心"
-        },
-        {
-            "id": "stabilizer",
-            "answer": "稳定子",
-            "aliases": [
-                "稳定子群"
-            ],
-            "category": "代数学",
-            "description": "群作用中保持某点不动的元素集合，是该点的稳定子群"
-        },
-        {
-            "id": "centralizer",
-            "answer": "中心化子",
-            "aliases": [],
-            "category": "代数学",
-            "description": "与给定子集元素都可交换的群元素集合"
-        },
-        {
-            "id": "normalizer",
-            "answer": "正规化子",
-            "aliases": [],
-            "category": "代数学",
-            "description": "使给定子集在共轭作用下不变的元素集合，是包含该子集为正规子群的最大子群"
-        },
-        {
-            "id": "fixed_point",
-            "answer": "不动点",
-            "aliases": [],
-            "category": "代数学",
-            "description": "群作用下保持不变的点，在Burnside引理和不动点定理中重要"
-        },
-        {
-            "id": "orbit_stabilizer_theorem",
-            "answer": "轨道-稳定子定理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "轨道大小等于稳定子的指数，|Orb(x)| = [G:Stab(x)]，有限群论基本工具"
-        },
-        {
-            "id": "group_action",
-            "answer": "群作用",
-            "aliases": [],
-            "category": "代数学",
-            "description": "群到集合上置换群的同态，描述群对集合的对称性作用"
-        },
-        {
-            "id": "simple_group",
-            "answer": "单群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "没有非平凡正规子群的群，是群论的原子，有限单群分类定理是数学巨著"
-        },
-        {
-            "id": "solvable_group",
-            "answer": "可解群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "导列最终达到平凡群的群，多项式方程根式可解的Galois群是可解群"
-        },
-        {
-            "id": "burnside_lemma",
-            "answer": "Burnside引理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "群作用下轨道数等于群元素不动点数的平均，计数组合学的重要工具"
-        },
-        {
-            "id": "classification_finite_simple_groups",
-            "answer": "有限单群分类定理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "所有有限单群都同构于18个无穷族之一或26个散在群之一，数学史上最庞大的证明"
-        },
-        {
-            "id": "monster_group",
-            "answer": "魔群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "最大的散在单群，阶数约8×10⁵³，与模形式和顶点算子代数有深刻联系"
-        },
-        {
-            "id": "baby_monster",
-            "answer": "小魔群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "第二大的散在单群，由Fischer发现，与魔群有密切关系"
-        },
-        {
-            "id": "permutation_group",
-            "answer": "置换群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "由集合上置换构成的群，每个群都可嵌入置换群（Cayley定理）"
-        },
-        {
-            "id": "symmetric_group",
-            "answer": "对称群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "n个元素上所有置换构成的群Sn，是群论和表示论的基本对象"
-        },
-        {
-            "id": "alternating_group",
-            "answer": "交错群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "对称群中偶置换构成的子群An，n≥5时是单群"
-        },
-        {
-            "id": "cyclic_group",
-            "answer": "循环群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "由一个元素生成的群，同构于整数加群或其商群Zn，是最简单的群"
-        },
-        {
-            "id": "abelian_group",
-            "answer": "Abel群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "运算满足交换律的群，有限生成Abel群有完全的结构分类"
-        },
-        {
-            "id": "semigroup",
-            "answer": "半群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "只满足结合律的代数结构，比群更弱，在自动机理论和组合数学中出现"
-        },
-        {
-            "id": "monoid",
-            "answer": "幺半群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "有单位元的半群，无逆元要求，在范畴论和计算机科学中重要"
-        },
-        {
-            "id": "free_group",
-            "answer": "自由群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "由一组生成元自由生成的群，没有非平凡关系，任何群都是自由群的商"
-        },
-        {
-            "id": "free_monoid",
-            "answer": "自由幺半群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "由字母表上所有有限字（包括空字）构成的幺半群，运算为字连接"
-        },
-        {
-            "id": "monstrous_moonshine",
-            "answer": "魔群月光猜想",
-            "aliases": [],
-            "category": "代数学",
-            "description": "魔群与模函数j函数的傅里叶系数之间的神秘联系，由Borcherds证明获菲尔兹奖"
-        },
-        {
-            "id": "domain",
-            "answer": "整环",
-            "aliases": [
-                "无零因子环"
-            ],
-            "category": "代数学",
-            "description": "无零因子的交换环，可以发展整除理论和因子分解"
-        },
-        {
-            "id": "division_ring",
-            "answer": "除环",
-            "aliases": [
-                "体"
-            ],
-            "category": "代数学",
-            "description": "非零元都可逆的环（不必交换），Wedderburn定理：有限除环必是域"
-        },
-        {
-            "id": "quaternion",
-            "answer": "四元数",
-            "aliases": [],
-            "category": "代数学",
-            "description": "Hamilton发现的非交换除环，形式为a+bi+cj+dk，是复数的非交换推广"
-        },
-        {
-            "id": "splitting_field",
-            "answer": "分裂域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "多项式分解为一次因子之积的最小域扩张，Galois理论的核心对象"
-        },
-        {
-            "id": "algebraic_extension",
-            "answer": "代数扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "扩张中每个元素都是基域上的代数元，是域扩张的基本类型"
-        },
-        {
-            "id": "transcendental_extension",
-            "answer": "超越扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "包含超越元的域扩张，如Q(π)/Q，对应有理函数域"
-        },
-        {
-            "id": "polynomial_ring",
-            "answer": "多项式环",
-            "aliases": [],
-            "category": "代数学",
-            "description": "系数在环中的多项式构成的环，Noether环上多项式环仍Noether"
-        },
-        {
-            "id": "cyclotomic_field",
-            "answer": "分圆域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "添加单位根到有理数域得到的域扩张，是代数数论的重要研究对象"
-        },
-        {
-            "id": "residue_class_ring",
-            "answer": "剩余类环",
-            "aliases": [],
-            "category": "代数学",
-            "description": "整数模n的剩余类构成的环，同构于Z/nZ，是有限环的基本例子"
-        },
-        {
-            "id": "klein_four_group",
-            "answer": "Klein群",
-            "aliases": [
-                "克莱因群",
-                "V4"
-            ],
-            "category": "代数学",
-            "description": "阶为4的非循环Abel群，同构于Z2×Z2，是最小的非循环群"
-        },
-        {
-            "id": "ufd",
-            "answer": "唯一因子分解整环",
-            "aliases": [
-                "UFD",
-                "Gauss整环",
-                "高斯整环",
-                "因子分解整环"
-            ],
-            "category": "代数学",
-            "description": "每个非零元都可唯一分解为素元乘积的整环，如整数环、域上多项式环"
-        },
-        {
-            "id": "euclidean_domain",
-            "answer": "Euclid整环",
-            "aliases": [
-                "欧几里得整环",
-                "ED"
-            ],
-            "category": "代数学",
-            "description": "可进行带余除法的整环，有辗转相除法，必是唯一因子分解整环"
-        },
-        {
-            "id": "ideal",
-            "answer": "理想",
-            "aliases": [],
-            "category": "代数学",
-            "description": "环的子集，对加减法封闭且吸收环中元素的乘法，是商环的核"
-        },
-        {
-            "id": "prime_ideal",
-            "answer": "素理想",
-            "aliases": [],
-            "category": "代数学",
-            "description": "商环是整环的理想，推广了素数的概念"
-        },
-        {
-            "id": "principal_ideal",
-            "answer": "主理想",
-            "aliases": [],
-            "category": "代数学",
-            "description": "由一个元素生成的理想，是最简单的理想类型"
-        },
-        {
-            "id": "maximal_ideal",
-            "answer": "极大理想",
-            "aliases": [],
-            "category": "代数学",
-            "description": "不被其他真理想包含的理想，商环是域，在有单位元的环中必存在"
-        },
-        {
-            "id": "pid",
-            "answer": "主理想整环",
-            "aliases": [
-                "PID"
-            ],
-            "category": "代数学",
-            "description": "每个理想都是主理想的整环，是唯一因子分解整环，有限生成模有结构定理"
-        },
-        {
-            "id": "algebraically_closed_field",
-            "answer": "代数闭域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "每个非常数多项式都有根的域，复数域是代数闭域，每个域都有代数闭包"
-        },
-        {
-            "id": "finite_field",
-            "answer": "有限域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "元素个数有限的域，必为pn个元素，在同构意义下唯一，记为Fq或GF(q)"
-        },
-        {
-            "id": "galois_extension",
-            "answer": "Galois扩张",
-            "aliases": [
-                "伽罗瓦扩张"
-            ],
-            "category": "代数学",
-            "description": "正规且可分的代数扩张，Galois理论的核心，Galois群刻画了扩张结构"
-        },
-        {
-            "id": "galois_group",
-            "answer": "Galois群",
-            "aliases": [
-                "伽罗瓦群"
-            ],
-            "category": "代数学",
-            "description": "保持基域不动的域自同构构成的群，连接域扩张与群论的桥梁"
-        },
-        {
-            "id": "normal_extension",
-            "answer": "正规扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "不可约多项式有一个根则所有根都在其中的代数扩张，是Galois扩张的条件之一"
-        },
-        {
-            "id": "separable_extension",
-            "answer": "可分扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "每个元素的极小多项式无重根的扩张，特征0的域上所有代数扩张都可分"
-        },
-        {
-            "id": "primitive_element",
-            "answer": "本原元素",
-            "aliases": [],
-            "category": "代数学",
-            "description": "使扩张由单元素生成的元素，有限可分扩张都有本原元素（本原元素定理）"
-        },
-        {
-            "id": "finitely_generated_extension",
-            "answer": "有限生成扩张",
-            "aliases": [],
-            "category": "代数学",
-            "description": "由基域添加有限个元素生成的域扩张，研究超越基和超越度"
-        },
-        {
-            "id": "algebraic_number_field",
-            "answer": "代数数域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "有理数域的有限扩张，代数数论的主要研究对象，其整数环是Dedekind整环"
-        },
-        {
-            "id": "transcendental_number_field",
-            "answer": "超越数域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "包含有理数域上超越元的域，如有理函数域Q(t)"
-        },
-        {
-            "id": "complete_field",
-            "answer": "完备域",
-            "aliases": [],
-            "category": "代数学",
-            "description": "每个Cauchy列都收敛的域，关于绝对值或赋值完备，如实数域、Qp"
-        },
-        {
-            "id": "hensel_lemma",
-            "answer": "Hensel引理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "关于在完备局部域中提升多项式解的引理，类似牛顿迭代法，在p-adic分析中核心"
-        },
-        {
-            "id": "abel_ruffini_theorem",
-            "answer": "Abel-Ruffini定理",
-            "aliases": [],
-            "category": "代数学",
-            "description": "五次及以上一般多项式方程没有根式解，由Abel和Ruffini证明，Galois理论解释"
-        },
-        {
-            "id": "cayley_theorem",
-            "answer": "Cayley定理",
-            "aliases": [
-                "凯莱定理"
-            ],
-            "category": "代数学",
-            "description": "每个群都同构于某个对称群的子群，任何群都可实现为置换群"
-        },
-        {
-            "id": "p_group",
-            "answer": "p-群",
-            "aliases": [],
-            "category": "代数学",
-            "description": "阶为素数幂的有限群，有非平凡中心，是幂零群"
-        },
-        {
-            "id": "sylow_subgroup",
-            "answer": "Sylow子群",
-            "aliases": [
-                "Sylow p-子群",
-                "西罗子群",
-                "西罗p-子群"
-            ],
-            "category": "代数学",
-            "description": "有限群中阶为pn的最大p-子群，Sylow定理保证了存在性和共轭性"
-        },
-        {
-            "id": "sylow_theorem",
-            "answer": "Sylow定理",
-            "aliases": [
-                "西罗定理"
-            ],
-            "category": "代数学",
-            "description": "关于有限群中Sylow子群存在、共轭和个数的三个定理，有限群论的基础"
-        },
-        {
-            "id": "complete",
-            "answer": "完备",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "空间中每个Cauchy列都收敛的性质，如实数域是完备的"
-        },
-        {
-            "id": "completion",
-            "answer": "完备化",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "将不完备度量空间嵌入到完备空间的过程，如实数是有理数的完备化"
-        },
-        {
-            "id": "cauchy_sequence",
-            "answer": "Cauchy列",
-            "aliases": [
-                "基本列",
-                "柯西列"
-            ],
-            "category": "数学分析",
-            "description": "距离任意小的项最终都接近的序列，完备空间中Cauchy列必收敛"
-        },
-        {
-            "id": "cauchy_convergence_criterion",
-            "answer": "Cauchy收敛准则",
-            "aliases": [
-                "Cauchy收敛原理",
-                "柯西收敛准则"
-            ],
-            "category": "数学分析",
-            "description": "数列收敛当且仅当它是Cauchy列，在实数域中成立的充要条件"
-        },
-        {
-            "id": "epsilon_delta",
-            "answer": "ε-δ语言",
-            "aliases": [
-                "epsilon-delta语言",
-                "epsilondelta语言"
-            ],
-            "category": "数学分析",
-            "description": "Weierstrass给出的极限严格定义，用ε和δ刻画任意接近"
-        },
-        {
-            "id": "sequence",
-            "answer": "数列",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "按自然数编号的一列实数，是研究极限和收敛的基本对象"
-        },
-        {
-            "id": "function",
-            "answer": "函数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "两个集合之间的对应关系，每个定义域元素对应唯一的值域元素"
-        },
-        {
-            "id": "natural_number",
-            "answer": "自然数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "用于计数的数0,1,2,3,...，由Peano公理严格定义"
-        },
-        {
-            "id": "integer",
-            "answer": "整数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "...,-2,-1,0,1,2,...，自然数添加负数得到，构成交换环"
-        },
-        {
-            "id": "rational_number",
-            "answer": "有理数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "可以表示为两个整数之比的数，在实数中稠密但不完备"
-        },
-        {
-            "id": "real_number",
-            "answer": "实数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "有理数的完备化，具有完备性和连续性，与数轴一一对应"
-        },
-        {
-            "id": "supremum",
-            "answer": "上确界",
-            "aliases": [
-                "最小上界",
-                "sup"
-            ],
-            "category": "数学分析",
-            "description": "集合的最小上界，实数系完备性的体现，非空有上界集合必有上确界"
-        },
-        {
-            "id": "infimum",
-            "answer": "下确界",
-            "aliases": [
-                "最大下界",
-                "inf"
-            ],
-            "category": "数学分析",
-            "description": "集合的最大下界，与上确界对偶"
-        },
-        {
-            "id": "upper_bound",
-            "answer": "上界",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "大于等于集合中所有元素的数"
-        },
-        {
-            "id": "lower_bound",
-            "answer": "下界",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "小于等于集合中所有元素的数"
-        },
-        {
-            "id": "least_upper_bound_property",
-            "answer": "最小上界性",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "实数系的基本性质：非空有上界的集合必有上确界，等价于完备性"
-        },
-        {
-            "id": "dedekind_cut",
-            "answer": "Dedekind分割",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "将有理数分为上下两部分构造实数的方法，体现实数连续性"
-        },
-        {
-            "id": "dedekind_theorem",
-            "answer": "Dedekind定理",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "关于实数连续性的基本定理，Dedekind分割确定唯一的实数"
-        },
-        {
-            "id": "complex_number",
-            "answer": "复数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "形如a+bi的数，i²=-1，实数域的代数闭扩张，对应复平面"
-        },
-        {
-            "id": "divergence",
-            "answer": "发散",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "序列或函数极限不存在或不趋向于有限值的情况"
-        },
-        {
-            "id": "monotone_convergence_theorem",
-            "answer": "单调有界定理",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "单调有界数列必收敛，实数系完备性的重要体现"
-        },
-        {
-            "id": "heine_theorem",
-            "answer": "Heine定理",
-            "aliases": [
-                "归结原理"
-            ],
-            "category": "数学分析",
-            "description": "函数极限存在当且仅当对任意趋于该点的数列，函数值数列极限存在且相等"
-        },
-        {
-            "id": "series",
-            "answer": "级数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "无穷个数相加的形式，研究其收敛性和求值"
-        },
-        {
-            "id": "harmonic_series",
-            "answer": "调和级数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "Σ1/n，虽然通项趋于0但级数发散，部分和增长如ln(n)"
-        },
-        {
-            "id": "p_series",
-            "answer": "p级数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "Σ1/n^p，p>1时收敛，p≤1时发散，级数收敛判别的重要例子"
-        },
-        {
-            "id": "geometric_series",
-            "answer": "几何级数",
-            "aliases": [
-                "等比级数"
-            ],
-            "category": "数学分析",
-            "description": "Σr^n，|r|<1时收敛于1/(1-r)，最简单的收敛级数"
-        },
-        {
-            "id": "hypergeometric_function",
-            "answer": "超几何函数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "用超几何级数定义的特殊函数，包含许多初等函数和特殊函数作为特例"
-        },
-        {
-            "id": "power_series",
-            "answer": "幂级数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "形如Σanx^n的级数，在收敛半径内表示解析函数"
-        },
-        {
-            "id": "abel_theorem",
-            "answer": "Abel定理",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "幂级数在收敛区间端点收敛，则和函数在该点连续"
-        },
-        {
-            "id": "radius_of_convergence",
-            "answer": "收敛半径",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "幂级数收敛区间长度的一半，可用Cauchy-Hadamard公式计算"
-        },
-        {
-            "id": "bolzano_weierstrass_theorem",
-            "answer": "Bolzano-Weierstrass定理",
-            "aliases": [
-                "波尔查诺-魏尔斯特拉斯定理",
-                "波尔查诺魏尔斯特拉斯定理"
-            ],
-            "category": "数学分析",
-            "description": "有界数列必有收敛子列，体现实数的列紧性，等价于Heine-Borel定理"
-        },
-        {
-            "id": "heine_borel_theorem",
-            "answer": "Heine-Borel定理",
-            "aliases": [
-                "海涅-博雷尔定理",
-                "海涅博雷尔定理"
-            ],
-            "category": "数学分析",
-            "description": "实数集的子集是紧的当且仅当它是有界闭集"
-        },
-        {
-            "id": "derivative",
-            "answer": "导数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "函数在某点的瞬时变化率，几何意义为切线斜率"
-        },
-        {
-            "id": "differential",
-            "answer": "微分",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "函数的线性近似，几何意义为切线纵坐标变化量"
-        },
-        {
-            "id": "directional_derivative",
-            "answer": "方向导数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "多元函数沿某方向的瞬时变化率"
-        },
-        {
-            "id": "multivariable_differential",
-            "answer": "多元微分",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "多元函数的微分，用线性映射逼近函数变化"
-        },
-        {
-            "id": "partial_derivative",
-            "answer": "偏导数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "多元函数对某一变量的导数，固定其他变量"
-        },
-        {
-            "id": "frechet_derivative",
-            "answer": "Fréchet微分",
-            "aliases": [
-                "Frechet微分",
-                "F-微分",
-                "Fréchet导数",
-                "Frechet导数",
-                "F-导数"
-            ],
-            "category": "数学分析",
-            "description": "泛函分析中的强导数概念，用有界线性算子逼近函数变化"
-        },
-        {
-            "id": "jacobian_matrix",
-            "answer": "Jacobi矩阵",
-            "aliases": [
-                "Jacobian",
-                "雅可比矩阵"
-            ],
-            "category": "数学分析",
-            "description": "多元向量值函数的一阶偏导数构成的矩阵，行列式用于坐标变换"
-        },
-        {
-            "id": "gradient",
-            "answer": "梯度",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "多元函数偏导数组成的向量，指向函数增长最快的方向"
-        },
-        {
-            "id": "divergence",
-            "answer": "散度",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "向量场在某点的通量密度，刻画源的强弱"
-        },
-        {
-            "id": "curl",
-            "answer": "旋度",
-            "aliases": [
-                "旋转度"
-            ],
-            "category": "数学分析",
-            "description": "向量场在某点的旋转程度，刻画涡旋的强弱"
-        },
-        {
-            "id": "dini_derivative",
-            "answer": "Dini导数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "导数的推广，定义四个方向的单侧导数（上下左右）"
-        },
-        {
-            "id": "left_derivative",
-            "answer": "左导数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "函数在某点左侧的导数，用左极限定义"
-        },
-        {
-            "id": "right_derivative",
-            "answer": "右导数",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "函数在某点右侧的导数，用右极限定义"
-        },
-        {
-            "id": "taylor_formula",
-            "answer": "Taylor公式",
-            "aliases": [
-                "Taylor定理",
-                "Taylor展开",
-                "泰勒公式",
-                "泰勒展开",
-                "泰勒定理"
-            ],
-            "category": "数学分析",
-            "description": "用多项式逼近函数，含函数在某点的各阶导数信息"
-        },
-        {
-            "id": "taylor_series",
-            "answer": "Taylor级数",
-            "aliases": [
-                "泰勒级数"
-            ],
-            "category": "数学分析",
-            "description": "Taylor展开的无穷级数形式，解析函数可展开为Taylor级数"
-        },
-        {
-            "id": "lhopital_rule",
-            "answer": "l'Hopital法则",
-            "aliases": [
-                "洛必达法则",
-                "LHospital法则"
-            ],
-            "category": "数学分析",
-            "description": "用导数比求不定式极限的方法，适用于0/0或∞/∞型"
-        },
-        {
-            "id": "fermat_lemma",
-            "answer": "Fermat引理",
-            "aliases": [
-                "费马引理"
-            ],
-            "category": "数学分析",
-            "description": "可导函数在极值点导数为零，是极值的必要条件"
-        },
-        {
-            "id": "rolle_theorem",
-            "answer": "Rolle中值定理",
-            "aliases": [
-                "罗尔中值定理"
-            ],
-            "category": "数学分析",
-            "description": "端点值相等的可导函数，内部有导数为零的点"
-        },
-        {
-            "id": "cauchy_mean_value",
-            "answer": "Cauchy中值定理",
-            "aliases": [
-                "柯西中值定理"
-            ],
-            "category": "数学分析",
-            "description": "两个函数在区间端点函数值差的比等于某点导数的比"
-        },
-        {
-            "id": "lagrange_mean_value",
-            "answer": "Lagrange中值定理",
-            "aliases": [
-                "拉格朗日中值定理"
-            ],
-            "category": "数学分析",
-            "description": "函数在区间上的平均变化率等于某点的瞬时变化率，微分学基本定理"
-        },
-        {
-            "id": "extreme_point",
-            "answer": "极值点",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "函数在该点邻域内取最大或最小值的点"
-        },
-        {
-            "id": "mean_value_inequality",
-            "answer": "中值不等式",
-            "aliases": [
-                "MVI"
-            ],
-            "category": "数学分析",
-            "description": "用导数有界性估计函数值差的不等式，Lagrange中值定理的推论"
-        },
-        {
-            "id": "riemann_integral",
-            "answer": "Riemann积分",
-            "aliases": [
-                "定积分",
-                "R-积分",
-                "黎曼积分"
-            ],
-            "category": "数学分析",
-            "description": "用Riemann和极限定义的积分，几何意义为曲线下面积"
-        },
-        {
-            "id": "darboux_sum",
-            "answer": "Darboux和",
-            "aliases": [
-                "达布和"
-            ],
-            "category": "数学分析",
-            "description": "用上下确界定义的积分和，与Riemann积分等价，用于可积性判定"
-        },
-        {
-            "id": "improper_integral",
-            "answer": "瑕积分",
-            "aliases": [
-                "反常积分"
-            ],
-            "category": "数学分析",
-            "description": "被积函数无界或积分区间无界的积分，用极限定义"
-        },
-        {
-            "id": "infinite_integral",
-            "answer": "无穷积分",
-            "aliases": [
-                "无穷限积分"
-            ],
-            "category": "数学分析",
-            "description": "积分限为无穷的积分，用极限定义"
-        },
-        {
-            "id": "multiple_integral",
-            "answer": "重积分",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "多元函数在区域上的积分，几何意义为高维体积"
-        },
-        {
-            "id": "double_integral",
-            "answer": "二重积分",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "二元函数在平面区域上的积分，几何意义为曲顶柱体体积"
-        },
-        {
-            "id": "triple_integral",
-            "answer": "三重积分",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "三元函数在空间区域上的积分，几何意义为四维超体积"
-        },
-        {
-            "id": "contour_integral",
-            "answer": "围道积分",
-            "aliases": [
-                "环积分",
-                "线积分",
-                "曲线积分"
-            ],
-            "category": "数学分析",
-            "description": "沿闭合曲线的积分，复分析中重要，与留数定理联系"
-        },
-        {
-            "id": "volume_integral",
-            "answer": "体积分",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "在立体区域上的积分，物理中常用"
-        },
-        {
-            "id": "gamma_function",
-            "answer": "Γ函数",
-            "aliases": [
-                "Gamma函数",
-                "伽马函数"
-            ],
-            "category": "数学分析",
-            "description": "阶乘在实数和复数上的推广，Γ(n)=(n-1)!，重要的特殊函数"
-        },
-        {
-            "id": "beta_function",
-            "answer": "Beta函数",
-            "aliases": [
-                "贝塔函数",
-                "B函数"
-            ],
-            "category": "数学分析",
-            "description": "用积分定义的特殊函数，与Gamma函数关系密切"
-        },
-        {
-            "id": "limit_superior",
-            "answer": "上极限",
-            "aliases": [
-                "limsup"
-            ],
-            "category": "数学分析",
-            "description": "序列所有收敛子列极限的最大值"
-        },
-        {
-            "id": "limit_inferior",
-            "answer": "下极限",
-            "aliases": [
-                "liminf"
-            ],
-            "category": "数学分析",
-            "description": "序列所有收敛子列极限的最小值"
-        },
-        {
-            "id": "left_limit",
-            "answer": "左极限",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "函数从左侧趋近某点的极限"
-        },
-        {
-            "id": "right_limit",
-            "answer": "右极限",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "函数从右侧趋近某点的极限"
-        },
-        {
-            "id": "leibniz_formula",
-            "answer": "Leibniz公式",
-            "aliases": [
-                "莱布尼茨公式"
-            ],
-            "category": "数学分析",
-            "description": "两个函数乘积的高阶导数公式，类似二项式展开"
-        },
-        {
-            "id": "newton_leibniz_formula",
-            "answer": "Newton-Leibniz公式",
-            "aliases": [
-                "牛莱公式",
-                "Newton-Leibniz定理"
-            ],
-            "category": "数学分析",
-            "description": "定积分等于原函数在端点的值之差，连接微分与积分的基本公式"
-        },
-        {
-            "id": "fundamental_theorem_calculus",
-            "answer": "微积分基本定理",
-            "aliases": [],
-            "category": "数学分析",
-            "description": "揭示微分与积分互逆关系的定理，是微积分的核心"
-        },
-        {
-            "id": "leibniz_rule",
-            "answer": "Leibniz法则",
-            "aliases": [
-                "莱布尼茨法则",
-                "积分号下求导"
-            ],
-            "category": "数学分析",
-            "description": "含参积分关于参数求导的法则，可交换积分与微分次序"
-        }
-    ]
+  "concepts": [
+    {
+      "id": "proposition",
+      "answer": "命题",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "可以判断真假的陈述句，是数理逻辑的基本研究对象"
+    },
+    {
+      "id": "inverse_proposition",
+      "answer": "逆命题",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "将原命题的条件和结论互换得到的新命题"
+    },
+    {
+      "id": "negative_proposition",
+      "answer": "否命题",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "同时否定原命题的条件和结论得到的命题"
+    },
+    {
+      "id": "contrapositive",
+      "answer": "逆否命题",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "既逆又否的命题，与原命题等价"
+    },
+    {
+      "id": "implication",
+      "answer": "蕴含",
+      "aliases": [
+        "implies"
+      ],
+      "category": "数学基础",
+      "description": "逻辑连接词，表示如果则的关系，记作⇒"
+    },
+    {
+      "id": "conjunction",
+      "answer": "与",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "逻辑连接词，表示两个命题同时成立，记作∧"
+    },
+    {
+      "id": "disjunction",
+      "answer": "或",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "逻辑连接词，表示至少一个命题成立，记作∨"
+    },
+    {
+      "id": "negation",
+      "answer": "非",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "逻辑否定，表示命题的反面，记作¬"
+    },
+    {
+      "id": "exclusive_or",
+      "answer": "异或",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "逻辑连接词，表示两者恰有一个成立，记作⊕"
+    },
+    {
+      "id": "xnor",
+      "answer": "异或非",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "异或的否定，表示两者同时成立或同时不成立"
+    },
+    {
+      "id": "set",
+      "answer": "集合",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "确定的不同元素的整体，是数学的基础概念"
+    },
+    {
+      "id": "zf_axioms",
+      "answer": "ZF公理系统",
+      "aliases": [
+        "ZF系统",
+        "ZF"
+      ],
+      "category": "数学基础",
+      "description": "Zermelo-Fraenkel集合论公理系统，现代数学的基础"
+    },
+    {
+      "id": "zfc_axioms",
+      "answer": "ZFC公理系统",
+      "aliases": [
+        "ZFC系统",
+        "ZFC"
+      ],
+      "category": "数学基础",
+      "description": "ZF公理系统加上选择公理，是最常用的集合论公理系统"
+    },
+    {
+      "id": "axiom_of_extensionality",
+      "answer": "外延公理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "两个集合相等当且仅当它们有相同的元素"
+    },
+    {
+      "id": "axiom_of_pairing",
+      "answer": "配对公理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "对任意两个集合，存在集合恰好包含它们作为元素"
+    },
+    {
+      "id": "axiom_of_regularity",
+      "answer": "正则公理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "每个非空集合都有一个极小元，防止集合属于自身"
+    },
+    {
+      "id": "axiom_of_infinity",
+      "answer": "无穷公理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "存在包含所有自然数的无限集合"
+    },
+    {
+      "id": "axiom_of_power_set",
+      "answer": "幂集公理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "对任意集合，其所有子集构成的集合存在"
+    },
+    {
+      "id": "axiom_of_union",
+      "answer": "并集公理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "对任意集合族，其并集存在"
+    },
+    {
+      "id": "axiom_schema_of_replacement",
+      "answer": "替换公理模式",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "通过函数映射，集合的像仍然是集合"
+    },
+    {
+      "id": "axiom_schema_of_separation",
+      "answer": "分离公理模式",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "从集合中分离满足某性质的元素形成子集"
+    },
+    {
+      "id": "axiom_of_choice",
+      "answer": "选择公理",
+      "aliases": [
+        "AC"
+      ],
+      "category": "数学基础",
+      "description": "任意非空集合的笛卡尔积非空，等价于良序原理"
+    },
+    {
+      "id": "zorns_lemma",
+      "answer": "Zorn引理",
+      "aliases": [
+        "佐恩引理"
+      ],
+      "category": "数学基础",
+      "description": "偏序集中每个链都有上界，则存在极大元"
+    },
+    {
+      "id": "well_ordering_theorem",
+      "answer": "Zarmelo良序定理",
+      "aliases": [
+        "良序定理",
+        "策梅洛良序定理",
+        "良序原理"
+      ],
+      "category": "数学基础",
+      "description": "任何集合都可以被良序化"
+    },
+    {
+      "id": "relation",
+      "answer": "关系",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "集合间的笛卡尔积的子集，表示元素间的联系"
+    },
+    {
+      "id": "order_relation",
+      "answer": "序关系",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "满足自反、反对称、传递的关系，用于比较元素"
+    },
+    {
+      "id": "partially_ordered_set",
+      "answer": "偏序集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "带有偏序关系的集合，不必任意两元素可比"
+    },
+    {
+      "id": "totally_ordered_set",
+      "answer": "全序集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "任意两元素都可比较的偏序集，也称为线性序"
+    },
+    {
+      "id": "strict_partial_order",
+      "answer": "严格偏序集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "满足反自反、反对称、传递的关系"
+    },
+    {
+      "id": "equivalence_relation",
+      "answer": "等价关系",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "满足自反、对称、传递的关系，用于分类元素"
+    },
+    {
+      "id": "mapping",
+      "answer": "映射",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "两个集合间元素的对应关系，每个元素有唯一像"
+    },
+    {
+      "id": "injective_map",
+      "answer": "单射",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不同元素映射到不同像的映射，也称为一对一映射"
+    },
+    {
+      "id": "surjective_map",
+      "answer": "满射",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "值域等于到达集的映射，每个元素都有原像"
+    },
+    {
+      "id": "bijective_map",
+      "answer": "双射",
+      "aliases": [
+        "一一映射"
+      ],
+      "category": "数学基础",
+      "description": "既是单射又是满射的映射，可以建立一一对应"
+    },
+    {
+      "id": "union",
+      "answer": "并集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "属于至少一个集合的所有元素构成的集合"
+    },
+    {
+      "id": "intersection",
+      "answer": "交集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "同时属于所有集合的元素构成的集合"
+    },
+    {
+      "id": "complement",
+      "answer": "补集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "全集中不属于该集合的元素构成的集合"
+    },
+    {
+      "id": "difference",
+      "answer": "差集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "属于第一个集合但不属于第二个集合的元素"
+    },
+    {
+      "id": "power_set",
+      "answer": "幂集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "集合所有子集构成的集合，含2的n次方个元素"
+    },
+    {
+      "id": "de_morgans_laws",
+      "answer": "De Morgan定律",
+      "aliases": [
+        "De Morgan律",
+        "对偶律",
+        "摩根定律"
+      ],
+      "category": "数学基础",
+      "description": "并的补等于补的交，交的补等于补的并"
+    },
+    {
+      "id": "peano_axioms",
+      "answer": "Peano公理",
+      "aliases": [
+        "皮亚诺公理"
+      ],
+      "category": "数学基础",
+      "description": "刻画自然数结构的五条公理，由Peano提出"
+    },
+    {
+      "id": "natural_numbers",
+      "answer": "自然数",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "用于计数的非负整数，0,1,2,3等"
+    },
+    {
+      "id": "cardinality",
+      "answer": "基数",
+      "aliases": [
+        "势数"
+      ],
+      "category": "数学基础",
+      "description": "集合的元素个数，用于比较集合的大小"
+    },
+    {
+      "id": "countable_set",
+      "answer": "可数集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "与自然数集等势的无限集合，如有理数集"
+    },
+    {
+      "id": "finite_set",
+      "answer": "有限集",
+      "aliases": [
+        "有穷集"
+      ],
+      "category": "数学基础",
+      "description": "元素个数为有限的集合"
+    },
+    {
+      "id": "infinite_set",
+      "answer": "无限集",
+      "aliases": [
+        "无穷集"
+      ],
+      "category": "数学基础",
+      "description": "元素个数为无限的集合，如自然数集"
+    },
+    {
+      "id": "uncountable_set",
+      "answer": "不可数集",
+      "aliases": [
+        "不可数"
+      ],
+      "category": "数学基础",
+      "description": "不与自然数集等势的无限集合，如实数集"
+    },
+    {
+      "id": "cantor_schroder_bernstein_theorem",
+      "answer": "Cantor-Schröder-Bernstein定理",
+      "aliases": [
+        "CSB定理",
+        "SB定理",
+        "Schröder-Bernstein定理"
+      ],
+      "category": "数学基础",
+      "description": "若两集合互相存在单射，则它们等势"
+    },
+    {
+      "id": "cartesian_product",
+      "answer": "Cartesian积",
+      "aliases": [
+        "笛卡尔积",
+        "Descartes积"
+      ],
+      "category": "数学基础",
+      "description": "多个集合元素的有序对或有序组构成的集合"
+    },
+    {
+      "id": "inverse_map",
+      "answer": "逆映射",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "双射的反向映射，将像映射回原像"
+    },
+    {
+      "id": "lexicographic_order",
+      "answer": "字典序",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "按分量逐位比较的序关系，如字典排列单词"
+    },
+    {
+      "id": "family_of_sets",
+      "answer": "集合族",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "以集合为元素的集合，即集合的集合"
+    },
+    {
+      "id": "mathematical_induction",
+      "answer": "数学归纳原理",
+      "aliases": [
+        "归纳法",
+        "归纳原理",
+        "数学归纳法"
+      ],
+      "category": "数学基础",
+      "description": "证明关于自然数命题的方法：基例加归纳步"
+    },
+    {
+      "id": "binary_relation",
+      "answer": "二元关系",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "两个集合笛卡尔积的子集，表示元素间的关系"
+    },
+    {
+      "id": "equivalence_class",
+      "answer": "等价类",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "等价关系下相互等价的元素构成的集合"
+    },
+    {
+      "id": "quotient_set",
+      "answer": "商集",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "所有等价类构成的集合，表示分类结果"
+    },
+    {
+      "id": "integers",
+      "answer": "整数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "包含正整数、负整数和零的数集，记作Z"
+    },
+    {
+      "id": "rational_numbers",
+      "answer": "有理数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "可以表示为两个整数之比的数，记作Q"
+    },
+    {
+      "id": "real_numbers",
+      "answer": "实数",
+      "aliases": [],
+      "category": "代数学/分析学",
+      "description": "完备的有序域，包含所有有理数和无理数，记作R"
+    },
+    {
+      "id": "complex_numbers",
+      "answer": "复数",
+      "aliases": [],
+      "category": "代数学/分析学",
+      "description": "形如a加bi的数，其中i方等于负1，记作C"
+    },
+    {
+      "id": "continuum",
+      "answer": "连续统",
+      "aliases": [],
+      "category": "分析学",
+      "description": "实数集的基数，也是完备度量空间的连通分支"
+    },
+    {
+      "id": "continuum_hypothesis",
+      "answer": "连续统假设",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不存在基数严格介于可数集和实数集之间的集合"
+    },
+    {
+      "id": "supremum",
+      "answer": "上确界",
+      "aliases": [
+        "sup"
+      ],
+      "category": "分析学",
+      "description": "集合最小上界，可能不属于集合本身"
+    },
+    {
+      "id": "infimum",
+      "answer": "下确界",
+      "aliases": [
+        "inf"
+      ],
+      "category": "分析学",
+      "description": "集合最大下界，可能不属于集合本身"
+    },
+    {
+      "id": "limit_superior",
+      "answer": "上极限",
+      "aliases": [],
+      "category": "分析学",
+      "description": "数列极限点的最大值，描述长期趋势的上界"
+    },
+    {
+      "id": "limit_inferior",
+      "answer": "下极限",
+      "aliases": [],
+      "category": "分析学",
+      "description": "数列极限点的最小值，描述长期趋势的下界"
+    },
+    {
+      "id": "left_limit",
+      "answer": "左极限",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数从左侧趋近某点时的极限值"
+    },
+    {
+      "id": "right_limit",
+      "answer": "右极限",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数从右侧趋近某点时的极限值"
+    },
+    {
+      "id": "limit",
+      "answer": "极限",
+      "aliases": [],
+      "category": "分析学",
+      "description": "变量趋近某值时函数或序列的趋势值"
+    },
+    {
+      "id": "sequence",
+      "answer": "数列",
+      "aliases": [],
+      "category": "分析学",
+      "description": "按自然数编号的一列数，是序列的特例"
+    },
+    {
+      "id": "series",
+      "answer": "级数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "数列各项的和，研究其收敛性是分析学的重要内容"
+    },
+    {
+      "id": "convergence",
+      "answer": "收敛",
+      "aliases": [],
+      "category": "分析学",
+      "description": "数列或函数趋近于某个确定的极限值"
+    },
+    {
+      "id": "cauchy_sequence",
+      "answer": "Cauchy列",
+      "aliases": [
+        "柯西列"
+      ],
+      "category": "分析学",
+      "description": "满足Cauchy条件的序列，任意两项充分接近"
+    },
+    {
+      "id": "cauchy_criterion",
+      "answer": "Cauchy收敛准则",
+      "aliases": [
+        "柯西收敛准则",
+        "Cauchy收敛原理"
+      ],
+      "category": "分析学",
+      "description": "完备空间中序列收敛当且仅当它是Cauchy列"
+    },
+    {
+      "id": "completeness",
+      "answer": "完备性",
+      "aliases": [],
+      "category": "分析学",
+      "description": "空间中所有Cauchy列都收敛的性质"
+    },
+    {
+      "id": "metric_space",
+      "answer": "度量空间",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "定义了距离函数的集合，是拓扑空间的特例"
+    },
+    {
+      "id": "net",
+      "answer": "网",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "定义在有向集上的广义序列，用于一般拓扑空间"
+    },
+    {
+      "id": "dedekind_cut",
+      "answer": "Dedekind分割",
+      "aliases": [
+        "戴德金分割"
+      ],
+      "category": "分析学",
+      "description": "将有理数分割为上下两部分来定义实数的方法"
+    },
+    {
+      "id": "dedekind_theorem",
+      "answer": "Dedekind定理",
+      "aliases": [
+        "戴德金定理"
+      ],
+      "category": "分析学",
+      "description": "实数集的Dedekind分割确定唯一的实数"
+    },
+    {
+      "id": "bolzano_weierstrass_theorem",
+      "answer": "Bolzano-Weierstrass定理",
+      "aliases": [
+        "波尔查诺巍尔斯特拉斯定理",
+        "波尔查诺-巍尔斯特拉斯定理"
+      ],
+      "category": "分析学",
+      "description": "有界数列必有收敛子列"
+    },
+    {
+      "id": "heine_borel_theorem",
+      "answer": "Heine-Borel定理",
+      "aliases": [
+        "海涅-博雷尔定理",
+        "海涅博雷尔定理"
+      ],
+      "category": "分析学",
+      "description": "欧氏空间子集紧致当且仅当有界闭集"
+    },
+    {
+      "id": "derivative",
+      "answer": "导数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数在某点的瞬时变化率，几何上表示切线斜率"
+    },
+    {
+      "id": "differential",
+      "answer": "微分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数增量的线性主部，用于近似计算和积分"
+    },
+    {
+      "id": "directional_derivative",
+      "answer": "方向导数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数沿某方向的变化率，是偏导数的推广"
+    },
+    {
+      "id": "multivariable_differential",
+      "answer": "多元微分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "多元函数的微分理论，涉及梯度、Hessian矩阵等"
+    },
+    {
+      "id": "partial_derivative",
+      "answer": "偏导数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "多元函数沿某一坐标轴方向的导数"
+    },
+    {
+      "id": "frechet_derivative",
+      "answer": "Fréchet微分",
+      "aliases": [
+        "Frechet微分",
+        "F-微分",
+        "F-导数",
+        "Frechet导数",
+        "Fréchet导数"
+      ],
+      "category": "分析学",
+      "description": "赋范空间之间映射的强可微性概念"
+    },
+    {
+      "id": "jacobian_matrix",
+      "answer": "Jacobi矩阵",
+      "aliases": [
+        "Jacobian",
+        "雅可比矩阵"
+      ],
+      "category": "代数学/分析学",
+      "description": "多元函数所有一阶偏导数构成的矩阵"
+    },
+    {
+      "id": "gradient",
+      "answer": "梯度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "多元函数各偏导数组成的向量，指向函数增长最快的方向"
+    },
+    {
+      "id": "divergence",
+      "answer": "散度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "向量场在某点的通量密度，表示源的强度"
+    },
+    {
+      "id": "curl",
+      "answer": "旋度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "向量场的旋转程度，表示场的涡旋特性"
+    },
+    {
+      "id": "dini_derivative",
+      "answer": "Dini导数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数在某点的上、下左、右导数"
+    },
+    {
+      "id": "left_derivative",
+      "answer": "左导数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数从左侧趋近某点时的导数"
+    },
+    {
+      "id": "right_derivative",
+      "answer": "右导数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数从右侧趋近某点时的导数"
+    },
+    {
+      "id": "taylors_formula",
+      "answer": "Taylor公式",
+      "aliases": [
+        "Taylor定理",
+        "Taylor展开",
+        "泰勒公式",
+        "泰勒展开",
+        "泰勒定理",
+        "Taylor级数",
+        "泰勒级数"
+      ],
+      "category": "分析学",
+      "description": "用多项式逼近函数的工具，包含余项估计"
+    },
+    {
+      "id": "analytic_function",
+      "answer": "解析函数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "局部可展开为幂级数的函数，具有良好的光滑性"
+    },
+    {
+      "id": "holomorphic_function",
+      "answer": "全纯函数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "复平面上处处可导的函数，具有极强的性质"
+    },
+    {
+      "id": "meromorphic_function",
+      "answer": "亚纯函数",
+      "aliases": [
+        "半纯函数"
+      ],
+      "category": "分析学",
+      "description": "除孤立极点外处处全纯的复变函数"
+    },
+    {
+      "id": "lhopitals_rule",
+      "answer": "l'Hopital法则",
+      "aliases": [
+        "洛必达法则"
+      ],
+      "category": "分析学",
+      "description": "求0比0或无穷比无穷型极限的方法，用导数比代替函数比"
+    },
+    {
+      "id": "fermats_lemma",
+      "answer": "Fermat引理",
+      "aliases": [
+        "费马引理"
+      ],
+      "category": "分析学",
+      "description": "可导函数在极值点处导数为零"
+    },
+    {
+      "id": "rolles_theorem",
+      "answer": "Rolle中值定理",
+      "aliases": [
+        "罗尔中值定理"
+      ],
+      "category": "分析学",
+      "description": "端点值相等的可导函数必有水平切线"
+    },
+    {
+      "id": "cauchy_mean_value_theorem",
+      "answer": "Cauchy中值定理",
+      "aliases": [
+        "柯西中值定理"
+      ],
+      "category": "分析学",
+      "description": "两函数导数比等于函数值变化比的定理"
+    },
+    {
+      "id": "lagrange_mean_value_theorem",
+      "answer": "Lagrange中值定理",
+      "aliases": [
+        "拉格朗日中值定理"
+      ],
+      "category": "分析学",
+      "description": "可导函数在某点切线平行于端点连线"
+    },
+    {
+      "id": "extreme_point",
+      "answer": "极值点",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数取得局部最大值或最小值的点"
+    },
+    {
+      "id": "mean_value_inequality",
+      "answer": "中值不等式",
+      "aliases": [
+        "MVI"
+      ],
+      "category": "分析学",
+      "description": "函数变化与导数关系的不等式形式"
+    },
+    {
+      "id": "riemann_integral",
+      "answer": "Riemann积分",
+      "aliases": [
+        "定积分",
+        "R-积分",
+        "黎曼积分"
+      ],
+      "category": "分析学",
+      "description": "通过分割、求和、取极限定义的定积分"
+    },
+    {
+      "id": "darboux_sum",
+      "answer": "Darboux和",
+      "aliases": [
+        "达布和"
+      ],
+      "category": "分析学",
+      "description": "Riemann积分的上和与下和，用于判定可积性"
+    },
+    {
+      "id": "improper_integral",
+      "answer": "瑕积分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "被积函数在积分区间某点无界的广义积分"
+    },
+    {
+      "id": "infinite_integral",
+      "answer": "无穷积分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "积分区间为无穷的广义积分"
+    },
+    {
+      "id": "multiple_integral",
+      "answer": "重积分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "多元函数在区域上的积分，包括二重、三重积分"
+    },
+    {
+      "id": "double_integral",
+      "answer": "二重积分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "二元函数在平面区域上的积分"
+    },
+    {
+      "id": "triple_integral",
+      "answer": "三重积分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "三元函数在空间区域上的积分"
+    },
+    {
+      "id": "contour_integral",
+      "answer": "围道积分",
+      "aliases": [
+        "环积分"
+      ],
+      "category": "分析学",
+      "description": "复变函数沿曲线的积分，Cauchy积分定理的基础"
+    },
+    {
+      "id": "volume_integral",
+      "answer": "体积分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "函数在三维区域上的积分"
+    },
+    {
+      "id": "lebesgue_integral",
+      "answer": "Lebesgue积分",
+      "aliases": [
+        "勒贝格积分"
+      ],
+      "category": "分析学",
+      "description": "基于测度论的现代积分理论，适用范围更广"
+    },
+    {
+      "id": "bochner_integral",
+      "answer": "Bochner积分",
+      "aliases": [
+        "波赫纳积分"
+      ],
+      "category": "分析学",
+      "description": "向量值函数的积分理论，Lebesgue积分的推广"
+    },
+    {
+      "id": "semigroup",
+      "answer": "半群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "只满足结合律的代数结构，运算封闭"
+    },
+    {
+      "id": "monoid",
+      "answer": "幺半群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "有单位元的半群，每个群都是幺半群"
+    },
+    {
+      "id": "group",
+      "answer": "群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "每个元素都有逆元的幺半群，是抽象代数的基本结构"
+    },
+    {
+      "id": "abelian_group",
+      "answer": "Abel群",
+      "aliases": [
+        "阿贝尔群",
+        "交换群"
+      ],
+      "category": "代数学",
+      "description": "Z模，即运算可交换的群"
+    },
+    {
+      "id": "ring",
+      "answer": "环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "带有加法和乘法两种运算的代数结构，加法成群"
+    },
+    {
+      "id": "integral_domain",
+      "answer": "整环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "无零因子的交换环，可以讨论整除性"
+    },
+    {
+      "id": "division_ring",
+      "answer": "除环",
+      "aliases": [
+        "体"
+      ],
+      "category": "代数学",
+      "description": "非零元都可逆的环，乘法不必交换"
+    },
+    {
+      "id": "domain",
+      "answer": "无零因子环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "两个非零元乘积不为零的环"
+    },
+    {
+      "id": "ufd",
+      "answer": "唯一因子分解整环",
+      "aliases": [
+        "UFD",
+        "Gauss整环"
+      ],
+      "category": "代数学",
+      "description": "每个非零元可唯一分解为素元乘积的整环"
+    },
+    {
+      "id": "pid",
+      "answer": "主理想整环",
+      "aliases": [
+        "PID"
+      ],
+      "category": "代数学",
+      "description": "每个理想都由单个元素生成的整环"
+    },
+    {
+      "id": "field",
+      "answer": "域",
+      "aliases": [],
+      "category": "代数学",
+      "description": "非零元都可逆的交换环，可进行四则运算"
+    },
+    {
+      "id": "open_set",
+      "answer": "开集",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "组成拓扑的基本要素"
+    },
+    {
+      "id": "closed_set",
+      "answer": "闭集",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "是开集的补集,也可以用来组成拓扑"
+    },
+    {
+      "id": "topological_space",
+      "answer": "拓扑空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "配备有一个拓扑的集合,即指定了一族开集"
+    },
+    {
+      "id": "normed_space",
+      "answer": "赋范空间",
+      "aliases": [],
+      "category": "代数学/分析学/拓扑学",
+      "description": "配备有一个范数的向量空间"
+    },
+    {
+      "id": "inner_product_space",
+      "answer": "内积空间",
+      "aliases": [],
+      "category": "代数学/分析学/拓扑学",
+      "description": "配备有一个内积的向量空间"
+    },
+    {
+      "id": "banach_space",
+      "answer": "Banach空间",
+      "aliases": [
+        "巴纳赫空间"
+      ],
+      "category": "代数学/分析学/拓扑学",
+      "description": "一个完备的赋范空间"
+    },
+    {
+      "id": "hilbert_space",
+      "answer": "Hilbert空间",
+      "aliases": [
+        "希尔伯特空间"
+      ],
+      "category": "代数学/分析学/拓扑学",
+      "description": "一个完备的内积空间"
+    },
+    {
+      "id": "topological_vector_space",
+      "answer": "拓扑线性空间",
+      "aliases": [
+        "TVS"
+      ],
+      "category": "代数学/分析学/拓扑学",
+      "description": "配备有一个与代数结构相容的拓扑的向量空间"
+    },
+    {
+      "id": "local_convex_space",
+      "answer": "局部凸空间",
+      "aliases": [
+        "LCTVS"
+      ],
+      "category": "代数学/分析学/拓扑学",
+      "description": "由一些半范数生成拓扑的拓扑向量空间"
+    },
+    {
+      "id": "convex_set",
+      "answer": "凸集",
+      "aliases": [],
+      "category": "代数学/分析学/拓扑学",
+      "description": "线段落在其内部的集合"
+    },
+    {
+      "id": "interior",
+      "answer": "内部",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "包含在这个集合中的最大开集"
+    },
+    {
+      "id": "closure",
+      "answer": "闭包",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "包含这个集合的最小闭集"
+    },
+    {
+      "id": "boundary",
+      "answer": "边界",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "一个集合的闭包减去其内部"
+    },
+    {
+      "id": "convex_closure",
+      "answer": "凸包",
+      "aliases": [],
+      "category": "代数学/分析学/拓扑学",
+      "description": "包含这个集合的最小凸集"
+    },
+    {
+      "id": "limit_point",
+      "answer": "极限点",
+      "aliases": [
+        "聚点"
+      ],
+      "category": "分析学/拓扑学",
+      "description": "任意邻域都与此集合有交的点"
+    },
+    {
+      "id": "t1_space",
+      "answer": "T1空间",
+      "aliases": [
+        "T1",
+        "T1公理"
+      ],
+      "category": "拓扑学",
+      "description": "每个单点集都是闭集的拓扑空间"
+    },
+    {
+      "id": "hausdorff_space",
+      "answer": "Hausdorff空间",
+      "aliases": [
+        "T2空间",
+        "豪斯多夫空间"
+      ],
+      "category": "拓扑学",
+      "description": "每两个不交的点都可以用不交开集分离的拓扑空间"
+    },
+    {
+      "id": "regular_space",
+      "answer": "正则空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "可以用不交开集分离点和闭集的拓扑空间"
+    },
+    {
+      "id": "t3_space",
+      "answer": "T3空间",
+      "aliases": [
+        "正则Hausdorff空间"
+      ],
+      "category": "拓扑学",
+      "description": "可以用不交开集分离点和闭集的Hausdorff空间"
+    },
+    {
+      "id": "normal_space",
+      "answer": "正规空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "可以用不交开集分离不交闭集的拓扑空间"
+    },
+    {
+      "id": "t4_space",
+      "answer": "T4空间",
+      "aliases": [
+        "正规Hausdorff空间"
+      ],
+      "category": "拓扑学",
+      "description": "可以用不交开集分离不交闭集的Hausdorff空间"
+    },
+    {
+      "id": "completely_normal_space",
+      "answer": "完全正规空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "任何子空间都是正规空间的拓扑空间"
+    },
+    {
+      "id": "t5_space",
+      "answer": "T5空间",
+      "aliases": [
+        "完全正规Hausdroff空间"
+      ],
+      "category": "拓扑学",
+      "description": "任何子空间都是正规空间的Hausdorff空间"
+    },
+    {
+      "id": "perfectly_normal_space",
+      "answer": "完美正规空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "可以用连续函数区分两个不交闭集的拓扑空间"
+    },
+    {
+      "id": "t6_space",
+      "answer": "T6空间",
+      "aliases": [
+        "完美正规Hausdorff空间"
+      ],
+      "category": "拓扑学",
+      "description": "可以用连续函数区分两个不交闭集的Hausdorff空间"
+    },
+    {
+      "id": "manifold",
+      "answer": "流形",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "第二可数Hausdorff的局部欧式拓扑空间,是几何学的核心对象"
+    },
+    {
+      "id": "differentiable_manifold",
+      "answer": "微分流形",
+      "aliases": [
+        "光滑流形"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "第二可数Hausdorff的局部光滑欧式拓扑空间,是几何学的核心对象"
+    },
+    {
+      "id": "first_countable",
+      "answer": "第一可数",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "每一点都有可数邻域基的性质"
+    },
+    {
+      "id": "second_countable",
+      "answer": "第二可数",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "存在一个可数邻域基的性质"
+    },
+    {
+      "id": "compact",
+      "answer": "紧致",
+      "aliases": [
+        "紧致性",
+        "紧"
+      ],
+      "category": "拓扑学",
+      "description": "每一个开覆盖都存在一个有限开覆盖"
+    },
+    {
+      "id": "connected",
+      "answer": "连通",
+      "aliases": [
+        "连通性"
+      ],
+      "category": "拓扑学",
+      "description": "不存在非平凡的既开又闭集"
+    },
+    {
+      "id": "compactification",
+      "answer": "紧致化",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "将一个拓扑空间变为泛性质意义下最小的紧致拓扑空间"
+    },
+    {
+      "id": "limit_point_compact",
+      "answer": "极限点紧致",
+      "aliases": [
+        "聚点紧致"
+      ],
+      "category": "拓扑学",
+      "description": "无限集必有极限点的性质"
+    },
+    {
+      "id": "sequentially_compact",
+      "answer": "序列紧致",
+      "aliases": [
+        "列紧"
+      ],
+      "category": "分析学/拓扑学",
+      "description": "任意序列都存在收敛子序列的性质"
+    },
+    {
+      "id": "uniform_topology",
+      "answer": "一致拓扑",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "uniformly_continuous",
+      "answer": "一致连续",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "uniform_convergence",
+      "answer": "一致收敛",
+      "aliases": [],
+      "category": "分析学",
+      "description": "把Cauchy列打到Cauchy列的连续态射"
+    },
+    {
+      "id": "stone_cech_compactification",
+      "answer": "Stone-Čech紧致化",
+      "aliases": [
+        "Stone-Cech紧致化",
+        "斯通切赫紧致化",
+        "斯通切赫紧化",
+        "斯通-切赫紧致化"
+      ],
+      "category": "拓扑学",
+      "description": "嵌入到一个拓扑空间的超滤取闭包得到的紧致化"
+    },
+    {
+      "id": "separable_space",
+      "answer": "可分集",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "存在一个可数集,其闭包等于这个集合"
+    },
+    {
+      "id": "lindelof_space",
+      "answer": "Lindelöf空间",
+      "aliases": [
+        "Lindelof空间",
+        "林德洛夫空间"
+      ],
+      "category": "拓扑学",
+      "description": "每个开覆盖都有可数子覆盖的拓扑空间"
+    },
+    {
+      "id": "locally_connected",
+      "answer": "局部连通",
+      "aliases": [
+        "局部连通性"
+      ],
+      "category": "拓扑学",
+      "description": "每一点都存在连通邻域的拓扑空间"
+    },
+    {
+      "id": "locally_compact",
+      "answer": "局部紧致",
+      "aliases": [
+        "局部紧致性"
+      ],
+      "category": "拓扑学",
+      "description": "每一点都存在紧致邻域的拓扑空间"
+    },
+    {
+      "id": "paracompact",
+      "answer": "仿紧致",
+      "aliases": [
+        "仿紧致性"
+      ],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "continuous_map",
+      "answer": "连续映射",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "homeomorphism",
+      "answer": "同胚",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "open_map",
+      "answer": "开映射",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "closed_map",
+      "answer": "闭映射",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "quotient_map",
+      "answer": "商映射",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "quotient_topology",
+      "answer": "商拓扑",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "embedding",
+      "answer": "嵌入",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "immersion",
+      "answer": "浸入",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "dense_set",
+      "answer": "稠密集",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "product_space",
+      "answer": "积空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "sum_space",
+      "answer": "和空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "arzela_ascolitheorem",
+      "answer": "Arzela-Ascoli定理",
+      "aliases": [
+        "阿尔泽拉-阿斯科利定理",
+        "阿尔泽拉阿斯科利定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "pointwise_convergence",
+      "answer": "点态收敛",
+      "aliases": [
+        "逐点收敛"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "compact_convergence",
+      "answer": "紧致收敛",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "urysohns_lemma",
+      "answer": "Urysohn引理",
+      "aliases": [
+        "乌雷松引理",
+        "乌瑞松引理"
+      ],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "urysohn_metrization_theorem",
+      "answer": "Urysohn度量化定理",
+      "aliases": [
+        "乌雷松度量化定理",
+        "乌瑞松定理"
+      ],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "tychonoffs_theorem",
+      "answer": "Tychonoff定理",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "nagata_smirnov_theorem",
+      "answer": "Nagata-Smirnov度量化定理",
+      "aliases": [
+        "Nagata-Smirnov定理",
+        "长田定理"
+      ],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "open_interval",
+      "answer": "开区间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "closed_interval",
+      "answer": "闭区间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "outer_measure",
+      "answer": "外测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "measure",
+      "answer": "测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "lebesgue_measure",
+      "answer": "Lebesgue测度",
+      "aliases": [
+        "勒贝格测度"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "salgebraic",
+      "answer": "σ代数",
+      "aliases": [
+        "sigma代数"
+      ],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "null_set",
+      "answer": "零测集",
+      "aliases": [
+        "null set",
+        "零集"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "almost_everywhere",
+      "answer": "几乎处处",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "support",
+      "answer": "支集",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "complete_measure",
+      "answer": "完备测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "borel_measure",
+      "answer": "Borel测度",
+      "aliases": [
+        "博雷尔测度"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "radon_measure",
+      "answer": "Radon测度",
+      "aliases": [
+        "拉东测度"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "egorovs_theorem",
+      "answer": "Egorov定理",
+      "aliases": [
+        "叶果洛夫定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "lusins_theorem",
+      "answer": "Lusin定理",
+      "aliases": [
+        "鲁金定理"
+      ],
+      "category": "分析学/数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "vitali_set",
+      "answer": "Vitali集",
+      "aliases": [
+        "维塔利集"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "signed_measure",
+      "answer": "符号测度",
+      "aliases": [
+        "带号测度",
+        "广义测度"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hahndecomposition",
+      "answer": "Hahn分解",
+      "aliases": [
+        "哈恩分解"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "jordandecomposition",
+      "answer": "Jordan分解",
+      "aliases": [
+        "若尔当分解"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "lebesgue_decomposition",
+      "answer": "Lebesgue分解",
+      "aliases": [
+        "勒贝格分解",
+        "Lebesgue测度分解"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "bounded_variation",
+      "answer": "有界变差",
+      "aliases": [
+        "有界变差函数",
+        "BV",
+        "BV函数",
+        "有界变差"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "absolutely_continuous",
+      "answer": "绝对连续",
+      "aliases": [
+        "绝对连续函数",
+        "AC",
+        "AC函数",
+        "绝对连续"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "singular_measure",
+      "answer": "奇异测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "jensen_inequality",
+      "answer": "Jensen不等式",
+      "aliases": [
+        "琴声不等式",
+        "詹森不等式"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "younginequality",
+      "answer": "Young不等式",
+      "aliases": [
+        "杨不等式"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "holder_inequality",
+      "answer": "Hölder不等式",
+      "aliases": [
+        "Holder不等式",
+        "赫尔德不等式"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "minkowski_inequality",
+      "answer": "Minkowski不等式",
+      "aliases": [
+        "闵可夫斯基不等式"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "fourier_transform",
+      "answer": "Fourier变换",
+      "aliases": [
+        "FT",
+        "傅里叶变换"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "fourierseries",
+      "answer": "Fourier级数",
+      "aliases": [
+        "傅里叶级数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "discrete_fourier_transform",
+      "answer": "离散Fourier变换",
+      "aliases": [
+        "DFT",
+        "离散傅里叶变换"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "discrete_time_fourier_transform",
+      "answer": "离散时间Fourier变换",
+      "aliases": [
+        "DTFT",
+        "离散时间傅里叶变换"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "convolution",
+      "answer": "卷积",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "simple_function",
+      "answer": "简单函数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "characteristic_function",
+      "answer": "特征函数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "dominated_convergence_theorem",
+      "answer": "控制收敛定理",
+      "aliases": [
+        "DCT"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "monotone_convergence_theorem",
+      "answer": "单调收敛定理",
+      "aliases": [
+        "MCT"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "fatous_lemma",
+      "answer": "Fatou引理",
+      "aliases": [
+        "法图引理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "fubinis_theorem",
+      "answer": "Fubini定理",
+      "aliases": [
+        "富比尼定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "riesz_fichertheorem",
+      "answer": "Riesz-Ficher定理",
+      "aliases": [
+        "里斯-费舍尔定理",
+        "里斯费舍尔定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "lpspace",
+      "answer": "Lp空间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "l1space",
+      "answer": "L1空间",
+      "aliases": [
+        "可积函数空间"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "l2space",
+      "answer": "L2空间",
+      "aliases": [
+        "平方可积函数空间"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "linear_space",
+      "answer": "线性空间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "matrix",
+      "answer": "矩阵",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "linear_map",
+      "answer": "线性映射",
+      "aliases": [
+        "线性算子"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "functional",
+      "answer": "泛函",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "linear_functional",
+      "answer": "线性泛函",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "dual_space",
+      "answer": "对偶空间",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "linear_basis",
+      "answer": "线性基",
+      "aliases": [
+        "Hamel基"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "dimension",
+      "answer": "维数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "rank",
+      "answer": "秩",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "nullity",
+      "answer": "零化度",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "subspace",
+      "answer": "子空间",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "kernal",
+      "answer": "核",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "image",
+      "answer": "像",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cokernal",
+      "answer": "余核",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "coimage",
+      "answer": "余像",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "linearly_dependent",
+      "answer": "线性相关",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "linearly_independent",
+      "answer": "线性无关",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "rank_nullity_theorem",
+      "answer": "秩-零化度定理",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "steinitz_rearrange_theorem",
+      "answer": "Steinitz替换定理",
+      "aliases": [
+        "斯坦尼茨替换定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "matrix_similarity",
+      "answer": "矩阵相似",
+      "aliases": [
+        "相似"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "matrix_equivlance",
+      "answer": "矩阵等价",
+      "aliases": [
+        "等价"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "matrix_contract",
+      "answer": "矩阵合同",
+      "aliases": [
+        "合同"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "positive_definite_matrix",
+      "answer": "正定矩阵",
+      "aliases": [
+        "正定"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "direct_sum",
+      "answer": "直和",
+      "aliases": [],
+      "category": "代数学",
+      "description": "仅有有限个分量非零的直积"
+    },
+    {
+      "id": "determinant",
+      "answer": "行列式",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "homomorphism",
+      "answer": "同态",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "isomorphism",
+      "answer": "同构",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "eigenvalue",
+      "answer": "特征值",
+      "aliases": [
+        "特征根"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "polarized_equality",
+      "answer": "极化恒等式",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "parallelogram_law",
+      "answer": "平行四边形法则",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "pythagoras_theorem",
+      "answer": "Pythagoras定理",
+      "aliases": [
+        "勾股定理",
+        "毕达哥拉斯定理"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "tensor_product",
+      "answer": "张量积",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "tensor_algebraic",
+      "answer": "张量代数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "associative_algebraic",
+      "answer": "结合代数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "algebra",
+      "answer": "代数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cramers_rule",
+      "answer": "Cramer法则",
+      "aliases": [
+        "克拉默法则"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "multilinear_map",
+      "answer": "多重线性映射",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "lagranges_theorem",
+      "answer": "Lagrange定理",
+      "aliases": [
+        "拉格朗日定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "symmetric_group",
+      "answer": "对称群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "permutation_group",
+      "answer": "置换群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "automorphism_group",
+      "answer": "自同构群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "rotation_group",
+      "answer": "旋转对称群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cyclic_group",
+      "answer": "循环群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "alternating_group",
+      "answer": "交错群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "solvable_group",
+      "answer": "可解群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cayley_theorem",
+      "answer": "Cayley定理",
+      "aliases": [
+        "凯莱定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "p_group",
+      "answer": "p-群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "sylowsub_group",
+      "answer": "Sylow子群",
+      "aliases": [
+        "Sylow p-子群",
+        "西罗子群",
+        "西罗p-子群"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "sylow_theorems",
+      "answer": "Sylow定理",
+      "aliases": [
+        "西罗定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "homomorphism_fundemental_theorem",
+      "answer": "同态基本定理",
+      "aliases": [
+        "Noether基本定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "simple_group",
+      "answer": "单群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "normal_subgroup",
+      "answer": "正规子群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "quotient_group",
+      "answer": "商群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "orbit",
+      "answer": "轨道",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "stabilizer",
+      "answer": "稳定子",
+      "aliases": [
+        "稳定子群"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "orbit_stabilizer_theorem",
+      "answer": "轨道-稳定子定理",
+      "aliases": [
+        "轨道稳定子定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "group_action",
+      "answer": "群作用",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "burnside_lemma",
+      "answer": "Burnside引理",
+      "aliases": [
+        "伯努赛德引理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "fixed_point",
+      "answer": "不动点",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "module",
+      "answer": "模",
+      "aliases": [],
+      "category": "代数学",
+      "description": "环上的向量空间，代数学的推广"
+    },
+    {
+      "id": "field_extension",
+      "answer": "域扩张",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "galois_extension",
+      "answer": "Galois扩张",
+      "aliases": [
+        "伽罗瓦扩张"
+      ],
+      "category": "代数学",
+      "description": "可分且正规的域扩张，Galois理论的核心对象"
+    },
+    {
+      "id": "algebraic_extension",
+      "answer": "代数扩张",
+      "aliases": [],
+      "category": "代数学",
+      "description": "扩张域中每个元素都是代数元的域扩张"
+    },
+    {
+      "id": "transcendental_extension",
+      "answer": "超越扩张",
+      "aliases": [],
+      "category": "代数学",
+      "description": "包含超越元的域扩张，如C对Q"
+    },
+    {
+      "id": "chinese_remainder_theorem",
+      "answer": "中国剩余定理",
+      "aliases": [
+        "CRT",
+        "孙子定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "bezouttheorem",
+      "answer": "Bezóut定理",
+      "aliases": [
+        "Bezout定理",
+        "裴蜀定理"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "eulers_totient_function",
+      "answer": "Euler函数",
+      "aliases": [
+        "φ",
+        "欧拉函数"
+      ],
+      "category": "数论",
+      "description": "小于n且与n互素的正整数个数"
+    },
+    {
+      "id": "fermats_little_theorem",
+      "answer": "Fermat小定理",
+      "aliases": [
+        "费马小定理"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "eulertheorem_number_theory",
+      "answer": "Euler定理(数论)",
+      "aliases": [
+        "Euler定理",
+        "欧拉定理"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "ideal",
+      "answer": "理想",
+      "aliases": [],
+      "category": "代数学",
+      "description": "环的子集，对加法和环中任意元素的乘法封闭"
+    },
+    {
+      "id": "principal_ideal",
+      "answer": "主理想",
+      "aliases": [],
+      "category": "代数学",
+      "description": "由一个元素生成的理想"
+    },
+    {
+      "id": "prime_ideal_nt",
+      "answer": "素理想",
+      "aliases": [],
+      "category": "代数学",
+      "description": "商环为整环的理想，对应代数几何中的不可约子簇"
+    },
+    {
+      "id": "maximal_ideal",
+      "answer": "极大理想",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不被其他真理想包含的理想，商环是域"
+    },
+    {
+      "id": "gamma_function",
+      "answer": "Γ函数",
+      "aliases": [
+        "Gamma函数",
+        "伽马函数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "betafunction",
+      "answer": "Beta函数",
+      "aliases": [
+        "贝塔函数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "radon_nikodym_theorem",
+      "answer": "Radon-Nikodym定理",
+      "aliases": [
+        "拉东-尼柯迪姆定理",
+        "拉东尼柯迪姆定理",
+        "R-N定理",
+        "Radon-Nikodym导数",
+        "Radon-Nikodym"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "radon_nikodym_derivative",
+      "answer": "Radon-Nikodym导数",
+      "aliases": [
+        "拉东-尼柯迪姆导数",
+        "拉东尼柯迪姆导数",
+        "R-N导数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "riesz_representation_theorem",
+      "answer": "Riesz表示定理",
+      "aliases": [
+        "里斯表示定理"
+      ],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "noetherian_module",
+      "answer": "Noether模",
+      "aliases": [
+        "Noether环",
+        "诺特模",
+        "诺特环"
+      ],
+      "category": "代数学",
+      "description": "子模满足升链条件的模"
+    },
+    {
+      "id": "artinian_module",
+      "answer": "Artin模",
+      "aliases": [
+        "Artin环",
+        "阿廷模",
+        "阿廷环"
+      ],
+      "category": "代数学",
+      "description": "子模满足降链条件的模"
+    },
+    {
+      "id": "category",
+      "answer": "范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "dual",
+      "answer": "对偶",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "morphism",
+      "answer": "态射",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "groupoid",
+      "answer": "群胚",
+      "aliases": [
+        "广群"
+      ],
+      "category": "代数学/拓扑学",
+      "description": "每个态射都可逆的范畴"
+    },
+    {
+      "id": "sub_object",
+      "answer": "子对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "quotient_object",
+      "answer": "商对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "terminal_object",
+      "answer": "终对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "initial_object",
+      "answer": "始对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "yoneda_lemma",
+      "answer": "Yoneda引理",
+      "aliases": [
+        "米田引理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "functor",
+      "answer": "函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "double_functor",
+      "answer": "双函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "representable_functor",
+      "answer": "可表函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "colimit",
+      "answer": "余极限",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "adjoint_functors",
+      "answer": "伴随函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "类似Hom和张量积之间的同构关系"
+    },
+    {
+      "id": "comma_category",
+      "answer": "逗号范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "gaft",
+      "answer": "广义伴随函子定理",
+      "aliases": [
+        "GAFT"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "saft",
+      "answer": "特殊伴随函子定理",
+      "aliases": [
+        "SAFT"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "sheaf",
+      "answer": "层",
+      "aliases": [
+        "sheaf"
+      ],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "site",
+      "answer": "景",
+      "aliases": [
+        "site",
+        "位形"
+      ],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "topos",
+      "answer": "意象",
+      "aliases": [
+        "Topos",
+        "topos",
+        "拓扑斯"
+      ],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "natural_transform",
+      "answer": "自然变换",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "faithful_functor",
+      "answer": "忠实函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "forgetful_functor",
+      "answer": "遗忘函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "free_group",
+      "answer": "自由群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "equalizer",
+      "answer": "等值子",
+      "aliases": [
+        "等化子"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "coequalizer",
+      "answer": "余等值子",
+      "aliases": [
+        "余等化子"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "product",
+      "answer": "积",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "coproduct",
+      "answer": "余积",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "fibered_product",
+      "answer": "纤维积",
+      "aliases": [
+        "拉回"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "fibered_coproduct",
+      "answer": "纤维余积",
+      "aliases": [
+        "推出"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "monoidial_category",
+      "answer": "幺半范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "pre_additive_category",
+      "answer": "准加性范畴",
+      "aliases": [
+        "预加法范畴",
+        "预加性范畴",
+        "准加法范畴"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "additive_category",
+      "answer": "加性范畴",
+      "aliases": [
+        "加法范畴"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "abel_categoty",
+      "answer": "Abel范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "zero_object",
+      "answer": "零对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "biproduct",
+      "answer": "双积",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "exact_sequence",
+      "answer": "正合列",
+      "aliases": [],
+      "category": "代数学",
+      "description": "相邻映射的像等于核的序列，同调代数的基本工具"
+    },
+    {
+      "id": "chain_complex",
+      "answer": "链复形",
+      "aliases": [
+        "复形"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "exact_functor",
+      "answer": "正合函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "five_lemma",
+      "answer": "五引理",
+      "aliases": [
+        "5引理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "nine_lemma",
+      "answer": "九引理",
+      "aliases": [
+        "9引理",
+        "三乘三引理",
+        "3x3引理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "snake_lemma",
+      "answer": "蛇形引理",
+      "aliases": [
+        "蛇引理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "pesudo_element",
+      "answer": "伪元素",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "presheaf",
+      "answer": "预层",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "stalk",
+      "answer": "茎",
+      "aliases": [],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "grem",
+      "answer": "芽",
+      "aliases": [],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "affine_space",
+      "answer": "仿射空间",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "projective_space",
+      "answer": "射影空间",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "frame",
+      "answer": "标架",
+      "aliases": [],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "exterior_algebra",
+      "answer": "外代数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "wedge_product",
+      "answer": "外积",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "chart",
+      "answer": "坐标卡",
+      "aliases": [],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "atlas",
+      "answer": "图册",
+      "aliases": [],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "smooth_map",
+      "answer": "光滑映射",
+      "aliases": [],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "tangent_vector",
+      "answer": "切向量",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "cotangent_vector",
+      "answer": "余切向量",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "tangent_space",
+      "answer": "切空间",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "contanget_space",
+      "answer": "余切空间",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "sub_manifold",
+      "answer": "子流形",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "grassmannian",
+      "answer": "Grassmann流形",
+      "aliases": [
+        "Grassmannian",
+        "格拉斯曼流形"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "torus",
+      "answer": "环面",
+      "aliases": [
+        "甜甜圈",
+        "Torus"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "sphere",
+      "answer": "球",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "mobius_strip",
+      "answer": "Möbius带",
+      "aliases": [
+        "Mobius带",
+        "Mobius环",
+        "莫比乌斯环"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "klein_bottle",
+      "answer": "Klein瓶",
+      "aliases": [
+        "克莱因瓶"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "roman_surface",
+      "answer": "罗马曲面",
+      "aliases": [
+        "Steiner曲面"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "riemann_surface",
+      "answer": "Riemann曲面",
+      "aliases": [
+        "黎曼曲面"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "oritation",
+      "answer": "定向",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "general_linear_group",
+      "answer": "一般线性群",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "exterior_derivative",
+      "answer": "外微分",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "exterior_form",
+      "answer": "外形式",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "frobenius_theorem",
+      "answer": "Frobenius定理",
+      "aliases": [
+        "佛罗贝尼乌斯定理"
+      ],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "stokes_theorem",
+      "answer": "Stokes定理",
+      "aliases": [
+        "斯托克斯定理"
+      ],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "green_formula",
+      "answer": "Green公式",
+      "aliases": [
+        "Green定理",
+        "格林公式"
+      ],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "lie_group",
+      "answer": "Lie群",
+      "aliases": [
+        "李群"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "vector_bundle",
+      "answer": "向量丛",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "fiber_bundle",
+      "answer": "纤维丛",
+      "aliases": [],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "tangent_bundle",
+      "answer": "切丛",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "cotangent_bundle",
+      "answer": "余切丛",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "diffeomorphism",
+      "answer": "光滑同胚",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "sardtheorem",
+      "answer": "Sard定理",
+      "aliases": [
+        "萨德定理"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "argument",
+      "answer": "辐角",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "exponential_function",
+      "answer": "指数函数",
+      "aliases": [
+        "指数",
+        "exp"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "sine_function",
+      "answer": "正弦函数",
+      "aliases": [
+        "正弦",
+        "sin"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "cosine_function",
+      "answer": "余弦函数",
+      "aliases": [
+        "余弦",
+        "cos"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "tangent_function",
+      "answer": "正切函数",
+      "aliases": [
+        "正切",
+        "tan"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "cotangent_function",
+      "answer": "余切函数",
+      "aliases": [
+        "余切",
+        "cot"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "power_series",
+      "answer": "幂级数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "convergence_radius",
+      "answer": "收敛半径",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "curve_integral",
+      "answer": "曲线积分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "cauchy_integral_formula",
+      "answer": "Cauchy积分公式",
+      "aliases": [
+        "柯西积分公式",
+        "Cauchy定理",
+        "柯西定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "cauchy_riemann_condtion",
+      "answer": "Cauchy-Riemann条件",
+      "aliases": [
+        "Cauchy-Riemann方程",
+        "柯西黎曼条件",
+        "柯西-黎曼条件"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "logarithm",
+      "answer": "对数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "complex_logarithm",
+      "answer": "复对数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "residue_theorem",
+      "answer": "留数定理",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "homotopy",
+      "answer": "同伦",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "path_homotopy",
+      "answer": "道路同伦",
+      "aliases": [
+        "路径同伦"
+      ],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "homology",
+      "answer": "同调",
+      "aliases": [],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "harmonic_function",
+      "answer": "调和函数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "zfunction",
+      "answer": "ζ函数",
+      "aliases": [
+        "Zeta函数",
+        "Riemann zeta函数"
+      ],
+      "category": "数论/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "riemann_hypothesis",
+      "answer": "Riemann猜想",
+      "aliases": [
+        "黎曼猜想"
+      ],
+      "category": "数论/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "prime_number",
+      "answer": "素数",
+      "aliases": [
+        "质数"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "prime_number_theorem",
+      "answer": "素数定理",
+      "aliases": [],
+      "category": "数论/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "conformal_map",
+      "answer": "共形映射",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "liouville_theorem",
+      "answer": "Liouville定理",
+      "aliases": [
+        "刘维尔定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "module_form",
+      "answer": "模形式",
+      "aliases": [],
+      "category": "数论/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "eisenstein_series",
+      "answer": "Eisenstein级数",
+      "aliases": [
+        "爱森斯坦级数"
+      ],
+      "category": "数论/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "homotopy_group",
+      "answer": "同伦群",
+      "aliases": [],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "fundamental_group",
+      "answer": "基本群",
+      "aliases": [],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "fundamental_groupoid",
+      "answer": "基本群胚",
+      "aliases": [
+        "基本广群",
+        "基本群培"
+      ],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "homology_group",
+      "answer": "同调群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "chain_homotopy",
+      "answer": "链同伦",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "complex",
+      "answer": "复形",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "singular_homology",
+      "answer": "奇异同调",
+      "aliases": [],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "cohomology",
+      "answer": "上同调",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cell",
+      "answer": "胞腔",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "genus",
+      "answer": "亏格",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "cw_complex",
+      "answer": "CW复形",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "euler_characteristic",
+      "answer": "Euler示性数",
+      "aliases": [
+        "Euler示数",
+        "欧拉示数",
+        "欧拉示性数"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "morse_inequalities",
+      "answer": "Morse不等式",
+      "aliases": [],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "kunnethformula",
+      "answer": "Künneth公式",
+      "aliases": [
+        "Kunneth公式",
+        "克奈公式"
+      ],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "poincare_duality",
+      "answer": "Poincaré对偶定理",
+      "aliases": [
+        "Poincare对偶定理",
+        "庞加莱对偶定理"
+      ],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "quotient_space",
+      "answer": "商空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "baire_category",
+      "answer": "Baire纲",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "open_map_theorem",
+      "answer": "开映射定理",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "closed_image_theorem",
+      "answer": "闭图像定理",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "uniform_boundedness_principle",
+      "answer": "共鸣定理",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hahn_banach_theorem",
+      "answer": "Hahn-Banach定理",
+      "aliases": [
+        "哈恩-巴纳赫定理",
+        "哈恩巴纳赫定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "weak_topology",
+      "answer": "弱拓扑",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "weak_star_topology",
+      "answer": "弱*拓扑",
+      "aliases": [
+        "弱星拓扑"
+      ],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "closed_subspace",
+      "answer": "闭子空间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "compact_operator",
+      "answer": "紧算子",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "adjoint_operator",
+      "answer": "伴随算子",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "stone_weierstrass_theorem",
+      "answer": "Stone-Weierstrass定理",
+      "aliases": [
+        "斯通巍尔斯特拉斯定理",
+        "斯通-巍尔斯特拉斯定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "haar_measure",
+      "answer": "Haar测度",
+      "aliases": [
+        "哈尔测度"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "generalized_function",
+      "answer": "广义函数",
+      "aliases": [
+        "分布"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "bounded_linear_operator",
+      "answer": "有界线性算子",
+      "aliases": [
+        "连续线性算子"
+      ],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "spectrum_of_an_operator",
+      "answer": "算子谱",
+      "aliases": [
+        "谱"
+      ],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "banach_algebrac",
+      "answer": "Banach代数",
+      "aliases": [
+        "巴拿赫代数"
+      ],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "involution",
+      "answer": "对合",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "spectral_theorem",
+      "answer": "谱定理",
+      "aliases": [],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "group_of_invertible_operators",
+      "answer": "可逆算子群",
+      "aliases": [],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "c_algebraic",
+      "answer": "C*代数",
+      "aliases": [],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "operator_semigroup",
+      "answer": "算子半群",
+      "aliases": [],
+      "category": "代数学/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "banachlimit",
+      "answer": "Banach极限",
+      "aliases": [
+        "巴纳赫极限"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "isometry",
+      "answer": "等距",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "norm",
+      "answer": "范数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "域扩张中元素的范数映射到基域的值"
+    },
+    {
+      "id": "volterraintegral_operator",
+      "answer": "Volterra积分算子",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "fredholm_determinant",
+      "answer": "Fredholm行列式",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "matrix_trace",
+      "answer": "迹",
+      "aliases": [],
+      "category": "代数学",
+      "description": "域扩张中元素的迹映射到基域的值"
+    },
+    {
+      "id": "function_space",
+      "answer": "函数空间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "sobolev_space",
+      "answer": "Sobolev空间",
+      "aliases": [
+        "索伯列夫空间"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hardy_space",
+      "answer": "Hardy空间",
+      "aliases": [
+        "哈代空间"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "continuous_function_space",
+      "answer": "连续函数空间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "symmetric_operator",
+      "answer": "对称算子",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "von_neumann_regular_ring",
+      "answer": "Von Neumann正则环",
+      "aliases": [
+        "冯诺依曼正则环"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "hereditary_ring",
+      "answer": "遗传环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "semihereditary_ring",
+      "answer": "半遗传环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "dedekindring",
+      "answer": "Dedekind环",
+      "aliases": [
+        "戴德金环"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "pruferring",
+      "answer": "Prüfer环",
+      "aliases": [
+        "Prufer环"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "local_ring",
+      "answer": "局部环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "triangulated_category",
+      "answer": "三角范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "derived_functor",
+      "answer": "导出函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "ext_functor",
+      "answer": "Ext函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "tor_functor",
+      "answer": "Tor函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "hom_functor",
+      "answer": "Hom函子",
+      "aliases": [
+        "态射函子"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "spectral_sequence",
+      "answer": "谱序列",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "transcendental_number",
+      "answer": "超越数",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "e_constant",
+      "answer": "e",
+      "aliases": [
+        "自然常数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "imaginary_unit",
+      "answer": "i",
+      "aliases": [
+        "虚数单位"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "gaussian_integer",
+      "answer": "Gauss整数",
+      "aliases": [
+        "高斯整数"
+      ],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "fundamental_theorem_of_arithmetic",
+      "answer": "算数基本定理",
+      "aliases": [],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "euclidean_algorithm",
+      "answer": "Euclid算法",
+      "aliases": [
+        "辗转相除法",
+        "欧几里得算法"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "fermat_number",
+      "answer": "Fermat数",
+      "aliases": [
+        "费马数"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "mersenne_number",
+      "answer": "Mersenne数",
+      "aliases": [
+        "梅森数"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "multiplicative_function",
+      "answer": "积性函数",
+      "aliases": [],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "divisibility",
+      "answer": "整除",
+      "aliases": [],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "congruence",
+      "answer": "同余",
+      "aliases": [],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "wilsons_theorem",
+      "answer": "Wilson定理",
+      "aliases": [
+        "威尔逊定理"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "continued_fraction",
+      "answer": "连分数",
+      "aliases": [
+        "连分式"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "fibonacci_sequence",
+      "answer": "Fibonacci数列",
+      "aliases": [
+        "斐波那契数列",
+        "兔子数列"
+      ],
+      "category": "数论v",
+      "description": "不会!"
+    },
+    {
+      "id": "mobius_function",
+      "answer": "Möbius函数",
+      "aliases": [
+        "Mobius函数",
+        "莫比乌斯函数"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "mobius_inversion",
+      "answer": "Möbius反演",
+      "aliases": [
+        "Mobius反演",
+        "莫比乌斯反演"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "ramanujan_sum",
+      "answer": "Ramanujan和",
+      "aliases": [
+        "拉马努金和"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "quaternion",
+      "answer": "四元数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "kronecker_delta",
+      "answer": "Kronecker符号",
+      "aliases": [
+        "克罗内克符号",
+        "Kronecker delta"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "elliptic_curve",
+      "answer": "椭圆曲线",
+      "aliases": [],
+      "category": "数论/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "ordinary_differential_equation",
+      "answer": "常微分方程",
+      "aliases": [
+        "ode",
+        "ODE"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "partial_differential_equation",
+      "answer": "偏微分方程",
+      "aliases": [
+        "PDE"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hilbert_basis_theorem",
+      "answer": "Hilbert基定理",
+      "aliases": [
+        "希尔伯特基定理"
+      ],
+      "category": "代数学",
+      "description": "Noether环上多项式环仍是Noether环"
+    },
+    {
+      "id": "hilberts_nullstellensatz",
+      "answer": "Hilbert零点定理",
+      "aliases": [
+        "希尔伯特零点定理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "primary_ideal",
+      "answer": "准素理想",
+      "aliases": [],
+      "category": "代数学",
+      "description": "类比于素数幂的理想，用于理想分解"
+    },
+    {
+      "id": "primary_decomposition",
+      "answer": "准素分解",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "hilbert_polynomial",
+      "answer": "Hilbert多项式",
+      "aliases": [
+        "希尔伯特多项式"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "regular_ring",
+      "answer": "正则环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "algebraic_set",
+      "answer": "代数集",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "algebraic_variety",
+      "answer": "代数簇",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "tree",
+      "answer": "树",
+      "aliases": [],
+      "category": "组合学",
+      "description": "不会!"
+    },
+    {
+      "id": "graph_basic",
+      "answer": "图",
+      "aliases": [],
+      "category": "组合学",
+      "description": "不会!"
+    },
+    {
+      "id": "shortest_path",
+      "answer": "最短路",
+      "aliases": [],
+      "category": "组合学",
+      "description": "不会!"
+    },
+    {
+      "id": "covering_space",
+      "answer": "覆叠空间",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "algebraic_function",
+      "answer": "代数函数",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "hesse_curve",
+      "answer": "Hesse曲线",
+      "aliases": [],
+      "category": "数论/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "peano_curve",
+      "answer": "Peano曲线",
+      "aliases": [
+        "皮亚诺曲线"
+      ],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "weierstrassfunction",
+      "answer": "Weierstrass函数",
+      "aliases": [
+        "巍尔斯特拉斯函数",
+        "Weierstraß函数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "algebraic_manifold",
+      "answer": "代数流形",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "pluckerformula",
+      "answer": "Plücker公式",
+      "aliases": [
+        "Plucker公式"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "scheme",
+      "answer": "概形",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "coherent_sheaf",
+      "answer": "凝聚层",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "cech_cohomology",
+      "answer": "Čech上同调",
+      "aliases": [
+        "Cech上同调",
+        "切赫上同调"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "complex_manifold",
+      "answer": "复流形",
+      "aliases": [],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "hilbertmanifold",
+      "answer": "Hilbert流形",
+      "aliases": [
+        "希尔伯特流形"
+      ],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "affine_variety",
+      "answer": "仿射簇",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "grothendieck_universe",
+      "answer": "Grothendieck宇宙",
+      "aliases": [
+        "格罗滕迪克宇宙"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "grothendiecktopology",
+      "answer": "Grothendieck拓扑",
+      "aliases": [
+        "格罗滕迪克拓扑"
+      ],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "riemann_rochtheorem",
+      "answer": "Riemann-Roch定理",
+      "aliases": [
+        "Grothendieck-Riemann-Roch定理",
+        "黎曼罗杰定理"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "weil_conjectures",
+      "answer": "Weil猜想",
+      "aliases": [
+        "韦伊猜想"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "etale_cohomology",
+      "answer": "平展上同调",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "poincare_conjecture",
+      "answer": "Poincaré猜想",
+      "aliases": [
+        "Poincare猜想",
+        "庞加莱猜想"
+      ],
+      "category": "几何学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "goldbachs_conjecture",
+      "answer": "Goldbach猜想",
+      "aliases": [
+        "哥德巴赫猜想"
+      ],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "twin_prime_conjecture",
+      "answer": "孪生素数猜想",
+      "aliases": [],
+      "category": "数论",
+      "description": "不会!"
+    },
+    {
+      "id": "p_vs_np_problem",
+      "answer": "P=NP问题",
+      "aliases": [],
+      "category": "理论计算机",
+      "description": "不会!"
+    },
+    {
+      "id": "hodge_conjecture",
+      "answer": "Hodge猜想",
+      "aliases": [
+        "霍奇猜想"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "navier_stokesequation",
+      "answer": "Navier-Stokes方程",
+      "aliases": [
+        "NS方程",
+        "N-S方程",
+        "纳维-斯托克斯方程",
+        "纳维斯托克斯方程"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "birch_swinnerton_dyer_conjecture",
+      "answer": "BSD猜想",
+      "aliases": [
+        "Birch和Swinnerton-Dyer猜想"
+      ],
+      "category": "数论/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "derivation",
+      "answer": "导子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "graduate_texts_in_mathematics",
+      "answer": "Graduate Texts in Mathematics",
+      "aliases": [
+        "GTM"
+      ],
+      "category": "其他",
+      "description": "不会!"
+    },
+    {
+      "id": "axiom",
+      "answer": "公理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "model",
+      "answer": "模型",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "ordinal_number",
+      "answer": "序数",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "transfinite_ordinal",
+      "answer": "超限序数",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "godel_model",
+      "answer": "Gödel模型",
+      "aliases": [
+        "Godel模型",
+        "哥德尔模型"
+      ],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "godel_incompleteness_theorems",
+      "answer": "Gödel不完备定理",
+      "aliases": [
+        "Godel不完备定理",
+        "哥德尔不完备定理"
+      ],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "simplicial_complex",
+      "answer": "单纯复形",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "p_adic_field",
+      "answer": "p进数域",
+      "aliases": [
+        "p-adic域"
+      ],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "weak_derivative",
+      "answer": "弱导数",
+      "aliases": [
+        "分布导数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "group_representation",
+      "answer": "群表示",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "linear_representation",
+      "answer": "线性表示",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "reducible_representation",
+      "answer": "可约表示",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "irreducible_representation",
+      "answer": "不可约表示",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "character",
+      "answer": "特征标",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "splitting_field",
+      "answer": "分裂域",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "polynomial_ring",
+      "answer": "多项式环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cartesian_closed_category",
+      "answer": "Cartesian闭范畴",
+      "aliases": [
+        "CCC",
+        "笛卡尔闭范畴"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "exponential_object",
+      "answer": "指数对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "module_structure",
+      "answer": "模结构",
+      "aliases": [
+        "Monad"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "topological_group",
+      "answer": "拓扑群",
+      "aliases": [],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "locally_compact_group",
+      "answer": "局部紧群",
+      "aliases": [],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "locally_compact_abelian_group",
+      "answer": "局部紧Abel群",
+      "aliases": [
+        "局部紧致Abel群",
+        "LCA"
+      ],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "reflexive_space",
+      "answer": "自反空间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "pseries",
+      "answer": "p级数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "geometry_series",
+      "answer": "几何级数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "telescoping_series",
+      "answer": "望远镜级数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "harmonic_series",
+      "answer": "调和级数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "difference",
+      "answer": "差分",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "prime_spectrum",
+      "answer": "素谱",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "环的所有素理想构成的集合，带有Zariski拓扑"
+    },
+    {
+      "id": "cauchyinequality",
+      "answer": "Cauchy不等式",
+      "aliases": [
+        "Cauchy-Schwarz不等式",
+        "Scharz不等式",
+        "柯西不等式"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "simple_module",
+      "answer": "单模",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "orthogonal",
+      "answer": "正交",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "orthonormal",
+      "answer": "标准正交",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "general_solution",
+      "answer": "通解",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "particular_solution",
+      "answer": "特解",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "homogeneous_differential_equation",
+      "answer": "齐次微分方程",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "exact_equation",
+      "answer": "恰当方程",
+      "aliases": [
+        "恰当微分方程"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "initial_value_problem",
+      "answer": "初值问题",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "system_of_linear_differential_equations",
+      "answer": "线性微分方程组",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "system_of_linear_equations",
+      "answer": "线性方程组",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "homogeneous_linear_system",
+      "answer": "齐次线性方程组",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "homogeneous_linear_differential_equation",
+      "answer": "齐次线性微分方程",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "comparison_test",
+      "answer": "比较判别法",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "series_of_nonnegative_terms",
+      "answer": "正项级数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "absolute_convergence",
+      "answer": "绝对收敛",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "conditional_convergence",
+      "answer": "条件收敛",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "riemann_series_theorem",
+      "answer": "Riemann重排定理",
+      "aliases": [
+        "重排定理",
+        "黎曼重排定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "logarithm_test",
+      "answer": "对数判别法",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "root_test",
+      "answer": "根值判别法",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "abels_test",
+      "answer": "Abel判别法",
+      "aliases": [
+        "阿贝尔判别法"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "dirichlets_test",
+      "answer": "Dirichlet判别法",
+      "aliases": [
+        "迪利克雷判别法"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "euler_formula",
+      "answer": "Euler公式",
+      "aliases": [
+        "欧拉公式"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "field_of_fractions",
+      "answer": "分式域",
+      "aliases": [],
+      "category": "代数学",
+      "description": "整环的分式构成的域，如整数环的分式域是有理数域"
+    },
+    {
+      "id": "f_sigma_set",
+      "answer": "Fσ集",
+      "aliases": [
+        "Fsigma集"
+      ],
+      "category": "分析学/数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "g_delta_set",
+      "answer": "Gδ集",
+      "aliases": [
+        "Gdelta集"
+      ],
+      "category": "分析学/数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "extended_real_number",
+      "answer": "广义实数",
+      "aliases": [],
+      "category": "分析学/数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "extended_complex_plane",
+      "answer": "扩充复平面",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "mobiustransform",
+      "answer": "Möbius变换",
+      "aliases": [
+        "Mobius变换",
+        "分式线性变换",
+        "莫比乌斯变换"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "laplace_transform",
+      "answer": "Laplace变换",
+      "aliases": [
+        "拉普拉斯变换"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "symbol_p",
+      "answer": "π",
+      "aliases": [
+        "Π",
+        "派",
+        "圆周率"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "discrete_topology",
+      "answer": "离散拓扑",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "hessematrix",
+      "answer": "Hesse矩阵",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "laplaceoperator",
+      "answer": "Laplace算子",
+      "aliases": [
+        "拉普拉斯算子"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "heat_equation",
+      "answer": "热方程",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "poisson_kernel",
+      "answer": "Possion核",
+      "aliases": [
+        "泊松核"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "laplace_equation",
+      "answer": "Laplace方程",
+      "aliases": [
+        "拉普拉斯方程"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "possion_equation",
+      "answer": "Possion方程",
+      "aliases": [
+        "泊松方程"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "wave_equation",
+      "answer": "波动方程",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "maxwells_equations",
+      "answer": "Maxwell方程组",
+      "aliases": [
+        "麦克斯韦方程组"
+      ],
+      "category": "数学物理",
+      "description": "不会!"
+    },
+    {
+      "id": "hypergeometric_function",
+      "answer": "超几何函数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hardy_littlewood_maximal_function",
+      "answer": "Hardy-Littlewood极大函数",
+      "aliases": [
+        "哈代利特尔伍德极大函数",
+        "极大函数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "lebesgue_differentiation_theorem",
+      "answer": "Lebesgue微分定理",
+      "aliases": [
+        "勒贝格微分定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "fundamental_theorem_of_calculus",
+      "answer": "微积分基本定理",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "binomial_theorem",
+      "answer": "二项式定理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "generalized_binomial_theorem",
+      "answer": "广义二项式定理",
+      "aliases": [],
+      "category": "数学基础",
+      "description": "不会!"
+    },
+    {
+      "id": "kahler_differential",
+      "answer": "Kähler微分",
+      "aliases": [
+        "Kahler微分"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "kahler_differential_sheaf",
+      "answer": "Kähler微分层",
+      "aliases": [
+        "Kahler微分"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "kahler_manifold",
+      "answer": "Kähler流形",
+      "aliases": [
+        "Kahler流形"
+      ],
+      "category": "几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "monster_group",
+      "answer": "魔群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "baby_monster_group",
+      "answer": "小魔群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "monstrous_moonshine",
+      "answer": "魔群月光猜想",
+      "aliases": [
+        "月光魔群猜想"
+      ],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "finite_simple_group_classification_theorem",
+      "answer": "有限单群分类定理",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "seifert_van_kampentheorem",
+      "answer": "Seifert-van Kampen定理",
+      "aliases": [
+        "van Kampen定理"
+      ],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "free_product",
+      "answer": "自由积",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "connected_sum",
+      "answer": "连通和",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "attaching_cell",
+      "answer": "黏贴胞腔",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "pasting_lemma",
+      "answer": "粘结引理",
+      "aliases": [
+        "粘贴引理",
+        "粘接引理",
+        "黏结引理",
+        "粘合引理"
+      ],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "wedge_of_circles",
+      "answer": "圆周束",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "linking_number",
+      "answer": "环绕数",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "classification_of_surfaces",
+      "answer": "曲面分类",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "jordan_curve_theorem",
+      "answer": "平面分割定理",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "jordan_curve",
+      "answer": "Jordan曲线",
+      "aliases": [
+        "简单闭曲线"
+      ],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "derived_category",
+      "answer": "导出范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "homotopy_category",
+      "answer": "同伦范畴",
+      "aliases": [
+        "K范畴"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "affine_scheme",
+      "answer": "仿射概形",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "projective_scheme",
+      "answer": "射影概形",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "flatness",
+      "answer": "平坦性",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "faithfully_flat",
+      "answer": "忠实平坦性",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "nakayamalemma",
+      "answer": "Nakayama引理",
+      "aliases": [
+        "中山引理"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "injective_module",
+      "answer": "内射模",
+      "aliases": [],
+      "category": "代数学",
+      "description": "正合列中可扩张的模，对偶于投射模"
+    },
+    {
+      "id": "projective_module",
+      "answer": "投射模",
+      "aliases": [],
+      "category": "代数学",
+      "description": "正合列中可提升的模，自由模的直和项"
+    },
+    {
+      "id": "injective_object",
+      "answer": "内射对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "projective_object",
+      "answer": "投射对象",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "grothendieck_spectral_sequence",
+      "answer": "Grothendieck谱序列",
+      "aliases": [
+        "格罗滕迪克谱序列"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "p_adic_period_ring",
+      "answer": "p进周期环",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "artin_homomorphism",
+      "answer": "Artin同态",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "grothendieck_group",
+      "answer": "Grothendieck群",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "apf_extension",
+      "answer": "APF扩张",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "l_function",
+      "answer": "L函数",
+      "aliases": [],
+      "category": "数论/分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hensel_ring",
+      "answer": "Hensel环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "herbrand_quotient",
+      "answer": "Herbrand商",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "tate_algebraic",
+      "answer": "Tate代数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "tate_module",
+      "answer": "Tate模",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "weil_group",
+      "answer": "Weil群",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "semi_simple_category",
+      "answer": "半单范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "semilinear_map",
+      "answer": "半线性映射",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cup_product",
+      "answer": "杯积",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "crystal",
+      "answer": "晶体",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "prism",
+      "answer": "棱镜",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "lattice",
+      "answer": "格",
+      "aliases": [],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "good_reduction",
+      "answer": "好约化",
+      "aliases": [],
+      "category": "数论/代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "division_algebra",
+      "answer": "可除代数",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "iwasawaalgebraic",
+      "answer": "Iwasawa代数",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "iwasawamodule",
+      "answer": "Iwasawa模",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "iwasawa_main_conjecture",
+      "answer": "Iwasawa主猜想",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "iwasawatheorem",
+      "answer": "Iwasawa定理",
+      "aliases": [],
+      "category": "数论/代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "truncation_functor",
+      "answer": "截断函子",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "double_complex",
+      "answer": "双复形",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "total_complex",
+      "answer": "全复形",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "hom_complex",
+      "answer": "Hom复形",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "mapping_cone",
+      "answer": "映射锥",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "mapping_cylinder",
+      "answer": "映射柱",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "complete_lattice",
+      "answer": "完全格",
+      "aliases": [
+        "完备格"
+      ],
+      "category": "代数学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "2_category",
+      "answer": "2-范畴",
+      "aliases": [
+        "2-cat"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "infinity_category",
+      "answer": "无穷范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "enriched_category",
+      "answer": "充实范畴",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "interpolation_theorem",
+      "answer": "插值定理",
+      "aliases": [
+        "Riesz-Thorin插值",
+        "Marcinkiewicz插值"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "calderon_zygmunddecomposition",
+      "answer": "Calderón-Zygmund分解",
+      "aliases": [
+        "CZ分解"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "ap_weight",
+      "answer": "Ap权",
+      "aliases": [],
+      "category": "分析学/几何学",
+      "description": "不会!"
+    },
+    {
+      "id": "hilbert_transform",
+      "answer": "Hilbert变换",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "bmospace",
+      "answer": "BMO空间",
+      "aliases": [
+        "BMO"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "singular_integral_operator",
+      "answer": "奇异积分算子",
+      "aliases": [
+        "奇异积分",
+        "奇异积分理论"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "local_smoothing_conjecture",
+      "answer": "局部光滑性猜想",
+      "aliases": [
+        "Local-Smoothing"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "restriction_conjecture",
+      "answer": "Fourier限制性猜想",
+      "aliases": [
+        "限制性猜想",
+        "Restriction"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "bochner_riesz_summability",
+      "answer": "Bochner-Riesz求和",
+      "aliases": [
+        "Bochner-Riesz算子"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "bochner_riesz_conjecture",
+      "answer": "Bochner-Riesz猜想",
+      "aliases": [
+        "Bochner-Riesz"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "john_nirenberginequality",
+      "answer": "John-Nirenberg不等式",
+      "aliases": [
+        "John-Nirenberg估计"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "dyadic_decomposition",
+      "answer": "二进分解",
+      "aliases": [
+        "2进分解"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "dyadic_pigeonhole_principle",
+      "answer": "二进鸽笼原理",
+      "aliases": [
+        "鸽笼原理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "a2_weight_conjecture",
+      "answer": "A2权猜想",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "almost_uniform_convergence",
+      "answer": "几乎一致收敛",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "borel_set",
+      "answer": "Borel集",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "baire_set",
+      "answer": "Baire集",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "banach_tarski_paradox",
+      "answer": "Banach-Tarski悖论",
+      "aliases": [
+        "分球悖论"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "measurable_function",
+      "answer": "可测函数",
+      "aliases": [
+        "Borel函数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "borel_algebra",
+      "answer": "Borel代数",
+      "aliases": [
+        "Borel σ代数",
+        "Borel sigma代数"
+      ],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cantor_set",
+      "answer": "Cantor集",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "caratheodory_theorem",
+      "answer": "Carathéodory定理",
+      "aliases": [
+        "Caratheodory定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "characteristic_function",
+      "answer": "示性函数",
+      "aliases": [
+        "特征函数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "chebyshev_inequality_prob",
+      "answer": "Chebyshev不等式",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hardyinequality",
+      "answer": "Hardy不等式",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "conjugate_indices",
+      "answer": "共轭指标",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "continuous_measure",
+      "answer": "连续测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "convergence_in_measure",
+      "answer": "依测度收敛",
+      "aliases": [
+        "依概率收敛"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "almost_everywhere_convergence",
+      "answer": "几乎处处收敛",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "daniellintegral",
+      "answer": "Daniell积分",
+      "aliases": [
+        "丹尼尔积分",
+        "Daniel积分"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "jordan_decomposition",
+      "answer": "Jordan测度分解",
+      "aliases": [
+        "测度分解",
+        "Hahn测度分解",
+        "Jordan分解",
+        "Hahn分解",
+        "Jordan分解定理",
+        "Hahn分解定理"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "dirac_measure",
+      "answer": "Dirac测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "finite_measure",
+      "answer": "有限测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "hausdorff_measure",
+      "answer": "Hausdorff测度",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "integrable_function",
+      "answer": "可积函数",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "measure_space",
+      "answer": "测度空间",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "sigma_finite_measure",
+      "answer": "σ-有限测度",
+      "aliases": [
+        "sigma有限测度"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "embedding_theorem",
+      "answer": "嵌入定理",
+      "aliases": [],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "turing_machine",
+      "answer": "Turing机",
+      "aliases": [
+        "图灵机"
+      ],
+      "category": "理论计算机",
+      "description": "不会!"
+    },
+    {
+      "id": "polynomial",
+      "answer": "多项式",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "fractal",
+      "answer": "分形",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "self_similarity",
+      "answer": "自相似",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "hausdorff_dimension",
+      "answer": "Hausdorff维数",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "julia_set",
+      "answer": "Julia集",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "sierpinski_triangle",
+      "answer": "Sierpiński三角形",
+      "aliases": [
+        "Sierpinski三角形",
+        "谢尔宾斯基三角形"
+      ],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "mandelbrot_set",
+      "answer": "Mandelbrot集",
+      "aliases": [
+        "曼德博集"
+      ],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "cw_complex",
+      "answer": "CW复形",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "resolvent",
+      "answer": "预解式",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "resolvent_set",
+      "answer": "预解集",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "laurentseries",
+      "answer": "Laurent级数",
+      "aliases": [
+        "洛朗级数"
+      ],
+      "category": "分析学",
+      "description": "不会!"
+    },
+    {
+      "id": "automaton",
+      "answer": "自动机",
+      "aliases": [],
+      "category": "理论计算机",
+      "description": "不会!"
+    },
+    {
+      "id": "cap_product",
+      "answer": "帽积",
+      "aliases": [],
+      "category": "拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "graded_ring",
+      "answer": "分次环",
+      "aliases": [],
+      "category": "代数学",
+      "description": "不会!"
+    },
+    {
+      "id": "cechcohomology",
+      "answer": "Cech上同调",
+      "aliases": [],
+      "category": "代数学/拓扑学",
+      "description": "不会!"
+    },
+    {
+      "id": "de_rham_cohomology",
+      "answer": "de Rham上同调",
+      "aliases": [],
+      "category": "分析学/拓扑学",
+      "description": "不会!"
+    }
+  ]
 }

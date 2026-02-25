@@ -2,14 +2,28 @@
 网络请求工具 - HTTP 客户端封装
 
 提供异步 HTTP 请求工具，支持重试机制和错误处理。
+
+注意：此模块需要 httpx，导入失败时相关函数不可用。
 """
 
 from typing import Optional, Dict
 import logging
 
-import httpx
+# 导入保护
+try:
+    import httpx
+    HTTPX_AVAILABLE = True
+except ImportError:
+    HTTPX_AVAILABLE = False
+    httpx = None  # type: ignore
 
 logger = logging.getLogger("plugins.utils.network")
+
+
+def _check_httpx():
+    """检查 httpx 是否可用"""
+    if not HTTPX_AVAILABLE:
+        raise ImportError("httpx is not available. Install with: pip install httpx")
 
 # 默认请求头
 DEFAULT_HEADERS = {

@@ -2,18 +2,53 @@
 图片处理工具 - PIL 封装
 
 提供图片下载、处理、转换的便捷函数。
+
+注意：此模块需要 PIL 和 NoneBot 环境，导入失败时相关函数不可用。
 """
 
 import io
 import base64
 from typing import Optional, List, Tuple, Union
-from PIL import Image
-from nonebot.adapters.onebot.v11 import MessageSegment
 import logging
+
+# 导入保护 - 避免 PIL 或 NoneBot 不存在时导致模块加载失败
+try:
+    from PIL import Image
+    PIL_AVAILABLE = True
+except ImportError:
+    PIL_AVAILABLE = False
+    Image = None  # type: ignore
+
+try:
+    from nonebot.adapters.onebot.v11 import MessageSegment
+    NONEBOT_AVAILABLE = True
+except ImportError:
+    NONEBOT_AVAILABLE = False
+    MessageSegment = None  # type: ignore
 
 from .network import fetch_binary
 
 logger = logging.getLogger("plugins.utils.image")
+
+
+# 检查依赖是否可用
+def _check_pil():
+    """检查 PIL 是否可用"""
+    if not PIL_AVAILABLE:
+        raise ImportError("PIL is not available. Install with: pip install Pillow")
+
+
+def _check_nonebot():
+    """检查 NoneBot 是否可用"""
+    if not NONEBOT_AVAILABLE:
+        raise ImportError("NoneBot is not available.")
+
+
+def _check_httpx():
+    """检查 httpx 是否可用"""
+    from .network import HTTPX_AVAILABLE
+    if not HTTPX_AVAILABLE:
+        raise ImportError("httpx is not available. Install with: pip install httpx")
 
 
 async def download_image(url: str, timeout: float = 10.0) -> Optional[Image.Image]:
@@ -32,6 +67,8 @@ async def download_image(url: str, timeout: float = 10.0) -> Optional[Image.Imag
         >>> if img:
         ...     print(f"Size: {img.size}")
     """
+    _check_pil()
+    _check_httpx()
     try:
         data = await fetch_binary(url, timeout=timeout)
         if data is None:
@@ -53,6 +90,8 @@ def image_to_message(image: Image.Image, format: str = 'PNG') -> MessageSegment:
     Returns:
         MessageSegment.image 对象
     """
+    _check_pil()
+    _check_nonebot()
     buffer = io.BytesIO()
     image.save(buffer, format=format)
     img_bytes = buffer.getvalue()
@@ -78,6 +117,7 @@ def merge_images(
     Returns:
         合并后的 PIL Image 对象
     """
+    _check_pil()
     result = base_image
     for overlay in overlays:
         if overlay.size != result.size:
@@ -92,6 +132,7 @@ def resize_image(
     keep_aspect: bool = True
 ) -> Image.Image:
     """调整图片大小"""
+    _check_pil()
     if keep_aspect:
         image.thumbnail(size, Image.Resampling.LANCZOS)
         return image
@@ -112,6 +153,7 @@ def crop_image(
     Returns:
         裁剪后的图片
     """
+    _check_pil()
     return image.crop(box)
 
 
@@ -121,6 +163,7 @@ def create_placeholder_image(
     color: Tuple[int, int, int, int] = (0, 0, 0, 0)
 ) -> Image.Image:
     """创建占位图片"""
+    _check_pil()
     return Image.new('RGBA', (width, height), color)
 
 
@@ -140,6 +183,7 @@ def compress_image(
     Returns:
         压缩后的图片
     """
+    _check_pil()
     result = image.copy()
     
     if max_size:
@@ -172,6 +216,7 @@ class ImageProcessor:
     """
     
     def __init__(self, image: Image.Image):
+        _check_pil()
         self.image = image.copy()
     
     def resize(self, size: Tuple[int, int], keep_aspect: bool = False) -> 'ImageProcessor':

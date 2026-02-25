@@ -114,6 +114,10 @@ class PluginConfig(BaseSettings):
         default=False,
         description="数学谜题插件调试模式"
     )
+    debug_concurrent: bool = Field(
+        default=False,
+        description="并发调试模式：在消息中附加buffer队列数量"
+    )
     
     # ==================== 随机回复配置 ====================
     random_reply_probability: float = Field(

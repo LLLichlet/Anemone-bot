@@ -6,6 +6,15 @@
 
 ---
 
+### Version 2.2.6 (2026-02-25)
+
+**Bug修复**
+
+- 修复消息发送并发bug：使用 ContextVar 隔离请求上下文，解决多请求共享 `_current_matcher` 导致的消息丢失问题
+- 重构 `SendBuffer`：改用 `asyncio.Lock` 替代后台 task，在调用者上下文中执行发送，避免 ContextVar 丢失
+
+---
+
 ### Version 2.2.5 (2026-02-24)
 
 **品牌更新**
@@ -213,7 +222,7 @@
 
 ---
 
-**最新版本**: 2.2.5  
+**最新版本**: 2.2.6  
 查看完整项目信息：[README.md](README.md)
 
 

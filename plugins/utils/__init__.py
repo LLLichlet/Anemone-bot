@@ -17,16 +17,29 @@ from .network import (
     DEFAULT_HEADERS,
     HttpClient,
 )
-from .image import (
-    download_image,
-    image_to_message,
-    merge_images,
-    resize_image,
-    crop_image,
-    create_placeholder_image,
-    compress_image,
-    ImageProcessor,
-)
+try:
+    from .image import (
+        download_image,
+        image_to_message,
+        merge_images,
+        resize_image,
+        crop_image,
+        create_placeholder_image,
+        compress_image,
+        ImageProcessor,
+    )
+    PIL_AVAILABLE = True
+except ImportError:
+    # PIL 不可用（例如测试环境）
+    PIL_AVAILABLE = False
+    download_image = None
+    image_to_message = None
+    merge_images = None
+    resize_image = None
+    crop_image = None
+    create_placeholder_image = None
+    compress_image = None
+    ImageProcessor = None
 from .prompt import read_prompt, read_prompt_with_fallback
 from .text import (
     normalize_text,

@@ -20,6 +20,7 @@ async def init_services():
         AIService, BanService, ChatService, BotService,
         TokenService, SystemMonitorService
     )
+    from plugins.common.buffer import init_buffer
     
     # 初始化并注册所有服务到 ServiceLocator
     AIService.get_instance().initialize()
@@ -28,6 +29,9 @@ async def init_services():
     BotService.get_instance().initialize()
     TokenService.get_instance().initialize()
     SystemMonitorService.get_instance().initialize()
+    
+    # 初始化消息缓冲区（防止高并发丢消息）
+    init_buffer()
     
     logger.success("核心服务初始化完成")
 
