@@ -55,7 +55,6 @@ class PluginConfig(BaseSettings):
     配置项分类:
         - AI API: 密钥、模型、基础 URL
         - 功能开关: 各功能的启用/禁用
-        - 随机回复: 概率、冷却、长度限制
         - AI 参数: 各功能的温度、token 限制等
         - 系统设置: 数据目录、管理员密码等
     
@@ -100,6 +99,10 @@ class PluginConfig(BaseSettings):
         default=True,
         description="数学海龟汤游戏功能开关"
     )
+    echo_enabled: bool = Field(
+        default=True,
+        description="复读功能开关"
+    )
     
     # ==================== 调试配置 ====================
     debug_mode: bool = Field(
@@ -117,30 +120,6 @@ class PluginConfig(BaseSettings):
     debug_concurrent: bool = Field(
         default=False,
         description="并发调试模式：在消息中附加buffer队列数量"
-    )
-    
-    # ==================== 随机回复配置 ====================
-    random_reply_probability: float = Field(
-        default=0.02,
-        ge=0.0,
-        le=1.0,
-        description="普通消息随机回复概率 (0-1)"
-    )
-    random_reply_probability_at: float = Field(
-        default=0.02,
-        ge=0.0,
-        le=1.0,
-        description="被@时随机回复概率 (0-1)"
-    )
-    random_reply_cooldown: int = Field(
-        default=30,
-        gt=0,
-        description="随机回复冷却时间（秒）"
-    )
-    random_reply_min_length: int = Field(
-        default=3,
-        ge=0,
-        description="触发随机回复的最小消息长度"
     )
     
     # ==================== 路径配置 ====================
@@ -212,6 +191,20 @@ class PluginConfig(BaseSettings):
         ge=0.0,
         le=1.0,
         description="随机回复 AI top-p 参数"
+    )
+    
+    # ==================== 复读配置 ====================
+    echo_probability: float = Field(
+        default=0.01,
+        ge=0.0,
+        le=1.0,
+        description="复读概率 (0-1)"
+    )
+    echo_reverse_probability: float = Field(
+        default=0.2,
+        ge=0.0,
+        le=1.0,
+        description="复读时倒序的概率 (0-1)"
     )
     
     # ==================== 系统设置 ====================

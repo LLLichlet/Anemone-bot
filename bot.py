@@ -2,7 +2,7 @@ import nonebot
 from nonebot.adapters.onebot.v11 import Adapter
 from nonebot.log import logger, default_format
 
-__version__ = "2.2.4"
+__version__ = "2.3.0"
 
 # 初始化NoneBot
 nonebot.init()

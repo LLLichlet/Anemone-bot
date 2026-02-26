@@ -10,7 +10,7 @@ fastapi_reload = true
 
 [project]
 name = "Anemone bot"
-version = "2.2.6"
+version = "2.3.0"
 description = "Anemone bot - 多功能查询聊天机器人"
 readme = "README.md"
 requires-python = ">=3.9"

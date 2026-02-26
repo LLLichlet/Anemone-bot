@@ -87,7 +87,7 @@ class ChatServiceProtocol(ABC):
         pass
     
     @abstractmethod
-    def check_cooldown(self, group_id: int) -> bool:
+    def check_cooldown(self, group_id: int, cooldown_seconds: int = 30) -> bool:
         """检查冷却时间"""
         pass
     

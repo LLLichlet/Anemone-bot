@@ -124,7 +124,7 @@ class ChatService(ServiceBase, ChatServiceProtocol):
             return "最近的聊天：\n" + "\n".join(lines) + "\n\n"
         return ""
     
-    def check_cooldown(self, group_id: int) -> bool:
+    def check_cooldown(self, group_id: int, cooldown_seconds: int = 30) -> bool:
         """检查群组冷却时间是否已过"""
         self.ensure_initialized()
         
@@ -132,7 +132,7 @@ class ChatService(ServiceBase, ChatServiceProtocol):
             return True
         
         elapsed = time.time() - self._cooldown[group_id]
-        return elapsed >= config.random_reply_cooldown
+        return elapsed >= cooldown_seconds
     
     def set_cooldown(self, group_id: int) -> None:
         """设置群组冷却时间"""
@@ -182,14 +182,14 @@ class ChatService(ServiceBase, ChatServiceProtocol):
         
         return users
     
-    def get_cooldown_remaining(self, group_id: int) -> float:
+    def get_cooldown_remaining(self, group_id: int, cooldown_seconds: int = 30) -> float:
         """获取剩余冷却秒数"""
         self.ensure_initialized()
         
         if group_id not in self._cooldown:
             return 0
         
-        remaining = config.random_reply_cooldown - (time.time() - self._cooldown[group_id])
+        remaining = cooldown_seconds - (time.time() - self._cooldown[group_id])
         return max(0, remaining)
     
     def clear_history(self, group_id: Optional[int] = None) -> None:

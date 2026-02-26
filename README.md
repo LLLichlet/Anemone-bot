@@ -1,6 +1,6 @@
 # Anemone bot
 
-[![Version](https://img.shields.io/badge/version-2.2.6-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](CHANGELOG.md)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 [![NoneBot2](https://img.shields.io/badge/NoneBot-2.4+-green.svg)](https://nonebot.dev/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
@@ -328,6 +328,7 @@ status = service.get_status()
 详见 [CHANGELOG.md](CHANGELOG.md)
 
 - **v2.2.6**: 修复消息发送并发bug，解决多请求消息丢失问题
+- **v2.3.0**: 新增复读插件，随机回复逻辑调整为关键词触发
 - **v2.2.5**: 品牌更新，项目更名为 Anemone bot
 - **v2.2.3**: 修复数学谜题bug，优化AI提示词
 - **v2.2.2**: 7层架构重构, ServiceLocator, Protocol接口, 处理器/接收器分离
@@ -652,6 +653,7 @@ Development:
 See [CHANGELOG.md](CHANGELOG.md)
 
 - **v2.2.6**: Fixed message sending concurrency bug, resolved message loss in multi-request scenarios
+- **v2.3.0**: Added echo plugin, changed random reply to keyword-triggered
 - **v2.2.5**: Rebranded to Anemone bot
 - **v2.2.1**: PluginRegistry, TokenService, SystemMonitorService, nb-cli support
 - **v2.2.0**: Math puzzle plugin, GameServiceBase, 726+ math concepts

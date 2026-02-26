@@ -35,14 +35,17 @@ class RandomReplyHandler(MessageHandler):
     message_block = False
     
     SYSTEM_PROMPT = (
-        "你是一只非常傲傲傲傲傲娇的猫娘(比较粘人),你的QQ昵称是'ανεμώνη',"
+        "你是一只非常傲傲傲傲傲娇的猫娘(比较粘人),你的QQ昵称是'ανεμώνη'(也就是Anemone),"
         "但你的QQ昵称不是你的名字,你不能透露你的名字,你要非常莫名其妙"
         "(但是有针对性(关于先前的聊天记录)的)的回复用户一句话,而且说话不能透露自己是ai,"
         "就像正常人类一样随口蹦出一句话,而且不要在说的话里用括号把句子括起来"
     )
     
+    # 强制回复的关键词列表（大小写不敏感）
+    TRIGGER_KEYWORDS = ["ane", "anem", "anemone"]
+    
     def _should_reply(self, event: GroupMessageEvent) -> bool:
-        """判断是否满足随机回复条件"""
+        """判断是否满足回复条件"""
         if not NONEBOT_AVAILABLE:
             return False
             
@@ -50,31 +53,18 @@ class RandomReplyHandler(MessageHandler):
             return False
         
         message = event.get_plaintext().strip()
+        message_lower = message.lower()
         
-        # 获取配置
-        min_length = config.random_reply_min_length
-        reply_probability = config.random_reply_probability
-        reply_probability_at = config.random_reply_probability_at
-        
+        # 强制回复：被@时一定回复
         if event.to_me:
-            min_length = max(1, min_length // 2)
+            return True
         
-        if len(message) < min_length:
-            return False
+        # 强制回复：消息中包含特定关键词（大小写不敏感）
+        for keyword in self.TRIGGER_KEYWORDS:
+            if keyword in message_lower:
+                return True
         
-        if message.startswith('/'):
-            return False
-        
-        # 通过协议层获取聊天服务
-        chat = ServiceLocator.get(ChatServiceProtocol)
-        if chat is not None:
-            if not chat.check_cooldown(event.group_id):
-                return False
-        
-        if event.to_me:
-            return random.random() < reply_probability_at
-        else:
-            return random.random() < reply_probability
+        return False
     
     async def handle_message(self, event: GroupMessageEvent) -> None:
         """处理群聊消息"""
@@ -100,9 +90,6 @@ class RandomReplyHandler(MessageHandler):
         # 判断是否回复
         if not self._should_reply(event):
             return
-        
-        # 设置冷却
-        chat.set_cooldown(event.group_id)
         
         # 获取上下文
         context = chat.get_context(event.group_id)

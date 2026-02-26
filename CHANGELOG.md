@@ -6,6 +6,23 @@
 
 ---
 
+### Version 2.3.0 (2026-02-26)
+
+**新功能**
+
+- 新增**复读插件** (`plugins/echo/`)：随机复读群聊消息，有概率倒着复读
+  - 配置项 `echo_probability`：复读概率（默认 1%）
+  - 配置项 `echo_reverse_probability`：倒序复读概率（默认 20%）
+
+**功能调整**
+
+- **随机回复插件**逻辑调整：
+  - 移除随机概率回复机制
+  - 现在只在被@或消息包含关键词 ("ane"/"anem"/"anemone") 时回复
+  - 移除相关配置项：`random_reply_probability`, `random_reply_probability_at`, `random_reply_cooldown`, `random_reply_min_length`
+
+---
+
 ### Version 2.2.6 (2026-02-25)
 
 **Bug修复**
@@ -222,7 +239,7 @@
 
 ---
 
-**最新版本**: 2.2.6  
+**最新版本**: 2.3.0  
 查看完整项目信息：[README.md](README.md)
 
 
