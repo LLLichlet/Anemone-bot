@@ -111,7 +111,6 @@ class HelpHandler(PluginHandler):
                 continue
             
             lines.append(f"(自动触发) {plugin.name}")
-            break
         
         if len(enabled_plugins) == 0:
             lines.append("当前所有功能已关闭，请联系管理员")
@@ -132,5 +131,5 @@ if NONEBOT_AVAILABLE:
         name=handler.name,
         description=handler.description,
         usage=f"/{handler.command}",
-        extra={"author": "Lichlet", "version": "2.3.0"}
+        extra={"author": "Lichlet", "version": "2.3.1"}
     )

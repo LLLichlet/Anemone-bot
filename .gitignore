@@ -104,6 +104,9 @@ tests/
 pytest.ini
 run_tests.py
 
+# Scripts
+scripts/
+
 # ============================================
 # Keep these (use ! to negate)
 # ============================================

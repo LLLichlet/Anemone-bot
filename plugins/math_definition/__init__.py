@@ -118,5 +118,5 @@ if NONEBOT_AVAILABLE:
         name=handler.name,
         description=handler.description,
         usage=f"/{handler.command} (/{' /'.join(handler.aliases)}) [数学名词]",
-        extra={"author": "Lichlet", "version": "2.3.0"}
+        extra={"author": "Lichlet", "version": "2.3.1"}
     )

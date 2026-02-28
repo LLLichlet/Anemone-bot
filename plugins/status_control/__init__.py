@@ -270,5 +270,5 @@ if NONEBOT_AVAILABLE:
         name="状态控制",
         description="管理员功能：查看和控制各功能开关状态（需令牌）",
         usage="私聊: /token (申请令牌) | 群内: /admin (状态控制) [令牌] [操作] [参数]",
-        extra={"author": "Lichlet", "version": "2.3.0"}
+        extra={"author": "Lichlet", "version": "2.3.1"}
     )

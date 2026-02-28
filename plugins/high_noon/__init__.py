@@ -200,5 +200,5 @@ if NONEBOT_AVAILABLE:
         name="午时已到",
         description="俄罗斯轮盘赌禁言游戏",
         usage="/highnoon (午时已到) 开始游戏，/fire (开枪) 参与",
-        extra={"author": "Lichlet", "version": "2.3.0"}
+        extra={"author": "Lichlet", "version": "2.3.1"}
     )

@@ -104,5 +104,5 @@ if NONEBOT_AVAILABLE:
         name=handler.name,
         description=handler.description,
         usage="无命令，自动触发",
-        extra={"author": "Lichlet", "version": "2.3.0"}
+        extra={"author": "Lichlet", "version": "2.3.1"}
     )

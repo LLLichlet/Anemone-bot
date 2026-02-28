@@ -185,5 +185,5 @@ if NONEBOT_AVAILABLE:
         name="数学谜题",
         description="通过是非问题猜测数学概念的猜谜游戏",
         usage="/mathpuzzle (数学谜) - 开始游戏，/ask (问) [问题] - 提问，/guess (猜) [答案] - 猜测",
-        extra={"author": "Lichlet", "version": "2.3.0"}
+        extra={"author": "Lichlet", "version": "2.3.1"}
     )
